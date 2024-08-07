@@ -8,5 +8,8 @@
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
+  },
+  "rules": {
+    "react/function-component": [2, { "namedComponents": "arrow-function" }]
   }
 }
