@@ -1,0 +1,67 @@
+@import "@/styles/style.scss";
+
+.button {
+  @include flex;
+  border-radius: 8px;
+  line-height: 1.4;
+
+  &--color-solid {
+    color: #fff;
+    background-color: $blue-40;
+    &:disabled {
+      color: $gray-50;
+      background-color: $gray-disabled;
+    }
+    &:hover {
+      background-color: $blue-50;
+    }
+    &:focus {
+      color: $blue-40;
+      background-color: $white;
+      border: 1px solid $blue-40;
+    }
+  }
+  &--color-outline {
+    color: $blue-40;
+    background-color: $white;
+    border: 1px solid $blue-40;
+    &:disabled {
+      color: $gray-60;
+      border: 1px solid $gray-30;
+    }
+    &:hover {
+      background-color: $gray-10;
+    }
+    &:focus {
+      color: $blue-40;
+      background-color: $blue-20;
+    }
+    &--gray {
+      color: $gray-70;
+      border: 1px solid $gray-30;
+      &:hover {
+        background-color: $gray-10;
+      }
+    }
+  }
+
+  &--size-small {
+    padding: 0 42px;
+    height: 40px;
+    @include text-style(16, false, 600);
+  }
+  &--size-medium {
+    padding: 0 137px;
+    height: 50px;
+    @include text-style(18, false, 600);
+  }
+  &--size-large {
+    padding: 0 137px;
+    height: 60px;
+    @include text-style(18, false, 600);
+  }
+
+  &--full {
+    width: 100%;
+  }
+}
