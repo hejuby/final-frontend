@@ -1,0 +1,26 @@
+.checkbox {
+  @include inline-flex;
+  &__input {
+    display: none;
+  }
+  &__label {
+    position: relative;
+    @include inline-flex;
+    width: 16px;
+    height: 16px;
+    border: 2px solid $gray-50;
+    border-radius: 2px;
+    box-sizing: border-box;
+    & > img {
+      display: none;
+    }
+  }
+  &__input:checked + &__label {
+    & > img {
+      @include pos-center;
+      display: block;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
