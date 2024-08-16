@@ -1,0 +1,50 @@
+.tag {
+  @include text-style(12, $blue-40, 600);
+  display: inline-block;
+  height: 20px;
+  padding: 0px 10px;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 1.4;
+
+  &--color-default {
+    color: $blue-40;
+    background-color: $blue-10;
+  }
+
+  &--color-light-blue {
+    color: $sky-blue-100;
+    background-color: $sky-blue-10;
+  }
+
+  &--color-light-purple {
+    color: $purple-10;
+    background-color: $purple-40;
+  }
+
+  &--color-light-gray {
+    color: $gray-60;
+    background-color: $gray-10;
+  }
+
+  &--color-dark-gray {
+    color: $gray-70;
+    background-color: $gray-20;
+  }
+
+  &--color-outline--gray {
+    border: 1px solid $gray-20;
+    color: $black;
+    background-color: $white;
+  }
+
+  &--shape-squared {
+    border-radius: 4px;
+  }
+
+  &--shape-rounded {
+    height: 22px;
+    border-radius: 20px;
+    line-height: 1.6;
+  }
+}
