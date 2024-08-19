@@ -1,0 +1,21 @@
+.floating-button {
+  position: fixed;
+  right: calc((100% - 1400px) / 2 - 170px);
+  bottom: 20px; // Todo 경민: 추후 위치 변경 예정
+  transition: 0.4s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &__icon {
+    width: 80px;
+    @media (max-width: $breakpoint-mobile) {
+      width: 56px;
+    }
+  }
+
+  @media (max-width: 1740px) {
+    right: 40px;
+  }
+}

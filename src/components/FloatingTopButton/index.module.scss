@@ -1,0 +1,30 @@
+.top-button {
+  position: fixed;
+  right: calc((100% - 1400px) / 2 - 170px);
+  bottom: 132px; // Todo 경민: 추후 위치 변경 예정
+  transition:
+    opacity 0.4s,
+    visibility 0.4s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &--show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &--hide {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    bottom: 100px;
+  }
+
+  @media (max-width: 1740px) {
+    right: 40px;
+  }
+}
