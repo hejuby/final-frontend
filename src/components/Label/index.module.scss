@@ -1,0 +1,5 @@
+.label {
+  @include text-style(14, $gray-80);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}

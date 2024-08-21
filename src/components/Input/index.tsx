@@ -1,11 +1,10 @@
-"use client";
-
 import ms from "@/utils/modifierSelector";
 import { InputHTMLAttributes, createElement, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import IconPasswordHidden from "@/assets/icons/icon-password-hidden.svg";
 import IconPasswordVisible from "@/assets/icons/icon-password-visible.svg";
 import styles from "./index.module.scss";
+import Label from "../Label";
 
 type InputProps = {
   id: string;
@@ -28,7 +27,7 @@ const Input = ({
 }: InputProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const togglePasswordVisibility = () => {
+  const handleTogglePasswordIcon = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
@@ -36,12 +35,8 @@ const Input = ({
 
   return (
     <div className={cn("", error ? "--error" : "", full && "--full")}>
-      {label && (
-        <label className={styles.label} htmlFor={id}>
-          {label}
-        </label>
-      )}
-      <div className={styles["input-wrap"]}>
+      {label && <Label htmlFor={id}>{label}</Label>}
+      <div className={styles["input-wrapper"]}>
         {createElement("input", {
           className: styles.input,
           id,
@@ -53,7 +48,7 @@ const Input = ({
           <button
             type="button"
             className={styles["btn-toggle-pw"]}
-            onClick={togglePasswordVisibility}
+            onClick={handleTogglePasswordIcon}
           >
             {isPasswordVisible ? (
               <IconPasswordHidden />

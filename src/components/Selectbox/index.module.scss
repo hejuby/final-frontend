@@ -1,0 +1,130 @@
+.select-wrapper {
+  @include column-flex(center, start);
+  width: 100%;
+  position: relative;
+  margin-bottom: 12px;
+  line-height: 1.4;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .option {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 12px);
+    z-index: 1;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 8px;
+    background-color: $white;
+    box-shadow: $box-shadow;
+
+    &__item {
+      @include text-style(14, $gray-80);
+      height: 50px;
+      padding: 13px 14px;
+      line-height: 24px;
+      cursor: pointer;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        @include text-style(14, $blue-40, 500);
+        background-color: $sky-blue;
+      }
+
+      span {
+        display: block;
+      }
+    }
+  }
+
+  .select {
+    @include text-style(14, $gray-80);
+    position: relative;
+    width: 100%;
+    height: 50px;
+    padding: 13px 17px;
+    border: 2px solid $gray-20;
+    border-radius: 8px;
+    line-height: 1.4;
+    background-color: $white;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    svg {
+      @include pos-center-y;
+      right: 16px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &--size-small {
+    max-width: 90px;
+
+    .select {
+      @include text-style(14, $black);
+      height: 36px;
+      padding: 8px 10px;
+      border-width: 1px;
+      border-radius: 4px;
+      line-height: 18px;
+
+      svg {
+        right: 10px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .option {
+      border: 1px solid $gray-20;
+      text-align: center;
+
+      &__item {
+        height: 40px;
+        padding: 10px;
+        line-height: 20px;
+        color: $black;
+      }
+    }
+  }
+
+  &--size-medium {
+    max-width: 114px;
+
+    .select {
+      @include text-style(16, $black);
+      height: 38px;
+      padding: 8px 16px;
+      border-width: 1px;
+      border-radius: 4px;
+      line-height: 18px;
+
+      svg {
+        right: 13px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .option {
+      border: 1px solid $gray-20;
+      text-align: center;
+
+      &__item {
+        height: 40px;
+        padding: 10px;
+        line-height: 20px;
+        color: $black;
+      }
+    }
+  }
+}
