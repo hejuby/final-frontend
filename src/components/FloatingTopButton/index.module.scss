@@ -20,7 +20,7 @@
     opacity: 0;
   }
 
-  @media (max-width: $breakpoint-mobile) {
+  @include mobile {
     bottom: 100px;
   }
 

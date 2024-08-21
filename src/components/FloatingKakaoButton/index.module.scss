@@ -10,7 +10,7 @@
 
   &__icon {
     width: 80px;
-    @media (max-width: $breakpoint-mobile) {
+    @include mobile {
       width: 56px;
     }
   }
