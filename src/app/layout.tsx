@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "../styles/reset.scss";
 import FloatingKakaoButton from "@/components/FloatingKakaoButton";
 import FloatingTopButton from "@/components/FloatingTopButton";
-import ShareButton from "@/components/ShareButton";
 
 export const metadata: Metadata = {
   title: "다인리뷰",
@@ -20,7 +19,6 @@ const RootLayout = ({
         {children}
         <FloatingTopButton />
         <FloatingKakaoButton />
-        <ShareButton />
       </body>
     </html>
   );
