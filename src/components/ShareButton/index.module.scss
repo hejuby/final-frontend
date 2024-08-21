@@ -1,0 +1,15 @@
+.share-button {
+  width: 72px;
+  height: 60px;
+  border-radius: 8px;
+  border: 1px solid $gray-30;
+  background-color: $white;
+  transition: 0.4s;
+  &:hover {
+    background-color: $gray-10;
+  }
+
+  @include mobile {
+    width: 60px;
+  }
+}
