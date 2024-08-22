@@ -1,26 +1,41 @@
 .checkbox {
   @include inline-flex;
   &__input {
-    display: none;
+    appearance: none;
+    vertical-align: middle;
   }
   &__label {
     position: relative;
     @include inline-flex;
-    width: 16px;
-    height: 16px;
     border: 2px solid $gray-50;
-    border-radius: 2px;
     box-sizing: border-box;
-    & > img {
+    cursor: pointer;
+    &--type-checkbox {
+      border-radius: 2px;
+    }
+    &--type-radio {
+      border-radius: 50%;
+    }
+    & > svg {
       display: none;
     }
   }
   &__input:checked + &__label {
-    & > img {
+    &--type-radio {
+      border-color: $blue-50;
+    }
+    & > svg {
       @include pos-center;
       display: block;
-      width: 24px;
-      height: 24px;
     }
+    & > div {
+      border: 1px solid $blue-50;
+      border-radius: 50%;
+      background-color: $blue-50;
+      box-sizing: border-box;
+    }
+  }
+  &__input:focus + &__label {
+    border-color: $blue-50;
   }
 }
