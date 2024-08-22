@@ -3,6 +3,7 @@ import "../styles/reset.scss";
 import FloatingKakaoButton from "@/components/FloatingKakaoButton";
 import FloatingTopButton from "@/components/FloatingTopButton";
 import Layout from "@/components/Layout";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "다인리뷰",
@@ -20,6 +21,7 @@ const RootLayout = ({
         <Layout>{children}</Layout>
         <FloatingTopButton />
         <FloatingKakaoButton />
+        <Footer />
       </body>
     </html>
   );
