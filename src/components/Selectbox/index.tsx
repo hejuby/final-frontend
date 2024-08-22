@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import ms from "@/utils/modifierSelector";
 import IconDirectionDown from "@/assets/icons/icon-direction-down-20.svg";

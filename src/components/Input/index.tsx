@@ -1,3 +1,5 @@
+"use client";
+
 import ms from "@/utils/modifierSelector";
 import { InputHTMLAttributes, createElement, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";

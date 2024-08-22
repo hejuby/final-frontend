@@ -1,5 +1,4 @@
 const Home = () => {
-  return <main>메인입니다</main>;
+  return <>메인입니다</>;
 };
-
 export default Home;
