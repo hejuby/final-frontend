@@ -1,0 +1,21 @@
+.button {
+  @include flex;
+  padding: 4px;
+  background-color: inherit;
+  &:hover {
+    background-color: $gray-20;
+  }
+}
+
+.span {
+  @include inline-flex;
+  @include text-style(16, $gray-60);
+  width: 22px;
+  height: 22px;
+  line-height: 1.4;
+
+  &--active {
+    color: $blue-40;
+    font-weight: 600;
+  }
+}

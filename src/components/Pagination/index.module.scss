@@ -1,0 +1,10 @@
+.flex {
+  @include flex;
+  gap: 10px;
+}
+
+.svg {
+  & path {
+    stroke: $gray-60;
+  }
+}
