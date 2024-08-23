@@ -1,0 +1,15 @@
+.line {
+  width: 100%;
+
+  &--type-thin {
+    height: 1px;
+    background-color: $gray-20;
+  }
+
+  &--type-thick {
+    height: 8px;
+    border-top: 1px solid $gray-20;
+    border-bottom: 1px solid $gray-20;
+    background-color: $gray-10;
+  }
+}
