@@ -1,8 +1,24 @@
-export type BoardType = "community" | "follows";
+export type BoardId = "A" | "B" | "C";
+
+export type BoardType = "announcement" | "community" | "follows";
+
+export type BoardName = "공지사항" | "커뮤니티" | "맞팔/서이추";
+
+export type Board = {
+  boardId: BoardId;
+  boardType: BoardType;
+  boardName: BoardName;
+};
+
+export const BOARD_LIST: Board[] = [
+  { boardId: "A", boardType: "announcement", boardName: "공지사항" },
+  { boardId: "B", boardType: "community", boardName: "커뮤니티" },
+  { boardId: "C", boardType: "follows", boardName: "맞팔/서이추" },
+] as const;
 
 export type CategoryId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
-export type CategoryName =
+export type CategoryType =
   | "question"
   | "know-how"
   | "accompany"
@@ -12,7 +28,7 @@ export type CategoryName =
   | "tictoc"
   | "others";
 
-export type CategoryText =
+export type CategoryName =
   | "질문하기"
   | "노하우"
   | "동행"
@@ -24,26 +40,27 @@ export type CategoryText =
 
 export interface BoardCategory {
   categoryId: CategoryId;
+  categoryType: CategoryType;
   categoryName: CategoryName;
-  categoryText: CategoryText;
 }
 
-export const CommunityList: BoardCategory[] = [
-  { categoryId: 1, categoryName: "question", categoryText: "질문하기" },
-  { categoryId: 2, categoryName: "know-how", categoryText: "노하우" },
-  { categoryId: 3, categoryName: "accompany", categoryText: "동행" },
-  { categoryId: 4, categoryName: "others", categoryText: "기타" },
+export const COMMUNITY_LIST: BoardCategory[] = [
+  { categoryId: 1, categoryType: "question", categoryName: "질문하기" },
+  { categoryId: 2, categoryType: "know-how", categoryName: "노하우" },
+  { categoryId: 3, categoryType: "accompany", categoryName: "동행" },
+  { categoryId: 4, categoryType: "others", categoryName: "기타" },
 ] as const;
 
-export const FollowsList: BoardCategory[] = [
-  { categoryId: 5, categoryName: "blog", categoryText: "블로그" },
-  { categoryId: 6, categoryName: "instagram", categoryText: "인스타그램" },
-  { categoryId: 7, categoryName: "youtube", categoryText: "유튜브" },
-  { categoryId: 8, categoryName: "tictoc", categoryText: "틱톡" },
-  { categoryId: 9, categoryName: "others", categoryText: "기타" },
+export const FOLLOWS_LIST: BoardCategory[] = [
+  { categoryId: 5, categoryType: "blog", categoryName: "블로그" },
+  { categoryId: 6, categoryType: "instagram", categoryName: "인스타그램" },
+  { categoryId: 7, categoryType: "youtube", categoryName: "유튜브" },
+  { categoryId: 8, categoryType: "tictoc", categoryName: "틱톡" },
+  { categoryId: 9, categoryType: "others", categoryName: "기타" },
 ] as const;
 
-export const CategoryList: Record<BoardType, BoardCategory[]> = {
-  community: CommunityList,
-  follows: FollowsList,
+export const CATEGORY_LIST: Record<BoardType, BoardCategory[]> = {
+  announcement: [],
+  community: COMMUNITY_LIST,
+  follows: FOLLOWS_LIST,
 } as const;

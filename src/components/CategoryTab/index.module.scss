@@ -1,11 +1,6 @@
 .category-tab {
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
-
-  @include mobile {
-    margin-bottom: 10px;
-  }
 
   &__button {
     @include text-style(16, $black);
@@ -15,9 +10,10 @@
     border-radius: 20px;
     border: 1px solid $gray-20;
     background-color: $white;
-    transition: 0.4s;
+    transition: 0.2s;
 
-    &--active {
+    &--active,
+    &:hover {
       border: 1px solid $blue-10;
       color: $blue-40;
       background-color: $blue-10;

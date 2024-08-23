@@ -1,4 +1,9 @@
-import BoardItem, { CommunityItemProps } from "@/components/Board/BoardItem";
+import SideNav from "@/components/Board/SideNav";
+import Title from "@/components/Board/Title";
+import CategoryTab from "@/components/CategoryTab";
+import ListItem, { CommunityItemProps } from "@/components/Board/ListItem";
+import Pagination from "@/components/Pagination";
+import styles from "./page.module.scss";
 
 const BOARD_LIST: CommunityItemProps[] = [
   {
@@ -16,14 +21,30 @@ const BOARD_LIST: CommunityItemProps[] = [
   },
 ];
 
+const tabs = [
+  { id: "que", label: "질문하기" },
+  { id: "nohawoo", label: "노하우" },
+  { id: "3", label: "동행" },
+];
+
 const Community = () => {
   return (
-    <>
-      {BOARD_LIST.map((boardItem) => (
-        // eslint-disable-next-line
-        <BoardItem key={boardItem.id} {...boardItem} />
-      ))}
-    </>
+    <main className={styles.main}>
+      <SideNav />
+      <section className={styles.section}>
+        <Title />
+        <CategoryTab tabs={tabs} />
+        <ul>
+          {BOARD_LIST.map((boardItem) => (
+            <li key={boardItem.id}>
+              {/* eslint-disable-next-line */}
+              <ListItem {...boardItem} />
+            </li>
+          ))}
+        </ul>
+        <Pagination chunkSize={10} totalPages={20} />
+      </section>
+    </main>
   );
 };
 

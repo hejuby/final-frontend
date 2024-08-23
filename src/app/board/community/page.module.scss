@@ -1,0 +1,16 @@
+.main {
+  display: flex;
+  gap: 37px;
+  margin-top: 40px;
+  margin-bottom: 68px;
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.section {
+  max-width: 926px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

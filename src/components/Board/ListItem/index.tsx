@@ -3,7 +3,7 @@ import formatDate from "@/utils/formatDate";
 import ms from "@/utils/modifierSelector";
 import IconProfile from "@/assets/icons/icon-profile.svg";
 import IconComment from "@/assets/icons/icon-comment.svg";
-import { BoardType, CategoryList, CategoryId } from "@/@types/board";
+import { BoardType, CategoryId, CATEGORY_LIST } from "@/@types/board";
 import styles from "./index.module.scss";
 
 export interface CommunityItemProps {
@@ -21,7 +21,7 @@ export interface CommunityItemProps {
 
 const ac = ms(styles, "article__category");
 
-const BoardItem = ({
+const ListItem = ({
   boardType,
   id,
   userId,
@@ -33,15 +33,16 @@ const BoardItem = ({
   viewCount,
   commentCount,
 }: CommunityItemProps) => {
-  const category = CategoryList[boardType].find(
+  const category = CATEGORY_LIST[boardType].find(
     (categoryItem) => categoryItem.categoryId === categoryId,
   );
-  const { categoryName, categoryText } = category || CategoryList[boardType][0];
+  const { categoryType, categoryName } =
+    category || CATEGORY_LIST[boardType][0];
 
   return (
     <article className={styles.article}>
-      <p className={ac(`--board-${boardType}--category-${categoryName}`)}>
-        {categoryText}
+      <p className={ac(`--board-${boardType}--category-${categoryType}`)}>
+        {categoryName}
       </p>
       <Link href={`/board/community/${id}`} className={styles.article__link}>
         <h3 className={styles.article__title}>{title}</h3>
@@ -73,4 +74,4 @@ const BoardItem = ({
   );
 };
 
-export default BoardItem;
+export default ListItem;

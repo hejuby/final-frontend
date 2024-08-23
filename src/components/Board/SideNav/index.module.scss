@@ -1,0 +1,63 @@
+.nav {
+  min-width: 184px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin: 16px 8px;
+  @include mobile {
+    min-width: none;
+    flex-direction: row;
+    margin: 0;
+  }
+  &__title {
+    @include text-style(18, false, 600);
+    line-height: 1.2;
+    @include mobile {
+      display: none;
+    }
+  }
+  &__list {
+    @include text-style(16, false, 400);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    line-height: 1.4;
+    @include mobile {
+      width: 100%;
+      flex-direction: row;
+      gap: 0;
+    }
+  }
+  &__link {
+    &--active {
+      position: relative;
+      color: $blue-40;
+      &::after {
+        content: "";
+        position: absolute;
+        top: -4px;
+        left: 61px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: $blue-40;
+      }
+    }
+    &:hover {
+      color: $blue-40;
+    }
+    @include mobile {
+      @include flex();
+      flex-grow: 1;
+      padding: 13px 0;
+      &--active::after {
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 1px;
+        border: none;
+      }
+    }
+  }
+}
