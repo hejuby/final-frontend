@@ -10,10 +10,11 @@
     max-width: 1400px;
     margin: auto;
 
+    // 좌측 gnb 영역
     &--left {
       @include flex(start, center);
       @include text-style(18, $black, 600);
-      gap: 100px;
+      gap: 90px;
 
       a {
         transition: 0.4s;
@@ -24,73 +25,140 @@
       }
     }
 
+    // 우측 유저정보 영역
     &--right {
+      position: relative;
       .user-info {
         @include flex(start, center);
         @include text-style(16, $black, 500);
-        position: relative;
-        gap: 24px;
+        gap: 35px;
 
+        // 공통 속성
+        li {
+          transition: 0.4s;
+          &:hover {
+            opacity: 0.7;
+          }
+
+          span {
+            color: $blue-40;
+          }
+
+          button {
+            @include text-style(16, $black, 500);
+          }
+        }
+
+        // 로그인시
         &--login {
-          & li:first-child {
+          .profile {
+            @include flex(start, center);
+
             div {
-              @include flex(between, center);
-              cursor: pointer;
+              margin-right: 10px;
             }
 
             p {
-              @include text-style(16, $black, 500);
-              margin-left: 10px;
-              &:hover {
-                opacity: 0.7;
+              position: relative;
+              &::after {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                right: -15px;
+                width: 1px;
+                height: 16px;
+                background-color: $gray-20;
               }
             }
           }
-          & li a {
-            &:hover {
-              opacity: 0.7;
-            }
-          }
-          & li span {
-            color: $blue-40;
-          }
         }
 
+        // 모달
         &__modal {
-          display: block;
           position: absolute;
-          left: 0;
-          bottom: -100px;
-          border: 1px solid $gray-20;
+          display: block;
+          top: 45px;
           border-radius: 8px;
-          text-align: center;
           background-color: $white;
-          z-index: 10;
           box-shadow: $box-shadow;
+          z-index: 10;
+          overflow: hidden;
 
-          & li {
-            display: block;
-            width: 100%;
-            padding: 14px 20px;
+          li {
+            text-align: center;
             transition: 0.4s;
             cursor: pointer;
+
+            a {
+              display: inline-block;
+              padding: 14px 20px;
+            }
+
+            button {
+              padding: 14px 20px;
+            }
             &:hover {
               background-color: $blue-10;
               color: $black;
+              opacity: 1;
             }
-
-            & button {
-              @include text-style(16, $black, 500);
-            }
-          }
-        }
-
-        &--logout {
-          & li span {
-            color: $blue-40;
           }
         }
       }
+    }
+  }
+
+  @include desktop {
+    padding: 0px 40px;
+    &__content {
+      &--left {
+        @include text-style(16, $black, 600);
+        gap: 40px;
+      }
+      &--right {
+        .user-info {
+          @include flex(start, center);
+          @include text-style(14, $black, 500);
+          gap: 20px;
+
+          &--login {
+            .profile {
+              p {
+                font-size: 14px;
+              }
+            }
+          }
+
+          &__modal {
+            display: block;
+
+            li {
+              a {
+                padding: 13px 20px;
+              }
+              button {
+                padding: 13px 20px;
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include tablet {
+    height: 52px;
+    &__mobile-right {
+      @include flex(start, center);
+      gap: 20px;
+    }
+  }
+
+  @include mobile {
+    padding: 0px 20px;
+    &__mobile-right {
+      gap: 10px;
     }
   }
 }
