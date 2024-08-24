@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import SideNav from "@/components/Board/SideNav";
 import Title from "@/components/Board/Title";
 import CategoryTab from "@/components/CategoryTab";
@@ -42,7 +43,9 @@ const Community = () => {
             </li>
           ))}
         </ul>
-        <Pagination chunkSize={10} totalPages={20} />
+        <Suspense>
+          <Pagination chunkSize={10} totalPages={20} />
+        </Suspense>
       </section>
     </main>
   );
