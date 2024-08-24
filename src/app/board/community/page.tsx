@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 import SideNav from "@/components/Board/SideNav";
 import Title from "@/components/Board/Title";
+import Search from "@/components/Board/Search";
 import CategoryTab from "@/components/CategoryTab";
+import PostButton from "@/components/Board/PostButton";
 import ListItem, { CommunityItemProps } from "@/components/Board/ListItem";
 import Pagination from "@/components/Pagination";
 import styles from "./page.module.scss";
@@ -32,9 +34,15 @@ const Community = () => {
   return (
     <main className={styles.main}>
       <SideNav />
-      <section className={styles.section}>
+      <section className={styles.main__section}>
         <Title />
-        <CategoryTab tabs={tabs} />
+        <section className={styles["control-section"]}>
+          <nav className={styles["search-nav"]}>
+            <Search />
+            <CategoryTab tabs={tabs} />
+          </nav>
+          <PostButton />
+        </section>
         <ul>
           {BOARD_LIST.map((boardItem) => (
             <li key={boardItem.id}>

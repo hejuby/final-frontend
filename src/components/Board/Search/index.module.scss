@@ -1,0 +1,30 @@
+.form {
+  position: relative;
+  @include mobile {
+    width: 100%;
+  }
+  &__input {
+    min-width: 273px;
+    padding: 10px 24px;
+    line-height: 1.4;
+    border: 1px solid $gray-20;
+    border-radius: 20px;
+    &::placeholder {
+      color: $gray-50;
+    }
+    @include mobile {
+      width: 100%;
+    }
+  }
+  &__button {
+    position: absolute;
+    top: 0;
+    right: 24px;
+    height: 100%;
+    padding: 0 4px;
+    & > svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

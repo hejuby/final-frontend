@@ -2,4 +2,7 @@
   @include text-style(32, false, 600);
   margin-top: 16px;
   margin-bottom: 10px;
+  @include mobile {
+    display: none;
+  }
 }
