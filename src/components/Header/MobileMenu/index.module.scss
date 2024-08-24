@@ -1,0 +1,160 @@
+.mobile-menu {
+  @include flex(between, start);
+  @include text-style(16, $black, 600);
+  flex-direction: column;
+  position: absolute;
+  top: 51px;
+  width: 100%;
+  height: calc(100% - 52px);
+  background-color: $white;
+  z-index: 12;
+  &__top {
+    width: 100%;
+
+    // 로그인 스타일
+    .user-info--login {
+      padding: 20px;
+
+      .user-profile {
+        @include flex(between, center);
+
+        h3 {
+          @include flex(start, center);
+          font-size: 28px;
+        }
+
+        p {
+          @include text-style(16, $gray-60, 400);
+          margin-top: 5px;
+        }
+      }
+
+      .user-point {
+        margin-top: 25px;
+        border-radius: 8px;
+        background-color: $gray-10;
+
+        a {
+          display: inline-block;
+          width: 100%;
+          padding: 15px 0 15px 10px;
+          font-weight: 400;
+          span {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+    // 로그아웃 스타일
+    .user-info--logout {
+      padding: 20px;
+      h3 {
+        font-size: 24px;
+      }
+      div {
+        @include flex(between, center);
+        margin-top: 20px;
+
+        a {
+          width: 49%;
+          margin-bottom: 10px;
+          padding: 9.5px 0;
+          border-radius: 8px;
+          border: 1px solid;
+          text-align: center;
+          transition: 0.4s;
+        }
+        .login-btn {
+          border-color: $blue-40;
+          color: $blue-40;
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+        .join-btn {
+          border-color: $gray-30;
+          color: $gray-60;
+          &:hover {
+            border-color: $gray-60;
+            color: $gray-80;
+          }
+        }
+      }
+    }
+  }
+
+  // 메뉴 리스트
+  &__list {
+    padding: 10px 20px;
+
+    li {
+      border-bottom: 1px solid $gray-20;
+      a {
+        @include flex(start, center);
+        width: 100%;
+        padding: 20px 0;
+
+        &:hover {
+          opacity: 0.7;
+        }
+
+        span {
+          margin-left: 20px;
+        }
+      }
+    }
+
+    li button {
+      @include flex(between, center);
+      width: 100%;
+      padding: 20px 0;
+      &:hover {
+        opacity: 0.7;
+      }
+
+      div {
+        @include flex(start, center);
+
+        span {
+          @include text-style(16, $black, 600);
+          margin-left: 20px;
+        }
+      }
+    }
+
+    .submenu {
+      margin-top: -10px;
+      li {
+        padding-left: 50px;
+        border-bottom: none;
+        a {
+          padding: 13px 0;
+          border-bottom: none;
+
+          &:hover {
+            color: $blue-40;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  // bottom 로그아웃 버튼
+  &__bottom {
+    width: 100%;
+    background-color: $gray-10;
+    padding: 30px 0;
+    text-align: center;
+
+    button {
+      @include text-style(16, $gray-60, 600);
+      padding: 15px 40px;
+      border: 1px solid $gray-30;
+      border-radius: 68px;
+    }
+  }
+
+  @include mobile {
+  }
+}
