@@ -1,0 +1,35 @@
+.dialog {
+  @include pos-center(fixed);
+  @include column-flex(between, stretch);
+  gap: 26px;
+  max-width: 338px;
+  width: 100%;
+  padding: 34px 24px 22px;
+  border-radius: 12px;
+  background-color: $white;
+  word-break: keep-all;
+
+  &__message {
+    @include text-style(16);
+    text-align: center;
+  }
+
+  &__button-wrapper {
+    @include flex(between);
+    gap: 10px;
+
+    > button {
+      flex-grow: 1;
+    }
+  }
+
+  &-dim {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: $black;
+    opacity: 0.5;
+  }
+}

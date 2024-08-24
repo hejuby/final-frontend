@@ -5,6 +5,7 @@ import FloatingTopButton from "@/components/FloatingTopButton";
 import Layout from "@/components/Layout";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Dialog from "@/components/Dialog";
 
 export const metadata: Metadata = {
   title: "다인리뷰",
@@ -24,6 +25,8 @@ const RootLayout = ({
         <FloatingTopButton />
         <FloatingKakaoButton />
         <Footer />
+        <Dialog />
+        <div id="dialog" />
       </body>
     </html>
   );
