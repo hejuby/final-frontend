@@ -5,6 +5,7 @@ import FloatingTopButton from "@/components/FloatingTopButton";
 import Layout from "@/components/Layout";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import MobileGnb from "@/components/MobileGnb";
 import Dialog from "@/components/Dialog";
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ const RootLayout = ({
         <FloatingTopButton />
         <FloatingKakaoButton />
         <Footer />
+        <MobileGnb />
         <Dialog />
         <div id="dialog" />
       </body>

@@ -1,17 +1,31 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "@/assets/icons/logo.svg";
+import MobileLogo from "@/assets/icons/logo-mobile.svg";
 import Link from "next/link";
 import styles from "./index.module.scss";
 
 const Footer = () => {
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    const screenWidth = () => {
+      if (window.innerWidth <= 1024) {
+        setIsTablet(true);
+      } else {
+        setIsTablet(false);
+      }
+    };
+    screenWidth();
+
+    window.addEventListener("resize", screenWidth);
+    return () => window.removeEventListener("resize", screenWidth);
+  }, []);
   return (
     <footer className={styles.footer}>
       <div className={styles["footer-container"]}>
-        <h3>
-          <Logo />
-        </h3>
+        <h3>{!isTablet ? <Logo /> : <MobileLogo />}</h3>
         <div>
           <ul className={`${styles.footer__info}`}>
             <li>(주)다인기획</li>
