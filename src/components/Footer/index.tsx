@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Logo from "@/assets/icons/logo.svg";
 import MobileLogo from "@/assets/icons/logo-mobile.svg";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./index.module.scss";
 
 const Footer = () => {
@@ -22,6 +23,13 @@ const Footer = () => {
     window.addEventListener("resize", screenWidth);
     return () => window.removeEventListener("resize", screenWidth);
   }, []);
+
+  // account 모든 페이지 footer 안 보이게 처리: 민주
+  const pathname = usePathname();
+  if (pathname.startsWith("/account")) {
+    return null;
+  }
+
   return (
     <footer className={styles.footer}>
       <div className={styles["footer-container"]}>

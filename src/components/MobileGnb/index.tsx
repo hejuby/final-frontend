@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 import Home from "@/assets/icons/icon-home.svg";
 import Group from "@/assets/icons/icon-experience.svg";
 import Guide from "@/assets/icons/icon-guide.svg";
@@ -25,6 +25,12 @@ const gnbItems = [
 
 const MobileGnb = () => {
   const segment = useSelectedLayoutSegment();
+
+  // account 모든 페이지에서 mobile-footer 안 보이게 처리: 민주
+  const pathname = usePathname();
+  if (pathname.startsWith("/account")) {
+    return null;
+  }
 
   return (
     <ul className={styles["mobile-footer"]}>
