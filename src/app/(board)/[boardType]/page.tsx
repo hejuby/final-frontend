@@ -11,6 +11,9 @@ import Pagination from "@/components/Pagination";
 import { BoardType, BOARD_TYPE, CATEGORY_LIST } from "@/@types/board";
 import styles from "./page.module.scss";
 
+// 추후 API 연결 후 변경 예정
+export const dynamic = "force-dynamic";
+
 const BoardSchema = z.enum(BOARD_TYPE);
 
 const Board = async ({
