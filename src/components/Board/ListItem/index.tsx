@@ -1,9 +1,9 @@
 import Link from "next/link";
 import formatDate from "@/utils/formatDate";
-import ms from "@/utils/modifierSelector";
 import IconProfile from "@/assets/icons/icon-profile.svg";
 import IconComment from "@/assets/icons/icon-comment.svg";
 import { BoardType, CategoryId, CATEGORY_LIST } from "@/@types/board";
+import Category from "../Category";
 import styles from "./index.module.scss";
 
 export interface CommunityItemProps {
@@ -18,8 +18,6 @@ export interface CommunityItemProps {
   viewCount: number;
   commentCount: number;
 }
-
-const ac = ms(styles, "li__category");
 
 const ListItem = ({
   boardType,
@@ -41,9 +39,13 @@ const ListItem = ({
 
   return (
     <li className={styles.li}>
-      <p className={ac(`--board-${boardType}--category-${categoryType}`)}>
+      <Category
+        pageType="list"
+        boardType={boardType}
+        categoryType={categoryType}
+      >
         {categoryName}
-      </p>
+      </Category>
       <Link href={`/${boardType}/${id}`} className={styles.li__link}>
         <h3 className={styles.li__title}>{title}</h3>
         <p className={styles.li__preview}>{preview}</p>

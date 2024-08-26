@@ -1,5 +1,6 @@
+import { notFound } from "next/navigation";
 import SideNav from "@/components/Board/SideNav";
-import { BoardType } from "@/@types/board";
+import { BoardType, BoardSchema } from "@/@types/board";
 import styles from "./layout.module.scss";
 
 const BoardLayout = ({
@@ -9,10 +10,14 @@ const BoardLayout = ({
   params: { boardType: BoardType };
   children: React.ReactNode;
 }) => {
+  if (!BoardSchema.safeParse(params.boardType).success) {
+    notFound();
+  }
+
   return (
     <section className={styles.layout}>
       <SideNav boardType={params.boardType} />
-      {children}
+      <article className={styles.page}>{children}</article>
     </section>
   );
 };

@@ -1,0 +1,39 @@
+.wrapper {
+  position: relative;
+  @include mobile {
+    display: none;
+  }
+}
+
+.dropdown {
+  @include text-style(14, false, 400);
+  position: absolute;
+  right: 0;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  line-height: 1.4;
+  background-color: $white;
+  box-shadow: $board-box-shadow;
+  &__button {
+    @include flex();
+    gap: 4px;
+    padding: 8px;
+    border-radius: 4px;
+    &:hover {
+      background-color: $gray-10;
+    }
+    & > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.delete-text {
+  color: $red;
+}

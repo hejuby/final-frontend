@@ -1,0 +1,24 @@
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  &__text {
+    @include text-style(20, false, 600);
+    @include mobile {
+      line-height: 1.4;
+    }
+  }
+  &__info {
+    @include text-style(14, $gray-70, 400);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    line-height: 1.4;
+    @include mobile {
+      justify-content: space-between;
+      gap: 0;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+  }
+}

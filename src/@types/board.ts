@@ -1,8 +1,12 @@
+import { z } from "zod";
+
 export type BoardId = "A" | "B" | "C";
 
 export const BOARD_TYPE = ["announcement", "community", "follows"] as const;
 
 export type BoardType = (typeof BOARD_TYPE)[number];
+
+export const BoardSchema = z.enum(BOARD_TYPE);
 
 export type BoardName = "공지사항" | "커뮤니티" | "맞팔/서이추";
 

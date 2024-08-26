@@ -4,47 +4,6 @@
   @include mobile {
     margin: 16px 0;
   }
-  &__category {
-    @include text-style(14, false, 600);
-    margin-bottom: 16px;
-    line-height: 1.4;
-    @include mobile {
-      margin-bottom: 8px;
-      font-size: 12px;
-      line-height: 1.2;
-    }
-    &--board-community {
-      &--category-question {
-        color: $category-yellow;
-      }
-      &--category-know-how {
-        color: $category-purple;
-      }
-      &--category-accompany {
-        color: $category-mint;
-      }
-      &--category-others {
-        color: $category-pink;
-      }
-    }
-    &--board-follows {
-      &--category-blog {
-        color: $category-green;
-      }
-      &--category-instagram {
-        color: $category-purple;
-      }
-      &--category-youtube {
-        color: $category-pink;
-      }
-      &--category-tictoc {
-        color: $category-mint;
-      }
-      &--category-others {
-        color: $category-yellow;
-      }
-    }
-  }
   &__link {
     &:hover > h3 {
       text-decoration: underline;
