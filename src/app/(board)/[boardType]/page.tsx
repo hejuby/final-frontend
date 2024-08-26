@@ -1,4 +1,3 @@
-import { promises as fs } from "fs";
 import { notFound } from "next/navigation";
 import { z } from "zod";
 import Title from "@/components/Board/Title";
@@ -25,12 +24,10 @@ const Board = async ({
     notFound();
   }
 
-  const response = await fs.readFile(
-    process.cwd().toString().concat("/public/mockData.json"),
-    "utf8",
+  const response = await fetch(
+    `http://localhost:3000/api/board/${params.boardType}`,
   );
-  const data = JSON.parse(response) as Record<BoardType, CommunityItemProps[]>;
-  const items = data[params.boardType];
+  const data: CommunityItemProps[] = await response.json();
 
   return (
     <article className={styles.page}>
@@ -49,7 +46,7 @@ const Board = async ({
       </section>
       <Line />
       <ul>
-        {items
+        {data
           .slice(
             10 * (Number(searchParams.page || 1) - 1),
             10 * Number(searchParams.page || 1),
@@ -68,7 +65,7 @@ const Board = async ({
         pathname={`/${params.boardType}`}
         searchParams={searchParams}
         chunkSize={10}
-        totalPages={Math.ceil(items.length / 10)}
+        totalPages={Math.ceil(data.length / 10)}
       />
     </article>
   );
