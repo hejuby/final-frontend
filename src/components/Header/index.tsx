@@ -1,11 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import useHeaderStore from "@/store/useHeaderStore";
+import titles from "@/data/header_title.json";
 import Logo from "@/assets/icons/logo.svg";
 import MobileLogo from "@/assets/icons/logo-mobile.svg";
 import IconSearch from "@/assets/icons/icon-search.svg";
 import IconHamberger from "@/assets/icons/icon-hamburger.svg";
 import IconClose from "@/assets/icons/icon-close.svg";
+import IconLeft from "@/assets/icons/icon-direction-left.svg";
 import Link from "next/link";
 import styles from "./index.module.scss";
 import UserInfo from "./UserInfo";
@@ -15,9 +19,12 @@ const Header = () => {
   const [isTablet, setIsTablet] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
-  const handleMenu = () => {
-    setShowMenu(!showMenu);
-  };
+  const router = useRouter();
+  const pathname = usePathname();
+  const setTitle = useHeaderStore((state) => state.setTitle);
+  const title = useHeaderStore((state) => state.title);
+
+  const toggleMenu = () => setShowMenu((prev) => !prev);
 
   useEffect(() => {
     const screenWidth = () => {
@@ -32,6 +39,14 @@ const Header = () => {
     window.addEventListener("resize", screenWidth);
     return () => window.removeEventListener("resize", screenWidth);
   }, []);
+
+  useEffect(() => {
+    setTitle(titles[pathname as keyof typeof titles] || "다인 리뷰");
+  }, [pathname, setTitle]);
+
+  const isAccountPage = pathname.startsWith("/account");
+  const isHomePage = pathname === "/";
+
   return (
     <>
       <header className={styles.header}>
@@ -44,7 +59,7 @@ const Header = () => {
                 </Link>
                 <Link href="/">체험단</Link>
                 <Link href="/">이용안내</Link>
-                <Link href="/">게시판</Link>
+                <Link href="/announcement">게시판</Link>
               </div>
               <div className={styles["header__content--right"]}>
                 <UserInfo />
@@ -53,8 +68,22 @@ const Header = () => {
           ) : (
             <>
               <div className={styles["header__mobile-left"]}>
-                <MobileLogo />
+                {!isHomePage ? (
+                  <button onClick={() => router.back()}>
+                    <IconLeft />
+                  </button>
+                ) : (
+                  <Link href="/">
+                    <MobileLogo />
+                  </Link>
+                )}
               </div>
+              {isAccountPage ? (
+                <MobileLogo />
+              ) : isHomePage ? null : (
+                <p>{title}</p>
+              )}
+
               <ul className={styles["header__mobile-right"]}>
                 <li>
                   <Link href="/">
@@ -65,7 +94,7 @@ const Header = () => {
                   <button
                     type="button"
                     aria-label="hamberger-button"
-                    onClick={handleMenu}
+                    onClick={toggleMenu}
                   >
                     {showMenu ? <IconClose /> : <IconHamberger />}
                   </button>
@@ -75,7 +104,7 @@ const Header = () => {
           )}
         </div>
       </header>
-      {showMenu && <MobileMenu />}
+      {isTablet && showMenu && <MobileMenu setShowMenu={setShowMenu} />}
     </>
   );
 };

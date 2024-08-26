@@ -12,12 +12,25 @@ import IconUp from "@/assets/icons/icon-direction-up-gray.svg";
 import IconRight from "@/assets/icons/icon-direction-right.svg";
 import styles from "./index.module.scss";
 
-const MobileMenu = ({ isLogin = false }) => {
+interface MobileMenuProps {
+  isLogin?: boolean;
+  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const MobileMenu: React.FC<MobileMenuProps> = ({
+  isLogin = true,
+  setShowMenu,
+}) => {
   const [showSubmenu, setShowSubmenu] = useState(false);
 
   const handleSubmenu = () => {
     setShowSubmenu(!showSubmenu);
   };
+
+  const handleCloseMenu = () => {
+    setShowMenu(false);
+  };
+
   return (
     <div className={styles["mobile-menu"]}>
       {/* top */}
@@ -25,7 +38,11 @@ const MobileMenu = ({ isLogin = false }) => {
         {/* uerInfo */}
         {isLogin ? (
           <div className={styles["user-info--login"]}>
-            <Link className={styles["user-profile"]} href="/">
+            <Link
+              className={styles["user-profile"]}
+              href="/"
+              onClick={handleCloseMenu}
+            >
               <div>
                 <h3>
                   감자도리 <IconRight />
@@ -42,7 +59,7 @@ const MobileMenu = ({ isLogin = false }) => {
               </div>
             </Link>
             <div className={styles["user-point"]}>
-              <Link href="/">
+              <Link href="/" onClick={handleCloseMenu}>
                 보유포인트 <span>0P</span>
               </Link>
             </div>
@@ -53,10 +70,18 @@ const MobileMenu = ({ isLogin = false }) => {
               안녕하세요! <br /> 다인리뷰입니다 : )
             </h3>
             <div>
-              <Link href="/" className={styles["login-btn"]}>
+              <Link
+                href="/"
+                className={styles["login-btn"]}
+                onClick={handleCloseMenu}
+              >
                 로그인
               </Link>
-              <Link href="/" className={styles["join-btn"]}>
+              <Link
+                href="/"
+                className={styles["join-btn"]}
+                onClick={handleCloseMenu}
+              >
                 회원가입
               </Link>
             </div>
@@ -67,19 +92,19 @@ const MobileMenu = ({ isLogin = false }) => {
         {/* menu */}
         <ul className={styles["mobile-menu__list"]}>
           <li>
-            <Link href="/">
+            <Link href="/" onClick={handleCloseMenu}>
               <Home color="#4b65f7" />
               <span>홈</span>
             </Link>
           </li>
           <li>
-            <Link href="/">
+            <Link href="/" onClick={handleCloseMenu}>
               <Group color="#4b65f7" />
               <span>체험단</span>
             </Link>
           </li>
           <li>
-            <Link href="/">
+            <Link href="/" onClick={handleCloseMenu}>
               <Guide color="#4b65f7" />
               <span>이용안내</span>
             </Link>
@@ -95,13 +120,19 @@ const MobileMenu = ({ isLogin = false }) => {
             {showSubmenu && (
               <ul className={styles.submenu}>
                 <li>
-                  <Link href="/">공지사항</Link>
+                  <Link href="/board/announcement" onClick={handleCloseMenu}>
+                    공지사항
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/">커뮤니티</Link>
+                  <Link href="/board/community" onClick={handleCloseMenu}>
+                    커뮤니티
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/">맞팔/서이추</Link>
+                  <Link href="/board/follows" onClick={handleCloseMenu}>
+                    맞팔/서이추
+                  </Link>
                 </li>
               </ul>
             )}
