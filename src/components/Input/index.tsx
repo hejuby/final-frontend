@@ -27,13 +27,25 @@ const Input = ({
   register,
   ...props
 }: InputProps) => {
+  const [isPassworFocused, setIsPassworFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [passwordInputValue, setPasswordInputValue] = useState("");
+
+  const handlePasswordFocus = () => {
+    setIsPassworFocused(true);
+  };
+
+  const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordInputValue(event.target.value);
+  };
 
   const handleTogglePasswordIcon = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
   const inputType = type === "password" && isPasswordVisible ? "text" : type;
+  const showToggleButton =
+    type === "password" && isPassworFocused && passwordInputValue !== "";
 
   return (
     <div className={cn("", error ? "--error" : "", full && "--full")}>
@@ -43,19 +55,21 @@ const Input = ({
           className: styles.input,
           id,
           type: inputType,
+          onFocus: handlePasswordFocus,
+          onInput: handlePasswordInput,
           ...register,
           ...props,
         })}
-        {type === "password" && (
+        {showToggleButton && (
           <button
             type="button"
-            className={styles["btn-toggle-pw"]}
+            className={styles["button-toggle-pw"]}
             onClick={handleTogglePasswordIcon}
           >
             {isPasswordVisible ? (
-              <IconPasswordHidden />
-            ) : (
               <IconPasswordVisible />
+            ) : (
+              <IconPasswordHidden />
             )}
           </button>
         )}

@@ -26,7 +26,7 @@
     @include column-flex(center, start);
     max-width: 337px;
     width: 100%;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
     line-height: 1.4;
 
     &:last-child {
@@ -52,7 +52,7 @@
     position: relative;
     width: 100%;
 
-    .btn-toggle-pw {
+    .button-toggle-pw {
       @include pos-center-y;
       right: 15px;
       z-index: 1;

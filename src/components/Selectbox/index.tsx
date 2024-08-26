@@ -21,7 +21,7 @@ interface SelectProps {
   onChange: (selection: Option) => void;
 }
 
-const cn = ms(styles, "select-wrapper");
+const cn = ms(styles, "select-container");
 
 const Selectbox = ({
   label,

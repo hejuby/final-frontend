@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import ms from "@/utils/modifierSelector";
 import Button from "@/components/Button";
 import styles from "./index.module.scss";
 
@@ -9,6 +10,8 @@ interface DialogContainerProps {
   onCancel: () => void;
 }
 
+const cn = ms(styles, "dialog");
+
 const DialogContainer: React.FC<DialogContainerProps> = ({
   message,
   type,
@@ -16,14 +19,10 @@ const DialogContainer: React.FC<DialogContainerProps> = ({
   onCancel,
 }) => (
   <>
-    <div
-      className={styles["dialog-dim"]}
-      onClick={onCancel}
-      aria-hidden="true"
-    />
-    <section className={styles.dialog}>
+    <div className={cn("-dim")} onClick={onCancel} aria-hidden="true" />
+    <div className={cn("-container")}>
       {message && <p className={styles.dialog__message}>{message}</p>}
-      <div className={styles["dialog__button-wrapper"]}>
+      <div className={cn("__button-container")}>
         {type !== "alert" && (
           <Button type="button" onClick={onCancel} color="outline--gray">
             취소
@@ -33,7 +32,7 @@ const DialogContainer: React.FC<DialogContainerProps> = ({
           확인
         </Button>
       </div>
-    </section>
+    </div>
   </>
 );
 
