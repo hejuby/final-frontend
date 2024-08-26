@@ -19,7 +19,7 @@ export interface CommunityItemProps {
   commentCount: number;
 }
 
-const ac = ms(styles, "article__category");
+const ac = ms(styles, "li__category");
 
 const ListItem = ({
   boardType,
@@ -40,13 +40,13 @@ const ListItem = ({
     category || CATEGORY_LIST[boardType][0];
 
   return (
-    <article className={styles.article}>
+    <li className={styles.li}>
       <p className={ac(`--board-${boardType}--category-${categoryType}`)}>
         {categoryName}
       </p>
-      <Link href={`/board/community/${id}`} className={styles.article__link}>
-        <h3 className={styles.article__title}>{title}</h3>
-        <p className={styles.article__preview}>{preview}</p>
+      <Link href={`/${boardType}/${id}`} className={styles.li__link}>
+        <h3 className={styles.li__title}>{title}</h3>
+        <p className={styles.li__preview}>{preview}</p>
       </Link>
       <section className={styles.section}>
         <ul className={styles.section__list}>
@@ -70,7 +70,7 @@ const ListItem = ({
           </li>
         </ul>
       </section>
-    </article>
+    </li>
   );
 };
 

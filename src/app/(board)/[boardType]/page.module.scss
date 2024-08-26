@@ -1,27 +1,20 @@
-.main {
+.page {
+  width: 926px;
   display: flex;
-  gap: 37px;
-  margin-top: 40px;
-  margin-bottom: 68px;
+  flex-direction: column;
+  gap: 20px;
   @include mobile {
-    flex-direction: column;
-    gap: 16px;
-  }
-  &__section {
-    max-width: 926px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    width: 100%;
   }
 }
 
-.control-section {
+.control {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.search-nav {
+.search {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;

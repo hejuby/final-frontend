@@ -1,7 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
 import createPaginationArray from "@/utils/createPaginationArray";
 import IconDirectionLeft from "@/assets/icons/icon-direction-left-white.svg";
 import IconDirectionRight from "@/assets/icons/icon-direction-right-white.svg";
@@ -9,14 +9,21 @@ import PaginationButton from "./PaginationButton";
 import styles from "./index.module.scss";
 
 interface PaginationProps {
+  pathname: string;
+  searchParams: Record<string, string>;
   chunkSize: number;
   totalPages: number;
 }
 
-const Pagination = ({ chunkSize, totalPages }: PaginationProps) => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page")) || 1;
+const Pagination = ({
+  pathname,
+  searchParams,
+  chunkSize,
+  totalPages,
+}: PaginationProps) => {
+  const currentPage = Number(searchParams.page) || 1;
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [currentChunk, setCurrentChunk] = useState<number>(chunkSize);
 
   const filterPageNumber = (pageNumber: number | string) => {
     if (Number(pageNumber) < 1) {
@@ -34,11 +41,28 @@ const Pagination = ({ chunkSize, totalPages }: PaginationProps) => {
     return `${pathname}?${params.toString()}`;
   };
 
+  const handleResize = () => {
+    if (window.innerWidth <= 1024) {
+      setIsMobile(true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      setCurrentChunk((prev) => Math.ceil(prev / 2));
+    }
+  }, [isMobile]);
+
   return (
     <nav className={styles.flex}>
       <Link
         href={createPageURL(
-          currentPage - chunkSize - (currentPage % chunkSize) + 1,
+          currentPage - chunkSize - (currentPage % currentChunk) + 1,
         )}
         aria-label="이전 페이지로 가기"
       >
@@ -51,7 +75,7 @@ const Pagination = ({ chunkSize, totalPages }: PaginationProps) => {
         </PaginationButton>
       </Link>
       <ul className={styles.flex}>
-        {createPaginationArray(chunkSize, totalPages, currentPage).map(
+        {createPaginationArray(currentChunk, totalPages, currentPage).map(
           (index) => (
             <li key={index}>
               <Link
@@ -71,7 +95,7 @@ const Pagination = ({ chunkSize, totalPages }: PaginationProps) => {
       </ul>
       <Link
         href={createPageURL(
-          currentPage + chunkSize - (currentPage % chunkSize) + 1,
+          currentPage + currentChunk - (currentPage % currentChunk) + 1,
         )}
         aria-label="다음 페이지로 가기"
       >

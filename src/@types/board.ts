@@ -1,6 +1,8 @@
 export type BoardId = "A" | "B" | "C";
 
-export type BoardType = "announcement" | "community" | "follows";
+export const BOARD_TYPE = ["announcement", "community", "follows"] as const;
+
+export type BoardType = (typeof BOARD_TYPE)[number];
 
 export type BoardName = "공지사항" | "커뮤니티" | "맞팔/서이추";
 

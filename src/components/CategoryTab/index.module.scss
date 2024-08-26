@@ -1,7 +1,10 @@
 .category-tab {
   display: flex;
   flex-direction: row;
-
+  @include mobile {
+    width: max-content;
+    overflow-x: scroll;
+  }
   &__button {
     @include text-style(16, $black);
     height: 38px;

@@ -1,19 +1,14 @@
-"use client";
-
-import { usePathname } from "next/navigation";
-import { BOARD_LIST } from "@/@types/board";
+import { BoardType, BOARD_LIST } from "@/@types/board";
 import styles from "./index.module.scss";
 
-const Title = () => {
-  const pathname = usePathname();
+interface TitleProps {
+  boardType: BoardType;
+}
 
+const Title = ({ boardType }: TitleProps) => {
   return (
     <h2 className={styles.h2}>
-      {
-        BOARD_LIST.find(
-          (board) => board.boardType === pathname.replace("/board/", ""),
-        )?.boardName
-      }
+      {BOARD_LIST.find((board) => board.boardType === boardType)?.boardName}
     </h2>
   );
 };
