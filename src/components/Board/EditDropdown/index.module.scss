@@ -3,11 +3,15 @@
   @include mobile {
     display: none;
   }
+  & > button {
+    @include flex();
+  }
 }
 
 .dropdown {
   @include text-style(14, false, 400);
   position: absolute;
+  top: calc(100% + 8px);
   right: 0;
   width: max-content;
   display: flex;

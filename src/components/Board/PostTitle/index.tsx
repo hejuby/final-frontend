@@ -38,7 +38,7 @@ const PostTitle = ({ post }: { post: CommunityItemProps }) => {
         >
           {category.categoryName}
         </Category>
-        <EditDropdown boardType={boardType} id={id} />
+        <EditDropdown type="post" boardType={boardType} id={id} />
       </aside>
       <h3 className={styles.title__text}>{title}</h3>
       <ul className={styles.title__info}>

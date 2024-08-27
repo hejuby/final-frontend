@@ -1,0 +1,68 @@
+.comment {
+  padding: 20px;
+  display: flex;
+  gap: 12px;
+  @include mobile {
+    padding: 14px 0;
+    gap: 8px;
+  }
+  &__profile {
+    & > svg {
+      width: 36px;
+      height: 36px;
+      @include mobile {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+  &__top {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include mobile {
+      margin-bottom: 2px;
+    }
+  }
+  &__text {
+    @include text-style(16, false, 400);
+    margin-bottom: 14px;
+    line-height: 1.4;
+    @include mobile {
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+  }
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  @include mobile {
+    gap: 8px;
+  }
+  &__username {
+    @include text-style(16, false, 600);
+    line-height: 1.4;
+    @include mobile {
+      font-size: 14px;
+    }
+  }
+  &__date {
+    @include text-style(14, $gray-60, 400);
+    line-height: 1.4;
+    @include mobile {
+      font-size: 12px;
+    }
+  }
+}
+
+.reply-button {
+  @include text-style(14, $gray-70, 400);
+  line-height: 1.4;
+  &:hover {
+    color: $gray-80;
+  }
+}

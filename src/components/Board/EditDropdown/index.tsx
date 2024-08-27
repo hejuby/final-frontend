@@ -9,11 +9,16 @@ import IconDelete from "@/assets/icons/icon-delete.svg";
 import styles from "./index.module.scss";
 
 interface EditDropdownProps {
-  boardType: BoardType;
+  type: "post" | "comment";
+  boardType?: BoardType;
   id: number;
 }
 
-const EditDropdown = ({ boardType, id }: EditDropdownProps) => {
+const EditDropdown = ({ type, boardType, id }: EditDropdownProps) => {
+  if (type === "post" && !boardType) {
+    return null;
+  }
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -30,13 +35,20 @@ const EditDropdown = ({ boardType, id }: EditDropdownProps) => {
       {isOpen && (
         <ul className={styles.dropdown}>
           <li>
-            <Link
-              href={`/${boardType}/${id}/edit`}
-              className={styles.dropdown__button}
-            >
-              <p>수정하기</p>
-              <IconEdit viewBox="0 0 24 24" />
-            </Link>
+            {type === "post" ? (
+              <Link
+                href={`/${boardType}/${id}/edit`}
+                className={styles.dropdown__button}
+              >
+                <p>수정하기</p>
+                <IconEdit viewBox="0 0 24 24" />
+              </Link>
+            ) : (
+              <button type="button" className={styles.dropdown__button}>
+                <p>수정하기</p>
+                <IconEdit viewBox="0 0 24 24" />
+              </button>
+            )}
           </li>
           <li>
             <button type="button" className={styles.dropdown__button}>
