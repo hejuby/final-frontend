@@ -11,9 +11,10 @@ export interface CommunityItemProps {
   id: number;
   userId: number;
   userNickname: string;
-  categoryId: CategoryId;
+  categoryId: CategoryId | null;
   title: string;
   preview: string;
+  content: string;
   date: string;
   viewCount: number;
   commentCount: number;

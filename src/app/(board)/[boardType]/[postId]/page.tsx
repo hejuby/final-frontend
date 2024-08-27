@@ -4,16 +4,15 @@ import Title from "@/components/Board/Title";
 import Line from "@/components/Line";
 import AnnouncementTitle from "@/components/Board/AnnouncementTitle";
 import PostTitle from "@/components/Board/PostTitle";
+import PostContent from "@/components/Board/PostContent";
+import mockData from "@/assets/mockData.json";
 
 const Post = async ({
   params,
 }: {
   params: { boardType: BoardType; postId: string };
 }) => {
-  const response = await fetch(
-    `http://127.0.0.1:3000/api/board/${params.boardType}`,
-  );
-  const data: CommunityItemProps[] = await response.json();
+  const data = mockData[params.boardType] as CommunityItemProps[];
   const post = data.find((item) => item.id === Number(params.postId));
 
   if (!post) {
@@ -29,6 +28,7 @@ const Post = async ({
       ) : (
         <PostTitle post={post} />
       )}
+      <PostContent content={post.content} />
     </>
   );
 };

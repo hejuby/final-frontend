@@ -7,6 +7,7 @@ import { CommunityItemProps } from "@/components/Board/ListItem";
 import List from "@/components/Board/List";
 import Pagination from "@/components/Pagination";
 import { BoardType, CATEGORY_LIST } from "@/@types/board";
+import mockData from "@/assets/mockData.json";
 import styles from "./page.module.scss";
 
 const Board = async ({
@@ -16,10 +17,7 @@ const Board = async ({
   params: { boardType: BoardType };
   searchParams: Record<string, string>;
 }) => {
-  const response = await fetch(
-    `http://127.0.0.1:3000/api/board/${params.boardType}`,
-  );
-  const data: CommunityItemProps[] = await response.json();
+  const data = mockData[params.boardType] as CommunityItemProps[];
 
   return (
     <>
