@@ -1,0 +1,176 @@
+.container {
+  @include text-style(14, $black);
+  position: relative;
+
+  .header {
+    margin-bottom: 40px;
+    text-align: center;
+
+    > h2 {
+      @include text-style(20, $black, 600);
+    }
+
+    > p {
+      margin-top: 15px;
+    }
+  }
+
+  .form {
+    @include flex;
+    gap: 60px;
+
+    @include mobile {
+      gap: 35px;
+    }
+  }
+
+  .radio-container {
+    @include column-flex;
+
+    label {
+      @include text-style(16);
+    }
+
+    svg {
+      margin-bottom: 25px;
+    }
+  }
+
+  .button-wrapper {
+    margin-top: 66px;
+
+    button {
+      padding: 0 10px;
+    }
+  }
+
+  .social {
+    &-container {
+      margin-top: 37px;
+      text-align: center;
+
+      > h3 {
+        @include text-style(12, $gray-90, 400);
+        position: relative;
+        padding: 9px;
+
+        &::before {
+          @include pos-center-y;
+          left: 0;
+          top: 18px;
+          max-width: 106px;
+          width: 100%;
+          height: 1px;
+          background-color: $gray-40;
+          content: "";
+
+          @include tablet {
+            max-width: 38%;
+          }
+
+          @include mobile {
+            max-width: 30%;
+          }
+        }
+
+        &::after {
+          @include pos-center-y;
+          right: 0;
+          top: 18px;
+          max-width: 106px;
+          width: 100%;
+          height: 1px;
+          background-color: $gray-40;
+          content: "";
+
+          @include tablet {
+            max-width: 38%;
+          }
+
+          @include mobile {
+            max-width: 30%;
+          }
+        }
+      }
+    }
+
+    &__list {
+      margin-top: 32px;
+    }
+
+    &__item {
+      @include flex;
+      @include text-style(16, $black, 600);
+      width: 100%;
+      height: 46px;
+      margin-top: 10px;
+      gap: 15px;
+      border-radius: 8px;
+      background-color: $white;
+
+      &-kakao {
+        background-color: $social-kakao;
+
+        &:hover {
+          background-color: $social-kakao-hover;
+        }
+      }
+
+      &-naver {
+        background-color: $social-naver;
+        color: $white;
+
+        &:hover {
+          background-color: $social-naver-hover;
+        }
+      }
+
+      &-google {
+        color: $gray-80;
+        border: 1px solid $gray-30;
+
+        &:hover {
+          background-color: $gray-10;
+        }
+      }
+    }
+
+    @include tablet {
+      &__list {
+        @include flex;
+        gap: 22px;
+        margin-top: 38px;
+      }
+
+      &__item {
+        width: 46px;
+        height: 46px;
+        gap: 0;
+        border-radius: 50%;
+        font-size: 0;
+        text-indent: -9999px;
+      }
+    }
+  }
+
+  .signiup-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 110px);
+    color: $gray-70;
+    text-align: center;
+
+    > a {
+      display: inline-block;
+      margin-left: 10px;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    @include tablet {
+      position: relative;
+      margin-top: 55px;
+    }
+  }
+}

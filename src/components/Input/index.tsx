@@ -11,6 +11,7 @@ import Label from "../Label";
 type InputProps = {
   id: string;
   label?: string;
+  infoMessage?: string;
   error?: string;
   full?: boolean;
   register?: UseFormRegisterReturn;
@@ -21,6 +22,7 @@ const cn = ms(styles, "input-field");
 const Input = ({
   id,
   label,
+  infoMessage,
   error,
   type = "text",
   full = false,
@@ -75,6 +77,7 @@ const Input = ({
         )}
       </div>
       {error && <p className={styles["error-message"]}>{error}</p>}
+      {infoMessage && <p className={styles["info-message"]}>{infoMessage}</p>}
     </div>
   );
 };

@@ -1,0 +1,37 @@
+.account {
+  &-container {
+    padding-top: 50px;
+    padding-bottom: 168px;
+    width: 100%;
+    background: url("/images/bg-account.jpg") no-repeat center bottom / contain;
+    background-attachment: fixed;
+  }
+
+  &__form-container {
+    @include column-flex(between, stretch);
+    max-width: 407px;
+    width: 100%;
+    min-height: 765px;
+    margin-left: auto;
+    padding: 120px 35px 45px;
+    border-radius: 20px;
+    background-color: $white;
+    box-shadow: $box-shadow;
+  }
+
+  @include tablet {
+    background-image: none;
+
+    &-container {
+      padding-bottom: 50px;
+    }
+
+    &__form-container {
+      max-width: 100%;
+      min-height: auto;
+      padding: 0 6px;
+      margin: 0 auto;
+      box-shadow: none;
+    }
+  }
+}

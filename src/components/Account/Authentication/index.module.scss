@@ -1,0 +1,32 @@
+.container {
+  margin: 20px -35px;
+  padding: 30px 35px;
+  background-color: $gray-10;
+
+  .contents {
+    > h2 {
+      @include text-style(16, $gray-80, 600);
+    }
+
+    > p {
+      @include text-style(12, $gray-60);
+      padding: 8px 0;
+      word-break: keep-all;
+    }
+  }
+
+  .button-wrapper {
+    margin-top: 20px;
+
+    button {
+      position: relative;
+      margin-top: 10px;
+      padding: 0 12px 0 16px;
+      font-weight: 500;
+
+      > svg {
+        margin-left: auto;
+      }
+    }
+  }
+}

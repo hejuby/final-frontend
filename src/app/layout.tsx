@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import MobileGnb from "@/components/MobileGnb";
 import Dialog from "@/components/Dialog";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "다인리뷰",
@@ -20,6 +21,7 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko">
+      <Script src="https://cdn.iamport.kr/v1/iamport.js" />
       <body>
         <Header />
         <Layout>{children}</Layout>

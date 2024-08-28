@@ -24,9 +24,9 @@ const Footer = () => {
     return () => window.removeEventListener("resize", screenWidth);
   }, []);
 
-  // account 모든 페이지 footer 안 보이게 처리: 민주
+  // 로그인&회원가입 footer 안 보이게 처리: 민주
   const pathname = usePathname();
-  if (pathname.startsWith("/account")) {
+  if (pathname.startsWith("/auth")) {
     return null;
   }
 

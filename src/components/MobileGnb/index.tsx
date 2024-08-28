@@ -26,9 +26,9 @@ const gnbItems = [
 const MobileGnb = () => {
   const segment = useSelectedLayoutSegment();
 
-  // account 모든 페이지에서 mobile-footer 안 보이게 처리: 민주
+  // 로그인&회원가입 mobile-footer 안 보이게 처리: 민주
   const pathname = usePathname();
-  if (pathname.startsWith("/account")) {
+  if (pathname.startsWith("/auth")) {
     return null;
   }
 

@@ -67,3 +67,8 @@
   margin-top: 2px;
   margin-left: auto;
 }
+
+.info-message {
+  @include text-style(10, $gray-80);
+  margin-top: 6px;
+}
