@@ -1,0 +1,53 @@
+.container {
+  @include text-style(14, $gray-80);
+  margin-bottom: 20px;
+
+  .title {
+    margin-bottom: 6px;
+  }
+
+  .radio {
+    &-wrapper {
+      @include flex;
+      gap: 6px;
+    }
+
+    &-button {
+      @include flex;
+      flex-grow: 1;
+      height: 50px;
+      padding: 5px 17px;
+      border: 2px solid $gray-20;
+      border-radius: 8px;
+      background-color: $white;
+    }
+
+    &-input {
+      display: none;
+    }
+  }
+}
+
+.radio-button {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  text-align: center;
+  flex: 1;
+
+  &.active {
+    @include text-style(14, $blue-40, 500);
+    border: 1px solid $blue-40;
+    background-color: $gray-10;
+  }
+}
+
+.radioButton:hover {
+  border-color: #bbb;
+}
+
+.radioInput {
+  display: none;
+}

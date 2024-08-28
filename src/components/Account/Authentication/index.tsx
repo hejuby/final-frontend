@@ -78,7 +78,7 @@ const Authentication = () => {
         </p>
         <IconAuthList />
       </div>
-      <div className={styles["button-wrapper"]}>
+      <div className={styles["button-container"]}>
         <Button size="medium" color="outline" full onClick={Certification}>
           간편인증 하러가기
           <IconDirectionRight />

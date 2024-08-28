@@ -3,7 +3,7 @@ import Button from "@/components/Button";
 import Link from "next/link";
 import styles from "./index.module.scss";
 
-const IdFindSuccess = () => {
+const IdFindComplete = () => {
   return (
     <section className={styles.container}>
       <header className={styles.header}>
@@ -30,4 +30,4 @@ const IdFindSuccess = () => {
   );
 };
 
-export default IdFindSuccess;
+export default IdFindComplete;

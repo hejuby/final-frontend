@@ -1,0 +1,13 @@
+.sns {
+  position: relative;
+
+  svg {
+    @include pos-center-y;
+    left: 17px;
+    z-index: 1;
+  }
+
+  input {
+    padding-left: 48px;
+  }
+}

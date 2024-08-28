@@ -1,0 +1,40 @@
+.container {
+  @include text-style(14, $black);
+
+  .header {
+    text-align: center;
+
+    > h2 {
+      @include text-style(24, $black, 600);
+    }
+
+    > p {
+      @include text-style(18, $gray-90, 500);
+      margin: 20px 0 96px;
+      line-height: 29px;
+    }
+  }
+
+  .button-container {
+    margin-top: 113px;
+
+    button {
+      padding: 0 10px;
+    }
+
+    @include tablet {
+      margin-top: 160px;
+    }
+  }
+
+  .login-text {
+    margin-top: 24px;
+    text-align: center;
+    > a {
+      display: inline-block;
+      margin-left: 10px;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+  }
+}

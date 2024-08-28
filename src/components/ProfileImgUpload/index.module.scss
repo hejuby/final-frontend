@@ -1,0 +1,24 @@
+.profile-img {
+  &-container {
+    @include column-flex;
+
+    button {
+      position: relative;
+      overflow: hidden;
+      width: 95px;
+      height: 95px;
+      border-radius: 50px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  label {
+    @include text-style(14, $gray-80);
+    margin-top: 10px;
+  }
+}

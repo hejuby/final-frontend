@@ -1,0 +1,23 @@
+.terms {
+  &-agreement {
+    margin-top: 38px;
+
+    > label {
+      color: $gray-80;
+    }
+  }
+
+  &__list {
+    @include column-flex(center, start);
+    gap: 5px;
+    padding: 15px 17px;
+    margin-top: 7px;
+    border: 2px solid $gray-20;
+    border-radius: 8px;
+  }
+
+  &__item {
+    @include flex;
+    color: $black;
+  }
+}

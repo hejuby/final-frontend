@@ -15,7 +15,7 @@ const IdFind = () => {
       </form>
       <Authentication />
       <div className={styles["button-container"]}>
-        <Link href="/auth/id-find-success">
+        <Link href="/auth/id-find-complete">
           <Button size="medium" full>
             확인
           </Button>

@@ -1,0 +1,38 @@
+.container {
+  @include column-flex(between, stretch);
+  @include text-style(14, $black);
+
+  .header {
+    margin-bottom: 40px;
+    text-align: center;
+
+    > h2 {
+      @include text-style(20, $black, 600);
+    }
+
+    > p {
+      margin-top: 15px;
+    }
+  }
+
+  .sns-container {
+    margin-top: 38px;
+
+    .title {
+      @include text-style(14, $gray-80);
+      margin-bottom: 6px;
+
+      .text-underline {
+        font-weight: 500;
+      }
+    }
+  }
+
+  .button-container {
+    margin-top: 20px;
+
+    button {
+      padding: 0 10px;
+    }
+  }
+}

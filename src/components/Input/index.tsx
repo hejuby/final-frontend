@@ -8,12 +8,13 @@ import IconPasswordVisible from "@/assets/icons/icon-password-visible.svg";
 import styles from "./index.module.scss";
 import Label from "../Label";
 
-type InputProps = {
+export type InputProps = {
   id: string;
   label?: string;
   infoMessage?: string;
   error?: string;
   full?: boolean;
+  gap?: number;
   register?: UseFormRegisterReturn;
 } & InputHTMLAttributes<HTMLInputElement>;
 
@@ -26,6 +27,7 @@ const Input = ({
   error,
   type = "text",
   full = false,
+  gap = 20,
   register,
   ...props
 }: InputProps) => {
@@ -50,7 +52,12 @@ const Input = ({
     type === "password" && isPassworFocused && passwordInputValue !== "";
 
   return (
-    <div className={cn("", error ? "--error" : "", full && "--full")}>
+    <div
+      className={cn("", error ? "--error" : "", full && "--full")}
+      style={{
+        marginBottom: `${gap}px`,
+      }}
+    >
       {label && <Label htmlFor={id}>{label}</Label>}
       <div className={styles["input-wrapper"]}>
         {createElement("input", {

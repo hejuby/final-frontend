@@ -26,12 +26,7 @@
     @include column-flex(center, start);
     max-width: 337px;
     width: 100%;
-    margin-bottom: 20px;
     line-height: 1.4;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
 
     &--full {
       max-width: 100%;

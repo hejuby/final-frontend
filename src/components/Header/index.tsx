@@ -44,7 +44,7 @@ const Header = () => {
     setTitle(titles[pathname as keyof typeof titles] || "다인 리뷰");
   }, [pathname, setTitle]);
 
-  const isAccountPage = pathname.startsWith("/account");
+  const isAuthPage = pathname.startsWith("/auth");
   const isHomePage = pathname === "/";
 
   return (
@@ -78,11 +78,7 @@ const Header = () => {
                   </Link>
                 )}
               </div>
-              {isAccountPage ? (
-                <MobileLogo />
-              ) : isHomePage ? null : (
-                <p>{title}</p>
-              )}
+              {isAuthPage ? <MobileLogo /> : isHomePage ? null : <p>{title}</p>}
 
               <ul className={styles["header__mobile-right"]}>
                 <li>

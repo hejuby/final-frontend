@@ -12,3 +12,11 @@
     position: absolute;
   }
 }
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.text-require {
+  color: $alert-blue;
+}

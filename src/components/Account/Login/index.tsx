@@ -15,7 +15,7 @@ const Login = () => {
       <form className={styles.form}>
         <Input id="email" type="email" label="이메일" full />
         <Input id="password" type="password" label="비밀번호" full />
-        <div className={styles["button-wrapper"]}>
+        <div className={styles["button-container"]}>
           <Button size="medium" full>
             로그인
           </Button>
