@@ -2,6 +2,7 @@
 
 import ms from "@/utils/modifierSelector";
 import React, { useState } from "react";
+import Link from "next/link";
 import Checkbox from "../Checkbox";
 import styles from "./index.module.scss";
 
@@ -13,7 +14,7 @@ interface TermsChecked {
 
 const cn = ms(styles, "terms");
 
-const TermsAgreement = () => {
+const TermsCheck = () => {
   const [allChecked, setAllChecked] = useState<boolean>(false);
   const [termsChecked, setTermsChecked] = useState<TermsChecked>({
     terms: false,
@@ -42,7 +43,7 @@ const TermsAgreement = () => {
   };
 
   return (
-    <div className={cn("-agreement")}>
+    <div className={cn("-check")}>
       <Checkbox
         id="all-terms"
         type="checkbox"
@@ -62,7 +63,7 @@ const TermsAgreement = () => {
             onChange={(e) => handleIndividualCheck("terms", e.target.checked)}
             gap={6}
           >
-            이용약관 동의{" "}
+            <Link href="/terms?tab=terms">이용약관 동의</Link>
             <span className={styles["text-require"]}>&#40;필수&#41;</span>
           </Checkbox>
         </li>
@@ -74,7 +75,7 @@ const TermsAgreement = () => {
             onChange={(e) => handleIndividualCheck("privacy", e.target.checked)}
             gap={6}
           >
-            개인정보 수집 및 이용 동의{" "}
+            <Link href="/terms?tab=privacy">개인정보 수집 및 이용 동의</Link>
             <span className={styles["text-require"]}>&#40;필수&#41;</span>
           </Checkbox>
         </li>
@@ -96,4 +97,4 @@ const TermsAgreement = () => {
   );
 };
 
-export default TermsAgreement;
+export default TermsCheck;

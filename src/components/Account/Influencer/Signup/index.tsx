@@ -5,7 +5,7 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Selectbox, { Option } from "@/components/Selectbox";
 import SNSInput from "@/components/SNSInput";
-import TermsAgreement from "@/components/TermsAgreement";
+import TermsCheck from "@/components/TermsCheck";
 import styles from "./index.module.scss";
 import Authentication from "../../Authentication";
 
@@ -79,7 +79,7 @@ const SignupInfluencer = () => {
           <SNSInput id="tictok" type="tictok" placeholder="틱톡" gap={5} />
           <SNSInput id="etc" type="etc" placeholder="기타" gap={5} />
         </div>
-        <TermsAgreement />
+        <TermsCheck />
       </form>
 
       <div className={styles["button-container"]}>

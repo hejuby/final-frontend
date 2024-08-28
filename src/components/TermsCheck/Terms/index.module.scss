@@ -1,0 +1,62 @@
+.container {
+  padding: 45px 0 70px;
+
+  h2 {
+    @include text-style(32, $black, 600);
+  }
+
+  .tab-menu {
+    @include flex(start);
+    gap: 10px;
+    margin-top: 18px;
+
+    button {
+      @include text-style(18, $blue-50, 600);
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: 1px solid $blue-50;
+      background-color: $white;
+
+      &.active {
+        color: $white;
+        background-color: $blue-50;
+      }
+    }
+  }
+
+  .tab-contents {
+    @include text-style(18);
+    margin-top: 48px;
+
+    p {
+      padding: 12px 0;
+      line-height: 1.4;
+    }
+  }
+
+  @include tablet {
+    padding: 60px 7px;
+
+    h2 {
+      font-size: 20px;
+    }
+
+    .tab-menu {
+      margin-top: 52px;
+
+      button {
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+
+    .tab-contents {
+      margin-top: 10px;
+      font-size: 16px;
+
+      p {
+        padding: 10px 0;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 .terms {
-  &-agreement {
+  &-check {
     margin-top: 38px;
 
     > label {
@@ -19,5 +19,9 @@
   &__item {
     @include flex;
     color: $black;
+
+    a {
+      text-decoration: underline;
+    }
   }
 }
