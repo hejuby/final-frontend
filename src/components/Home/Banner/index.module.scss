@@ -1,0 +1,28 @@
+.top-banner {
+  display: inline-block;
+  width: 100%;
+  height: 380px;
+  padding: 60px 60px;
+  border-radius: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+
+  h2 {
+    @include text-style(32, $white, 600);
+    margin-bottom: 15px;
+  }
+  p {
+    @include text-style(16, $white, 400);
+    width: 150px;
+    line-height: 1.6;
+    word-break: keep-all;
+  }
+  button {
+    @include text-style(16, $black, 500);
+    margin-top: 20px;
+    padding: 8px 20px;
+    border-radius: 30px;
+    background-color: $white;
+  }
+}

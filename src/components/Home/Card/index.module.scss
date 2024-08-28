@@ -1,5 +1,7 @@
 .card-wrap {
   position: relative;
+  margin-left: 5px;
+  background-color: $white;
   transition: 0.4s;
 
   .card-badge {
@@ -16,7 +18,9 @@
         color: $blue-50;
       }
       h3 {
+        @include line-clamp(1);
         margin-top: 7px;
+        margin-bottom: 0;
         font-size: 18px;
       }
       p {
@@ -51,6 +55,13 @@
     width: 320px;
     border: 1px solid $gray-20;
     border-radius: 16px; //horizontal 8
+
+    .text-content {
+      .reward {
+        @include line-clamp(2);
+        height: 35px;
+      }
+    }
     .image-content {
       position: relative;
       height: 320px;
@@ -108,6 +119,9 @@
     .text-content {
       width: calc(100% - 148px);
       padding: 5px 15px;
+      .reward {
+        @include line-clamp(1);
+      }
       &__type {
         .point-info {
           @include text-style(12, $black, 500);

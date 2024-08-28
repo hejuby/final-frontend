@@ -63,7 +63,7 @@ const Card: React.FC<ICardProps> = ({ type = "vertical", card }) => {
           <h3>
             [{card.region1}/{card.region2}] {card.name}
           </h3>
-          <p>{card.reward}</p>
+          <p className={styles.reward}>{card.reward}</p>
           <p>
             <span>
               체험기간 : {formatDate(card.experience_start_date, "YMD")} ~

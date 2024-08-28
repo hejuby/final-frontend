@@ -9,7 +9,10 @@ import "swiper/scss/navigation";
 interface SlideProps {
   children: ReactNode;
   slidesPerView?: number;
+  spaceBetween?: number;
+  slidesPerGroup?: number;
   navigation?: boolean;
+  loop?: boolean;
   breakpoints?: Record<
     number,
     { slidesPerView?: number; spaceBetween?: number }
@@ -19,16 +22,22 @@ interface SlideProps {
 const Slide: React.FC<SlideProps> = ({
   children,
   slidesPerView = 4,
+  spaceBetween = 10,
+  slidesPerGroup = 1,
   navigation = false,
+  loop = true,
   breakpoints = {},
 }) => {
   const slides = React.Children.toArray(children);
   return (
     <Swiper
       slidesPerView={slidesPerView}
+      spaceBetween={spaceBetween}
       simulateTouch={true}
       grabCursor={true}
+      loop={loop}
       navigation={navigation}
+      slidesPerGroup={slidesPerGroup}
       breakpoints={breakpoints}
       modules={[Navigation, Pagination]}
       direction="horizontal"
