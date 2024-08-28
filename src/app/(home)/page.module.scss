@@ -1,0 +1,11 @@
+// 카테고리
+.slide-category {
+  margin-top: 80px;
+}
+
+.array-group {
+  @include flex(between, start);
+  > div {
+    width: 49%;
+  }
+}
