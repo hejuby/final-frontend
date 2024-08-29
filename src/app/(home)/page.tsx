@@ -59,7 +59,8 @@ const Home = () => {
           slidesPerView={2}
           spaceBetween={20}
           slidesPerGroup={1}
-          navigation={true}
+          customNav={true}
+          styles={styles}
         >
           {bannerItems.map(({ title, desc, href, img }, index) => (
             <Banner
@@ -74,6 +75,7 @@ const Home = () => {
       </section>
       <section className={cn("__category")}>
         <Slide
+          styles={styles}
           slidesPerView={4}
           spaceBetween={30}
           breakpoints={{
@@ -100,7 +102,7 @@ const Home = () => {
             더보기 <IconMoreRight />
           </button>
         </h2>
-        <Slide navigation={true}>
+        <Slide styles={styles} customNav={true}>
           {testData.premium.map((card) => (
             <Card key={card.id} card={card} />
           ))}
@@ -115,7 +117,7 @@ const Home = () => {
             더보기 <IconMoreRight />
           </button>
         </h2>
-        <Slide navigation={true}>
+        <Slide styles={styles} customNav={true}>
           {testData.popular.map((card) => (
             <Card key={card.id} card={card} />
           ))}

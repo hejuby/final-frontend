@@ -1,22 +1,26 @@
 "use client";
-import React, { ReactNode } from "react";
+
+import React, { ReactNode, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/scss";
 import "swiper/scss/pagination";
 import "swiper/scss/navigation";
+import CustomNavigation from "./Navigation/index";
 
 interface SlideProps {
   children: ReactNode;
   slidesPerView?: number;
   spaceBetween?: number;
   slidesPerGroup?: number;
-  navigation?: boolean;
+  direction?: "horizontal" | "vertical" | undefined;
   loop?: boolean;
   breakpoints?: Record<
     number,
     { slidesPerView?: number; spaceBetween?: number }
   >;
+  styles?: { [key: string]: string };
+  customNav?: boolean;
 }
 
 const Slide: React.FC<SlideProps> = ({
@@ -24,28 +28,46 @@ const Slide: React.FC<SlideProps> = ({
   slidesPerView = 4,
   spaceBetween = 10,
   slidesPerGroup = 1,
-  navigation = false,
+  direction = "horizontal",
   loop = true,
   breakpoints = {},
+  styles = {},
+  customNav = false,
 }) => {
-  const slides = React.Children.toArray(children);
+  const swiperRef = useRef<any>(null);
+
+  const handlePrev = () => {
+    swiperRef.current.swiper.slidePrev();
+  };
+
+  const handleNext = () => {
+    swiperRef.current.swiper.slideNext();
+  };
+
   return (
-    <Swiper
-      slidesPerView={slidesPerView}
-      spaceBetween={spaceBetween}
-      simulateTouch={true}
-      grabCursor={true}
-      loop={loop}
-      navigation={navigation}
-      slidesPerGroup={slidesPerGroup}
-      breakpoints={breakpoints}
-      modules={[Navigation, Pagination]}
-      direction="horizontal"
-    >
-      {slides.map((child, index) => (
-        <SwiperSlide key={index}>{child}</SwiperSlide>
-      ))}
-    </Swiper>
+    <>
+      <Swiper
+        ref={swiperRef}
+        slidesPerView={slidesPerView}
+        spaceBetween={spaceBetween}
+        slidesPerGroup={slidesPerGroup}
+        direction={direction}
+        modules={[Navigation, Pagination]}
+        loop={loop}
+        breakpoints={breakpoints}
+      >
+        {React.Children.map(children, (child, index) => (
+          <SwiperSlide key={index}>{child}</SwiperSlide>
+        ))}
+      </Swiper>
+      {customNav && (
+        <CustomNavigation
+          onPrev={handlePrev}
+          onNext={handleNext}
+          styles={styles}
+        />
+      )}
+    </>
   );
 };
 
