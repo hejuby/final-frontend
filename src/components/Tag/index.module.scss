@@ -18,8 +18,8 @@
   }
 
   &--color-light-purple {
-    color: $purple-10;
-    background-color: $purple-40;
+    color: $purple-40;
+    background-color: $purple-10;
   }
 
   &--color-light-gray {
@@ -35,6 +35,12 @@
   &--color-outline--gray {
     border: 1px solid $gray-20;
     color: $black;
+    background-color: $white;
+  }
+
+  &--color-outline--blue {
+    border: 1px solid $blue-40;
+    color: $blue-40;
     background-color: $white;
   }
 

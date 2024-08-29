@@ -1,0 +1,11 @@
+.empty-container {
+  @include column-flex;
+  gap: 10px;
+  padding: 30px 0;
+  text-align: center;
+
+  p {
+    @include text-style(18, $gray-40, 600);
+    line-height: 1.4;
+  }
+}

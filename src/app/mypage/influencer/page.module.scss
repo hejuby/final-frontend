@@ -1,0 +1,40 @@
+.layout {
+  @include flex(start, start);
+  gap: 70px;
+  padding: 50px 0 76px;
+
+  &__left {
+    flex-shrink: 1;
+    width: 400px;
+  }
+
+  &__right {
+    flex-grow: 1;
+  }
+
+  .sub-title {
+    @include text-style(24, $black, 600);
+    margin-bottom: 20px;
+  }
+
+  .search-container {
+    @include flex(start);
+    gap: 10px;
+    padding-bottom: 4px;
+  }
+
+  @include desktop {
+    gap: 35px;
+  }
+
+  @include tablet {
+    @include column-flex(start, stretch);
+    width: 100%;
+    padding: 0;
+
+    &__left {
+      flex-shrink: 1;
+      width: 100%;
+    }
+  }
+}

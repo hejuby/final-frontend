@@ -13,8 +13,10 @@ html {
 }
 
 body {
+  min-width: 320px;
   margin: 0;
   font-family: $font-main;
+  color: $black;
   font-weight: 400;
   line-height: 1.2;
 }
@@ -95,6 +97,13 @@ input[type="number"]::-webkit-outer-spin-button {
   appearance: none;
 }
 
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration {
+  display: none;
+}
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -103,6 +112,10 @@ select {
   &::-ms-expand {
     display: none;
   }
+}
+
+table {
+  border-collapse: collapse;
 }
 
 :root {

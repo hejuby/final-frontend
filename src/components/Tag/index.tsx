@@ -9,7 +9,8 @@ type TagProps = {
     | "light-purple"
     | "light-gray"
     | "dark-gray"
-    | "outline--gray";
+    | "outline--gray"
+    | "outline--blue";
   shape?: "squared" | "rounded";
 } & {
   children: React.ReactNode;

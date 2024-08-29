@@ -1,13 +1,14 @@
 .profile-img {
   &-container {
     @include column-flex;
+    position: relative;
 
     button {
       position: relative;
       overflow: hidden;
       width: 95px;
       height: 95px;
-      border-radius: 50px;
+      border-radius: 50%;
 
       img {
         width: 100%;
@@ -15,6 +16,12 @@
         object-fit: cover;
       }
     }
+  }
+
+  > svg {
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
   }
 
   label {

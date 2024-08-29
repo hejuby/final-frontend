@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ms from "@/utils/modifierSelector";
+import IconCamera from "@/assets/icons/icon-profile-camera.svg";
 import React, { useRef, ChangeEvent } from "react";
 import styles from "./index.module.scss";
 
@@ -9,12 +10,14 @@ interface ProfileImgUploadProps {
   profileImg: string;
   setProfileImg: React.Dispatch<React.SetStateAction<string>>;
   label?: boolean;
+  cameraButon?: boolean;
 }
 
 const ProfileImgUpload: React.FC<ProfileImgUploadProps> = ({
   profileImg,
   setProfileImg,
   label = false,
+  cameraButon = false,
 }) => {
   // 기본 이미지
   const fileInput = useRef<HTMLInputElement | null>(null);
@@ -60,7 +63,7 @@ const ProfileImgUpload: React.FC<ProfileImgUploadProps> = ({
         ref={fileInput}
         onChange={handleProfileImg}
       />
-
+      {cameraButon && <IconCamera onClick={() => fileInput.current?.click()} />}
       {label && <label htmlFor="input-file">프로필 이미지</label>}
     </div>
   );

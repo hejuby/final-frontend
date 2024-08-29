@@ -1,0 +1,26 @@
+.sns__list {
+  @include flex;
+  gap: 16px;
+  margin-top: 42px;
+
+  li {
+    &:nth-child(3),
+    &:nth-child(4) {
+      img {
+        width: 26px;
+        height: 26px;
+      }
+    }
+    &:last-child {
+      img {
+        width: 28px;
+        height: 28px;
+      }
+    }
+  }
+
+  @include tablet {
+    margin-top: 20px;
+    justify-content: flex-start;
+  }
+}
