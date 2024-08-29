@@ -1,21 +1,21 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 
 const Terms = () => {
-  const searchParams = useSearchParams();
-  const tab = searchParams.get("tab");
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"terms" | "privacy">("terms");
 
   useEffect(() => {
-    if (tab === "privacy") {
+    const queryTab = new URLSearchParams(window.location.search).get("tab");
+    if (queryTab === "privacy") {
       setActiveTab("privacy");
     } else {
       setActiveTab("terms");
     }
-  }, [tab]);
+  }, [router]);
 
   return (
     <div className={styles.container}>
