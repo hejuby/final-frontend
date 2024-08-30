@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import IconDirection from "@/assets/icons/icon-direction-right-gray.svg";
 import IconWarning from "@/assets/icons/icon-warning-gray-filled.svg";
 import IconClose from "@/assets/icons/icon-close.svg";
 import styles from "./index.module.scss";
-import { useState } from "react";
 
-const InteractionList = () => {
+const InteractionListInfluencer = () => {
   const [isOpenPenaltyModal, setIsOpenPenaltyModal] = useState(false);
 
   const handleOpenPenaltyModal = () => {
@@ -18,7 +18,7 @@ const InteractionList = () => {
   };
 
   return (
-    <div>
+    <div className={styles["interaction-container"]}>
       <h3 className="visually-hidden">보유포인트, 찜하기, 패널티 정보</h3>
       <div className={styles.interaction__list}>
         <div className={styles.interaction__item}>
@@ -123,4 +123,4 @@ const InteractionList = () => {
   );
 };
 
-export default InteractionList;
+export default InteractionListInfluencer;

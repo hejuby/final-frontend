@@ -31,8 +31,15 @@
     margin-top: 13px;
   }
 
+  .state {
+    margin-top: 20px;
+    > div {
+      line-height: 22px;
+    }
+  }
+
   .button-container {
-    margin-top: 42px;
+    margin-top: 72px;
 
     button {
       padding: 0 12px;
@@ -75,7 +82,7 @@
     }
 
     .button-container {
-      display: none;
+      margin-top: 40px;
     }
   }
 }

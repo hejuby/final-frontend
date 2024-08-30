@@ -13,7 +13,7 @@ const Searchbox = () => {
         <button
           type="submit"
           className={styles.form__button}
-          aria-label="게시판 검색"
+          aria-label="체험단 검색"
         >
           <IconSearch viewBox="0 0 24 24" />
         </button>

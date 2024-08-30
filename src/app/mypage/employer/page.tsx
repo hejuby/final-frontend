@@ -2,12 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Selectbox, { Option } from "@/components/Selectbox/index";
-import CampaignItemInfluencer from "@/components/Mypage/Influencer/CampaignItem";
-import CountBox from "@/components/Mypage/Influencer/CountBox";
-import ProfileBoxInfluencer from "@/components/Mypage/Influencer/ProfileBox";
 import Searchbox from "@/components/Mypage/Searchbox";
+import ProfileBoxEmployer from "@/components/Mypage/Employer/ProfileBox";
+import InteractionListEmployer from "@/components/Mypage/Employer/InteractionList";
+import CampaignItemEmployer from "@/components/Mypage/Employer/CampaignItem";
 // import CampaignEmpty from "@/components/Mypage/CampaignEmpty";
-import InteractionListInfluencer from "@/components/Mypage/Influencer/InteractionList";
 import styles from "./page.module.scss";
 
 const campaignItems = [
@@ -45,7 +44,7 @@ const campaignItems = [
   },
 ];
 
-const MypageInfluencerPage = () => {
+const MypageEmployerPage = () => {
   const [selectedItem1, setSelectedItem1] = useState<Option | null>(null);
   const [selectedItem2, setSelectedItem2] = useState<Option | null>(null);
 
@@ -66,21 +65,11 @@ const MypageInfluencerPage = () => {
     <div className={styles.layout}>
       <h2 className="visually-hidden">마이페이지</h2>
       <section className={styles.layout__left}>
-        <ProfileBoxInfluencer />
-        <InteractionListInfluencer />
+        <ProfileBoxEmployer />
+        <InteractionListEmployer />
       </section>
+      {isTablet && <div className={styles.divider} />}
       <div className={styles.layout__right}>
-        <section>
-          <CountBox
-            countItems={[
-              { title: "신청한 체험단", count: 0 },
-              { title: "선정된 체험단", count: 0 },
-              { title: "진행중 체험단", count: 0 },
-              { title: "최소 횟수", count: 0 },
-            ]}
-          />
-        </section>
-        {isTablet && <div className={styles.divider} />}
         <section>
           <h3 className={styles["sub-title"]}>체험단</h3>
           <div className={styles["campaign-search"]}>
@@ -114,7 +103,7 @@ const MypageInfluencerPage = () => {
             <Searchbox />
           </div>
           <div className={styles.campaign__list}>
-            <CampaignItemInfluencer campaignItems={campaignItems} />
+            <CampaignItemEmployer campaignItems={campaignItems} />
             {/* <CampaignEmpty /> */}
           </div>
         </section>
@@ -123,4 +112,4 @@ const MypageInfluencerPage = () => {
   );
 };
 
-export default MypageInfluencerPage;
+export default MypageEmployerPage;

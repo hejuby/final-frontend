@@ -3,29 +3,17 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ProfileImgUpload from "@/components/ProfileImgUpload";
-import SNSList from "@/components/SNSList";
 import Button from "@/components/Button";
 import IconDirection from "@/assets/icons/icon-direction-right.svg";
+import Tag from "@/components/Tag";
 import styles from "./index.module.scss";
 
-const ProfileBoxInfluencer = () => {
+const ProfileBoxEmployer = () => {
   const [profileImg, setProfileImg] = useState(
     "/images/profile-default-mypage.svg",
   );
 
   const [isTablet, setIsTablet] = useState(false);
-
-  const snsResponseList = [
-    {
-      snsType: "INSTAGRAM",
-    },
-    {
-      snsType: "NAVER_BLOG",
-    },
-    {
-      snsType: "YOUTUBE",
-    },
-  ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,25 +37,33 @@ const ProfileBoxInfluencer = () => {
         />
       </div>
       <div className={styles["name-container"]}>
-        <strong>감자도리</strong>
+        <strong>24시 감자탕</strong>
         {isTablet && (
           <Link href="/">
             <IconDirection />
           </Link>
         )}
       </div>
-      <span className={styles.type}>인플루언서</span>
-      <SNSList snsResponseList={snsResponseList} />
+      <span className={styles.type}>사업주 / 대행사</span>
+      {!isTablet && (
+        <div className={styles.state}>
+          <Tag color="outline--blue" shape="rounded">
+            대행사 검수중
+          </Tag>
+        </div>
+      )}
       <div className={styles["button-container"]}>
         <Button type="button" size="large" full>
           회원 정보 변경
         </Button>
-        <Button type="button" color="outline--gray" size="large" full>
-          로그아웃
-        </Button>
+        {!isTablet && (
+          <Button type="button" color="outline--gray" size="large" full>
+            로그아웃
+          </Button>
+        )}
       </div>
     </section>
   );
 };
 
-export default ProfileBoxInfluencer;
+export default ProfileBoxEmployer;
