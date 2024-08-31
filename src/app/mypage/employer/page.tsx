@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Selectbox, { Option } from "@/components/Selectbox/index";
-import Searchbox from "@/components/Mypage/Searchbox";
-import ProfileBoxEmployer from "@/components/Mypage/Employer/ProfileBox";
-import InteractionListEmployer from "@/components/Mypage/Employer/InteractionList";
 import CampaignItemEmployer from "@/components/Mypage/Employer/CampaignItem";
+import Searchbox from "@/components/Mypage/Searchbox";
 // import CampaignEmpty from "@/components/Mypage/CampaignEmpty";
+import Link from "next/link";
+import Button from "@/components/Button";
 import styles from "./page.module.scss";
 
 const campaignItems = [
@@ -62,17 +62,12 @@ const MypageEmployerPage = () => {
   }, []);
 
   return (
-    <div className={styles.layout}>
-      <h2 className="visually-hidden">마이페이지</h2>
-      <section className={styles.layout__left}>
-        <ProfileBoxEmployer />
-        <InteractionListEmployer />
-      </section>
+    <div className={styles.container}>
       {isTablet && <div className={styles.divider} />}
-      <div className={styles.layout__right}>
-        <section>
-          <h3 className={styles["sub-title"]}>체험단</h3>
-          <div className={styles["campaign-search"]}>
+      <section>
+        <h3 className={styles["sub-title"]}>체험단 관리</h3>
+        <div className={styles["campaign-search"]}>
+          <div className={styles["search-inner"]}>
             <div className={styles.search__select}>
               <Selectbox
                 placeholder="플랫폼"
@@ -102,12 +97,15 @@ const MypageEmployerPage = () => {
             </div>
             <Searchbox />
           </div>
-          <div className={styles.campaign__list}>
-            <CampaignItemEmployer campaignItems={campaignItems} />
-            {/* <CampaignEmpty /> */}
-          </div>
-        </section>
-      </div>
+          <Link href="/" className={styles["campaign-button"]}>
+            <Button>체험단 등록</Button>
+          </Link>
+        </div>
+        <div className={styles.campaign__list}>
+          <CampaignItemEmployer campaignItems={campaignItems} />
+          {/* <CampaignEmpty /> */}
+        </div>
+      </section>
     </div>
   );
 };

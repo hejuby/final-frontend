@@ -32,6 +32,37 @@
       max-width: 100%;
     }
 
+    &--horizontal {
+      max-width: 100%;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+
+      > label {
+        min-width: 205px;
+        margin-bottom: 0;
+        margin-top: 15px;
+      }
+
+      .info-message {
+        @include text-style(12, $gray-70);
+      }
+
+      .error-message {
+        font-size: 12px;
+      }
+
+      @include tablet {
+        @include column-flex(center, start);
+
+        > label {
+          min-width: auto;
+          margin-top: 0;
+          margin-bottom: 6px;
+        }
+      }
+    }
+
     &--error {
       .input {
         border: 1px solid $alert-red;
@@ -41,6 +72,10 @@
         }
       }
     }
+
+    @include tablet {
+      max-width: 100%;
+    }
   }
 
   &-wrapper {
@@ -48,7 +83,8 @@
     width: 100%;
 
     .button-toggle-pw {
-      @include pos-center-y;
+      position: absolute;
+      top: 15px;
       right: 15px;
       z-index: 1;
       width: 20px;

@@ -53,9 +53,11 @@ const ProfileBoxEmployer = () => {
         </div>
       )}
       <div className={styles["button-container"]}>
-        <Button type="button" size="large" full>
-          회원 정보 변경
-        </Button>
+        <Link href="/mypage/employer/profile">
+          <Button type="button" size="large" full>
+            회원 정보 변경
+          </Button>
+        </Link>
         {!isTablet && (
           <Button type="button" color="outline--gray" size="large" full>
             로그아웃

@@ -38,6 +38,7 @@ const SNSInput = ({ type, ...props }: SNSInputProps) => {
         value={props.value}
         onChange={props.onChange}
         full
+        gap={5}
       />
     </div>
   );

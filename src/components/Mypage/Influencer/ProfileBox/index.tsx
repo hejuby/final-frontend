@@ -59,9 +59,11 @@ const ProfileBoxInfluencer = () => {
       <span className={styles.type}>인플루언서</span>
       <SNSList snsResponseList={snsResponseList} />
       <div className={styles["button-container"]}>
-        <Button type="button" size="large" full>
-          회원 정보 변경
-        </Button>
+        <Link href="/mypage/influencer/profile">
+          <Button type="button" size="large" full>
+            회원 정보 변경
+          </Button>
+        </Link>
         <Button type="button" color="outline--gray" size="large" full>
           로그아웃
         </Button>

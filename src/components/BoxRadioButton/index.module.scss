@@ -26,6 +26,29 @@
       display: none;
     }
   }
+
+  &.horizontal {
+    @include flex(start);
+
+    .title {
+      min-width: 205px;
+      margin-bottom: 0;
+    }
+
+    .radio-wrapper {
+      width: 100%;
+    }
+
+    @include tablet {
+      @include column-flex(center, start);
+
+      .title {
+        min-width: auto;
+        margin-top: 0;
+        margin-bottom: 6px;
+      }
+    }
+  }
 }
 
 .radio-button {

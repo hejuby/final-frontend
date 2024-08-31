@@ -1,0 +1,29 @@
+.layout {
+  @include flex(start, start);
+  gap: 70px;
+  padding: 50px 0 160px;
+
+  &__left {
+    width: 400px;
+  }
+
+  &__right {
+    flex: 1;
+  }
+
+  @include desktop {
+    gap: 50px;
+  }
+
+  @include tablet {
+    @include column-flex(start, stretch);
+    gap: 20px;
+    width: 100%;
+    padding: 0 0 140px;
+
+    &__left {
+      flex-shrink: 1;
+      width: 100%;
+    }
+  }
+}

@@ -15,6 +15,7 @@ export type InputProps = {
   error?: string;
   full?: boolean;
   gap?: number;
+  horizontal?: boolean;
   register?: UseFormRegisterReturn;
 } & InputHTMLAttributes<HTMLInputElement>;
 
@@ -28,6 +29,7 @@ const Input = ({
   type = "text",
   full = false,
   gap = 20,
+  horizontal = false,
   register,
   ...props
 }: InputProps) => {
@@ -53,7 +55,12 @@ const Input = ({
 
   return (
     <div
-      className={cn("", error ? "--error" : "", full && "--full")}
+      className={cn(
+        "",
+        error ? "--error" : "",
+        full && "--full",
+        horizontal && "--horizontal",
+      )}
       style={{
         marginBottom: `${gap}px`,
       }}
@@ -82,9 +89,9 @@ const Input = ({
             )}
           </button>
         )}
+        {infoMessage && <p className={styles["info-message"]}>{infoMessage}</p>}
+        {error && <p className={styles["error-message"]}>{error}</p>}
       </div>
-      {error && <p className={styles["error-message"]}>{error}</p>}
-      {infoMessage && <p className={styles["info-message"]}>{infoMessage}</p>}
     </div>
   );
 };

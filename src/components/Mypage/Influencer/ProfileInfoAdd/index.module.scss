@@ -1,0 +1,23 @@
+.address-container {
+  @include flex(start, start);
+  gap: 5px;
+
+  input {
+    flex-grow: 1;
+  }
+
+  button {
+    @include text-style(14, $blue-40, 500);
+    flex-shrink: 0;
+    width: 80px;
+    padding: 0 10px;
+  }
+
+  @include tablet {
+    align-items: center;
+
+    button {
+      margin-top: 20px;
+    }
+  }
+}
