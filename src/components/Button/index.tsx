@@ -6,6 +6,7 @@ type ButtonProps = {
   color?: "solid" | "outline" | "outline--gray";
   size?: "small" | "medium" | "large";
   full?: boolean;
+  padding?: string;
 } & {
   children: React.ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
@@ -19,6 +20,7 @@ const Button = ({
   full = false,
   type = "button",
   disabled = false,
+  padding,
   ...props
 }: ButtonProps) =>
   createElement(
@@ -27,6 +29,7 @@ const Button = ({
       className: cn(`--color-${color}`, `--size-${size}`, full && "--full"),
       type: type === "submit" ? "submit" : "button",
       disabled,
+      style: padding ? { padding: `0 ${padding}` } : null,
       ...props,
     },
     children,

@@ -1,0 +1,18 @@
+.top {
+  display: flex;
+  width: 1325px;
+  margin: 0 auto;
+  margin-bottom: 16px;
+  justify-content: space-between;
+  align-items: center;
+  &__control {
+    @include flex();
+    @include text-style(15, false, 600);
+    gap: 14px;
+    line-height: 1.4;
+  }
+  &__selected {
+    @include text-style(16, false, 500);
+    line-height: 1.4;
+  }
+}
