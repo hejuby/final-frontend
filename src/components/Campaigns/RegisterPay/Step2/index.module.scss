@@ -1,0 +1,63 @@
+.container {
+  padding: 60px 60px 80px;
+  background-color: $white;
+  border-radius: 16px;
+
+  .title {
+    @include text-style(24, $black, 600);
+
+    &::after {
+      display: block;
+      margin-top: 20px;
+      width: 100%;
+      height: 1px;
+      background-color: $gray-40;
+      content: "";
+    }
+  }
+
+  .sub-title {
+    @include text-style(16, $black, 500);
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .article {
+    margin-top: 40px;
+  }
+
+  .select-container {
+    @include column-flex;
+    gap: 6px;
+  }
+
+  .info-message {
+    @include text-style(12, $gray-70);
+  }
+
+  @include tablet {
+    padding: 30px 30px 40px;
+
+    .article {
+      &:first-of-type {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+.address-container {
+  @include flex(start, start);
+  gap: 5px;
+
+  input {
+    flex-grow: 1;
+  }
+
+  button {
+    @include text-style(14, $blue-40, 500);
+    flex-shrink: 0;
+    width: 80px;
+    padding: 0 10px;
+  }
+}

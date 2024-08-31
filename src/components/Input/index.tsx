@@ -16,6 +16,7 @@ export type InputProps = {
   full?: boolean;
   gap?: number;
   horizontal?: boolean;
+  unit?: string;
   register?: UseFormRegisterReturn;
 } & InputHTMLAttributes<HTMLInputElement>;
 
@@ -30,6 +31,7 @@ const Input = ({
   full = false,
   gap = 20,
   horizontal = false,
+  unit,
   register,
   ...props
 }: InputProps) => {
@@ -89,6 +91,7 @@ const Input = ({
             )}
           </button>
         )}
+        {unit && <span className={styles.unit}>{unit}</span>}
         {infoMessage && <p className={styles["info-message"]}>{infoMessage}</p>}
         {error && <p className={styles["error-message"]}>{error}</p>}
       </div>

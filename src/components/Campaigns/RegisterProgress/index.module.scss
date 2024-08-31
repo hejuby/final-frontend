@@ -1,0 +1,97 @@
+.progress-container {
+  @include flex(between, start);
+  margin-bottom: 60px;
+
+  .step-item {
+    @include column-flex;
+    position: relative;
+    gap: 18px;
+    width: 25%;
+    text-align: center;
+    line-height: 1.4;
+
+    .bar {
+      position: absolute;
+      left: calc(100% - 30px);
+      top: 20px;
+      max-width: 60px;
+      width: 100%;
+      height: 2px;
+      background-color: $gray-30;
+      content: "";
+
+      &.complete {
+        background-color: $blue-50;
+      }
+    }
+
+    &:last-child {
+      .bar {
+        display: none;
+      }
+    }
+  }
+
+  .number {
+    @include flex;
+    @include text-style(20, $gray-40, 600);
+    position: relative;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    background-color: $white;
+    border: 2px solid $gray-40;
+
+    &.current {
+      background-color: $blue-50;
+      border-color: $blue-50;
+      color: $white;
+    }
+
+    &.complete {
+      border-color: $blue-50;
+    }
+  }
+
+  .label {
+    @include text-style(16, $gray-50, 600);
+    max-width: 80px;
+    word-break: keep-all;
+
+    &.current {
+      color: $black;
+    }
+
+    &.complete {
+      color: $black;
+    }
+  }
+  @include tablet {
+    margin-bottom: 40px;
+
+    .step-item {
+      gap: 12px;
+
+      .bar {
+        top: 15px;
+      }
+    }
+
+    .number {
+      width: 30px;
+      height: 30px;
+      font-size: 18px;
+    }
+
+    .label {
+      font-size: 14px;
+    }
+  }
+
+  @include mobile {
+    .label {
+      max-width: 60px;
+    }
+  }
+}

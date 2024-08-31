@@ -1,0 +1,30 @@
+.img {
+  &-container {
+    @include column-flex(center, start);
+    position: relative;
+
+    button {
+      position: relative;
+      overflow: hidden;
+      width: 140px;
+      height: 140px;
+      border-radius: 8px;
+      border: 2px solid $gray-20;
+
+      @include tablet {
+        width: 100%;
+      }
+
+      img {
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+      }
+    }
+  }
+
+  label {
+    @include text-style(14, $gray-80);
+    margin-bottom: 6px;
+  }
+}

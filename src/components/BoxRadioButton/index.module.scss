@@ -14,12 +14,20 @@
 
     &-button {
       @include flex;
-      flex-grow: 1;
+      flex: 1;
       height: 50px;
       padding: 5px 17px;
+      text-align: center;
       border: 2px solid $gray-20;
       border-radius: 8px;
       background-color: $white;
+      cursor: pointer;
+
+      &.active {
+        @include text-style(14, $blue-40, 500);
+        border: 1px solid $blue-40;
+        background-color: $gray-10;
+      }
     }
 
     &-input {
@@ -49,28 +57,4 @@
       }
     }
   }
-}
-
-.radio-button {
-  padding: 10px 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #fff;
-  cursor: pointer;
-  text-align: center;
-  flex: 1;
-
-  &.active {
-    @include text-style(14, $blue-40, 500);
-    border: 1px solid $blue-40;
-    background-color: $gray-10;
-  }
-}
-
-.radioButton:hover {
-  border-color: #bbb;
-}
-
-.radioInput {
-  display: none;
 }
