@@ -1,0 +1,68 @@
+.progress {
+  @include text-style(16, $gray-50, 600);
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  line-height: 1.4;
+}
+
+.bar {
+  @include flex();
+  gap: 10px;
+  &__icon {
+    @include flex();
+    width: 100px;
+    height: 100px;
+    border: 2px solid $gray-30;
+    border-radius: 50%;
+    & > svg {
+      width: 60px;
+      height: 60px;
+      & > path {
+        stroke: $gray-40;
+      }
+    }
+    &--active {
+      border: none;
+      background-color: $blue-50;
+      & > svg > path {
+        stroke: $white;
+      }
+    }
+    &--finished {
+      border-color: $blue-50;
+      & > svg > path {
+        stroke: $blue-50;
+      }
+    }
+  }
+  &__arrow {
+    & > svg {
+      width: 60px;
+      height: 60px;
+      & > path {
+        stroke: $gray-30;
+      }
+    }
+    &--finished {
+      & > svg > path {
+        stroke: $blue-50;
+      }
+    }
+  }
+}
+
+.caption {
+  @include flex();
+  gap: 80px;
+  &__text {
+    width: 100px;
+    text-align: center;
+    &--active,
+    &--finished {
+      color: $black;
+    }
+  }
+}

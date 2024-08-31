@@ -15,11 +15,11 @@ interface EditDropdownProps {
 }
 
 const EditDropdown = ({ type, boardType, id }: EditDropdownProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   if (type === "post" && !boardType) {
     return null;
   }
-
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav className={styles.wrapper}>
