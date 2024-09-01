@@ -3,7 +3,7 @@
     @include text-style(14, false, 600);
     margin-bottom: 16px;
     line-height: 1.4;
-    @include mobile {
+    @include tablet {
       margin-bottom: 8px;
       font-size: 12px;
       line-height: 1.2;
@@ -11,7 +11,7 @@
   }
   &--page-post {
     @include text-style(16, false, 600);
-    @include mobile {
+    @include tablet {
       font-size: 12px;
       line-height: 1.2;
     }

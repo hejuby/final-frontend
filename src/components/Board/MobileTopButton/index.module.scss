@@ -1,0 +1,20 @@
+.button {
+  @include text-style(14, $gray-80, 400);
+  display: none;
+  width: 100%;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 10px 20px;
+  line-height: 1.4;
+  border-top: 1px solid $gray-20;
+  @include tablet {
+    @include flex();
+  }
+  & > svg {
+    width: 20px;
+    height: 20px;
+    & > path {
+      stroke: $gray-80;
+    }
+  }
+}

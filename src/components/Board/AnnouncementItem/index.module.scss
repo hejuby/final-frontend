@@ -1,8 +1,7 @@
 .item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 14px 12px 15px;
+  padding: 14px 12px 15px 24px;
   line-height: 1.4;
   border-bottom: 1px solid $gray-10;
   @include mobile {
@@ -13,18 +12,43 @@
   }
   &__link {
     @include text-style(16, false, 600);
+    width: 695px;
     &:hover {
       text-decoration: underline;
+    }
+    @include mobile {
+      width: auto;
     }
   }
   &__info {
     @include flex();
     @include text-style(14, $gray-70, 400);
-    gap: 20px;
     @include mobile {
       gap: 8px;
       font-size: 12px;
       line-height: 1.2;
+    }
+  }
+}
+
+.date {
+  @include flex();
+  width: 120px;
+  @include mobile {
+    width: auto;
+  }
+}
+
+.views {
+  @include flex();
+  width: 75px;
+  @include mobile {
+    width: auto;
+  }
+  &__text {
+    display: none;
+    @include mobile {
+      display: block;
     }
   }
 }

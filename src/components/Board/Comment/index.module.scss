@@ -2,7 +2,7 @@
   padding: 20px;
   display: flex;
   gap: 12px;
-  @include mobile {
+  @include tablet {
     padding: 14px 0;
     gap: 8px;
   }
@@ -10,7 +10,7 @@
     & > svg {
       width: 36px;
       height: 36px;
-      @include mobile {
+      @include tablet {
         width: 24px;
         height: 24px;
       }
@@ -21,7 +21,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @include mobile {
+    @include tablet {
       margin-bottom: 2px;
     }
   }
@@ -29,7 +29,7 @@
     @include text-style(16, false, 400);
     margin-bottom: 14px;
     line-height: 1.4;
-    @include mobile {
+    @include tablet {
       margin-bottom: 12px;
       line-height: 1.6;
     }
@@ -40,20 +40,20 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  @include mobile {
+  @include tablet {
     gap: 8px;
   }
   &__username {
     @include text-style(16, false, 600);
     line-height: 1.4;
-    @include mobile {
+    @include tablet {
       font-size: 14px;
     }
   }
   &__date {
     @include text-style(14, $gray-60, 400);
     line-height: 1.4;
-    @include mobile {
+    @include tablet {
       font-size: 12px;
     }
   }

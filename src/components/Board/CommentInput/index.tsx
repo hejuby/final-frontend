@@ -24,7 +24,9 @@ const CommentInput = ({ id = "comment" }: { id?: string }) => {
           setComment(event.target.value);
         }}
       />
-      <Button type="submit">등록</Button>
+      <Button type="submit" padding="20px">
+        등록
+      </Button>
     </form>
   );
 };

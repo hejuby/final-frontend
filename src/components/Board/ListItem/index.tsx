@@ -31,7 +31,7 @@ const ListItem = ({
   date,
   viewCount,
   commentCount,
-}: CommunityItemProps) => {
+}: Omit<CommunityItemProps, "content">) => {
   const category = CATEGORY_LIST[boardType].find(
     (categoryItem) => categoryItem.categoryId === categoryId,
   );

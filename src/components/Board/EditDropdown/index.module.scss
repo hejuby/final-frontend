@@ -1,6 +1,6 @@
 .wrapper {
   position: relative;
-  @include mobile {
+  @include tablet {
     display: none;
   }
   & > button {

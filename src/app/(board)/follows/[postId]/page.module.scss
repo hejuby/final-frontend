@@ -1,0 +1,21 @@
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 68px;
+  @include tablet {
+    gap: 34px;
+    margin-bottom: 48px;
+  }
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 30px;
+  @include tablet {
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+}

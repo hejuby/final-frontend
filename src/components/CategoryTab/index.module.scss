@@ -1,7 +1,7 @@
 .category-tab {
   display: flex;
   flex-direction: row;
-  @include mobile {
+  @include tablet {
     width: max-content;
     overflow-x: scroll;
   }
@@ -22,7 +22,7 @@
       background-color: $blue-10;
     }
 
-    @include mobile {
+    @include tablet {
       height: 36px;
       font-size: 14px;
     }

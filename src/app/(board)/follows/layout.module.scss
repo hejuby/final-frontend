@@ -1,7 +1,7 @@
-.h2 {
+.title {
   @include text-style(32, false, 600);
   margin-top: 16px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   @include tablet {
     display: none;
   }

@@ -1,7 +1,7 @@
 .div {
   & > button {
     padding: 0 23px;
-    @include mobile {
+    @include tablet {
       display: none;
     }
   }

@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  @include mobile {
+  @include tablet {
+    padding: 16px 0;
     gap: 8px;
   }
   &__top {
@@ -12,7 +13,7 @@
   }
   &__text {
     @include text-style(20, false, 600);
-    @include mobile {
+    @include tablet {
       line-height: 1.4;
     }
   }
@@ -22,7 +23,7 @@
     align-items: center;
     gap: 16px;
     line-height: 1.4;
-    @include mobile {
+    @include tablet {
       justify-content: space-between;
       gap: 0;
       font-size: 12px;
@@ -34,7 +35,7 @@
 .info-group {
   @include flex;
   gap: 16px;
-  @include mobile {
+  @include tablet {
     gap: 12px;
   }
 }
@@ -43,13 +44,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  @include mobile {
+  @include tablet {
     gap: 4px;
   }
   & > svg {
     width: 24px;
     height: 24px;
-    @include mobile {
+    @include tablet {
       width: 20px;
       height: 20px;
     }
@@ -63,7 +64,7 @@
   & > svg {
     width: 16px;
     height: 16px;
-    @include mobile {
+    @include tablet {
       width: 14px;
       height: 14px;
     }

@@ -1,0 +1,5 @@
+.divider {
+  @include tablet {
+    display: none;
+  }
+}

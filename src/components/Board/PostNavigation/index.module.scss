@@ -1,0 +1,22 @@
+.navigation {
+  @include flex();
+  @include text-style(16, $gray-70, 600);
+  gap: 12px;
+}
+
+.direction {
+  @include flex();
+  gap: 8px;
+  & > svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.list,
+.direction {
+  padding: 10px 20px;
+  &:hover {
+    color: $black;
+  }
+}
