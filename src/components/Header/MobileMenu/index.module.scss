@@ -9,7 +9,7 @@
     @include flex(between, start);
     @include text-style(16, $black, 600);
     flex-direction: column;
-    position: absolute;
+    position: fixed;
     top: 51px;
     width: 100%;
     height: calc(100% - 52px);

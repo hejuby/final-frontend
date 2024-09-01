@@ -26,9 +26,11 @@
 
   @include tablet {
     @include flex(around, center);
+    z-index: $header-level;
   }
   @include mobile {
     padding: 10px 0 20px;
     font-size: 14px;
+    z-index: $header-level;
   }
 }
