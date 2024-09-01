@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 
 type SNSType = "NAVER_BLOG" | "INSTAGRAM" | "YOUTUBE" | "TIKTOK" | "ETC";
 
-interface SNSResponse {
+export interface SNSResponse {
   snsType: SNSType;
 }
 

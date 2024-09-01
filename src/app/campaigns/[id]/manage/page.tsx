@@ -1,16 +1,19 @@
 import ManageProgress from "@/components/Campaigns/ManageProgress";
 import ManageTable from "@/components/Campaigns/ManageTable";
-import Button from "@/components/Button";
+import ManageButtons from "@/components/Campaigns/ManageButtons";
+import Line from "@/components/Line";
 import styles from "./page.module.scss";
 
 const Page = () => {
   return (
     <>
-      <nav className={styles.nav}>
-        <Button color="outline">일정확인</Button>
-        <Button color="solid">모집종료</Button>
-      </nav>
-      <ManageProgress activeIndex={0} />
+      <section className={styles.info}>
+        <ManageButtons />
+        <ManageProgress activeIndex={0} />
+      </section>
+      <section className={styles.divider}>
+        <Line type="thick" />
+      </section>
       <ManageTable />
     </>
   );

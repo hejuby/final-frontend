@@ -178,11 +178,11 @@ const ManageTable = () => {
             // eslint-disable-next-line no-extra-boolean-cast
             selection: !!item.selection ? (
               <Button color="outline" padding="20px" disabled>
-                취소하기
+                <p className={styles["selection-button-text"]}>취소하기</p>
               </Button>
             ) : (
               <Button color="outline" padding="20px">
-                선정하기
+                <p className={styles["selection-button-text"]}>선정하기</p>
               </Button>
             ),
             platform: (

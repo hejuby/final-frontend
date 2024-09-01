@@ -7,20 +7,36 @@
   flex-direction: column;
   gap: 18px;
   line-height: 1.4;
+  @include tablet {
+    @include text-style(14, $gray-50, 500);
+    gap: 9px;
+    margin-bottom: 22px;
+  }
 }
 
 .bar {
   @include flex();
   gap: 10px;
+  @include tablet {
+    gap: 6px;
+  }
   &__icon {
     @include flex();
     width: 100px;
     height: 100px;
     border: 2px solid $gray-30;
     border-radius: 50%;
+    @include tablet {
+      width: 60px;
+      height: 60px;
+    }
     & > svg {
       width: 60px;
       height: 60px;
+      @include tablet {
+        width: 32px;
+        height: 32px;
+      }
       & > path {
         stroke: $gray-40;
       }
@@ -43,6 +59,10 @@
     & > svg {
       width: 60px;
       height: 60px;
+      @include tablet {
+        width: 32px;
+        height: 32px;
+      }
       & > path {
         stroke: $gray-30;
       }
@@ -58,9 +78,15 @@
 .caption {
   @include flex();
   gap: 80px;
+  @include tablet {
+    gap: 44px;
+  }
   &__text {
     width: 100px;
     text-align: center;
+    @include tablet {
+      width: 60px;
+    }
     &--active,
     &--finished {
       color: $black;

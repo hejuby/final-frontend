@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ProfileImgUpload from "@/components/ProfileImgUpload";
-import SNSList from "@/components/SNSList";
+import SNSList, { SNSResponse } from "@/components/SNSList";
 import Button from "@/components/Button";
 import IconDirection from "@/assets/icons/icon-direction-right.svg";
 import styles from "./index.module.scss";
@@ -15,7 +15,7 @@ const ProfileBoxInfluencer = () => {
 
   const [isTablet, setIsTablet] = useState(false);
 
-  const snsResponseList = [
+  const snsResponseList: SNSResponse[] = [
     {
       snsType: "INSTAGRAM",
     },

@@ -1,9 +1,15 @@
 .layout {
   padding-top: 60px;
   padding-bottom: 176px;
+  @include tablet {
+    padding-top: 40px;
+  }
 }
 
 .title {
   @include text-style(32, false, 600);
   margin-bottom: 55px;
+  @include tablet {
+    display: none;
+  }
 }

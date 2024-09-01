@@ -1,18 +1,25 @@
 .table {
   @include text-style(16, false, 600);
-  width: fit-content;
   margin: 0 auto;
   line-height: 1.4;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .line {
   @include flex();
-  width: fit-content;
-  padding: 19px 0;
+  min-width: fit-content;
+  padding: 15px 0;
   border-bottom: 1px solid $gray-10;
+  @include mobile {
+    @include text-style(14, false, 400);
+    padding: 14px 0;
+  }
   &--head {
-    padding: 15px 0;
     background-color: $gray-20;
+    @include mobile {
+      @include text-style(14, false, 600);
+    }
   }
   &--active {
     background-color: $blue-10;
@@ -22,7 +29,13 @@
 .item {
   @include flex();
   width: 175px;
+  @include mobile {
+    width: 95px;
+  }
   &--index {
     width: 100px;
+    @include mobile {
+      width: 45px;
+    }
   }
 }

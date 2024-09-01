@@ -12,7 +12,7 @@ const toggle = ms(styles, "toggle");
 
 const ToggleSwitch = ({ id, register, ...props }: ToggleSwitchProps) => {
   return (
-    <label htmlFor={register ? register.name : ""}>
+    <label htmlFor={register ? register.name : ""} className={styles.wrapper}>
       {createElement("input", {
         type: "checkbox",
         className: toggle(),

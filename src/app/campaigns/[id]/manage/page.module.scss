@@ -1,7 +1,14 @@
-.nav {
+.info {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 26px;
+  flex-direction: column;
+  @include tablet {
+    flex-direction: column-reverse;
+  }
+}
+
+.divider {
+  display: none;
+  @include tablet {
+    display: block;
+  }
 }
