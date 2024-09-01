@@ -56,11 +56,18 @@ const Home = () => {
     <main>
       <section className={cn("__top-banner")}>
         <Slide
-          slidesPerView={2}
-          spaceBetween={20}
+          slidesPerView={1.1}
+          spaceBetween={10}
           slidesPerGroup={1}
           customNav={true}
           styles={styles}
+          breakpoints={{
+            481: { slidesPerView: 1.1, spaceBetween: 10 },
+            624: { slidesPerView: 1.3 },
+            800: { slidesPerView: 1.5 },
+            950: { slidesPerView: 1.8 },
+            1025: { slidesPerView: 2 },
+          }}
         >
           {bannerItems.map(({ title, desc, href, img }, index) => (
             <Banner
@@ -92,6 +99,7 @@ const Home = () => {
             <Category key={index} icon={icon} label={label} />
           ))}
         </Slide>
+        <div className={styles.line}></div>
       </section>
       <section className={cn("__slide")}>
         <h2>
@@ -102,7 +110,26 @@ const Home = () => {
             더보기 <IconMoreRight />
           </button>
         </h2>
-        <Slide styles={styles} customNav={true}>
+        <Slide
+          styles={styles}
+          customNav={true}
+          slidesPerView={1.1}
+          spaceBetween={5}
+          breakpoints={{
+            370: { slidesPerView: 1.3 },
+            440: { slidesPerView: 1.5 },
+            480: { slidesPerView: 1.3 },
+            520: { slidesPerView: 1.4 },
+            580: { slidesPerView: 1.6 },
+            660: { slidesPerView: 1.8 },
+            750: { slidesPerView: 2.2 },
+            850: { slidesPerView: 2.5 },
+            980: { slidesPerView: 2.8 },
+            1100: { slidesPerView: 3.2 },
+            1260: { slidesPerView: 3.5 },
+            1400: { slidesPerView: 4 },
+          }}
+        >
           {testData.premium.map((card) => (
             <Card key={card.id} card={card} />
           ))}
@@ -117,7 +144,26 @@ const Home = () => {
             더보기 <IconMoreRight />
           </button>
         </h2>
-        <Slide styles={styles} customNav={true}>
+        <Slide
+          styles={styles}
+          customNav={true}
+          slidesPerView={1.1}
+          spaceBetween={5}
+          breakpoints={{
+            370: { slidesPerView: 1.3 },
+            440: { slidesPerView: 1.5 },
+            480: { slidesPerView: 1.3 },
+            520: { slidesPerView: 1.4 },
+            580: { slidesPerView: 1.6 },
+            660: { slidesPerView: 1.8 },
+            750: { slidesPerView: 2.2 },
+            850: { slidesPerView: 2.5 },
+            980: { slidesPerView: 2.8 },
+            1100: { slidesPerView: 3.2 },
+            1260: { slidesPerView: 3.5 },
+            1400: { slidesPerView: 4 },
+          }}
+        >
           {testData.popular.map((card) => (
             <Card key={card.id} card={card} />
           ))}

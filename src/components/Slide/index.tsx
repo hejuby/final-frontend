@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, useRef } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/scss";
@@ -36,6 +36,20 @@ const Slide: React.FC<SlideProps> = ({
 }) => {
   const swiperRef = useRef<any>(null);
 
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    const screenWidth = () => {
+      setIsDesktop(window.innerWidth >= 1520);
+    };
+    screenWidth();
+
+    window.addEventListener("resize", screenWidth);
+    return () => window.removeEventListener("resize", screenWidth);
+  }, []);
+
+  console.log(isDesktop);
+
   const handlePrev = () => {
     swiperRef.current.swiper.slidePrev();
   };
@@ -60,7 +74,7 @@ const Slide: React.FC<SlideProps> = ({
           <SwiperSlide key={index}>{child}</SwiperSlide>
         ))}
       </Swiper>
-      {customNav && (
+      {isDesktop && customNav && (
         <CustomNavigation
           onPrev={handlePrev}
           onNext={handleNext}

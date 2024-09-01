@@ -25,4 +25,53 @@
     border-radius: 30px;
     background-color: $white;
   }
+
+  @include tablet {
+    height: 300px;
+    margin-left: 40px;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    background-position: center right;
+    h2 {
+      @include text-style(28, $white, 500);
+      margin-bottom: 10px;
+    }
+    p {
+      @include text-style(16, $white, 400);
+      width: 100%;
+      line-height: 1.4;
+    }
+
+    button {
+      @include text-style(16, $black, 500);
+      margin-top: 20px;
+      padding: 8px 20px;
+      border-radius: 30px;
+      background-color: $white;
+    }
+  }
+  @include mobile {
+    height: 220px;
+    margin-left: 20px;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    background-position: center right;
+    h2 {
+      @include text-style(20, $white, 500);
+      margin-bottom: 7px;
+    }
+    p {
+      @include text-style(14, $white, 400);
+      width: 100%;
+      line-height: 1.4;
+    }
+
+    button {
+      @include text-style(12, $black, 500);
+      margin-top: 20px;
+      padding: 8px 20px;
+      border-radius: 30px;
+      background-color: $white;
+    }
+  }
 }
