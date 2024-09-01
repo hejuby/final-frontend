@@ -1,13 +1,15 @@
 .button {
   position: fixed;
   right: calc((100% - 1400px) / 2 - 170px);
+  bottom: 200px;
   transition: 0.4s;
+  z-index: $top-level;
 
   &:hover {
     opacity: 0.8;
   }
 
   @media (max-width: 1740px) {
-    right: 40px;
+    right: 20px;
   }
 }

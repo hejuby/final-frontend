@@ -48,8 +48,6 @@ const Slide: React.FC<SlideProps> = ({
     return () => window.removeEventListener("resize", screenWidth);
   }, []);
 
-  console.log(isDesktop);
-
   const handlePrev = () => {
     swiperRef.current.swiper.slidePrev();
   };

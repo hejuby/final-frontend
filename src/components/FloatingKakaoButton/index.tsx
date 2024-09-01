@@ -5,7 +5,7 @@ import styles from "./index.module.scss";
 
 const FloatingKakaoButton = () => {
   return (
-    <FloatingButton bottom="20px">
+    <FloatingButton bottom="120px">
       <Link
         href="https://pf.kakao.com/_ZGyxls" // Todo 경민: 추후 제공된 링크로 변경 예정
       >

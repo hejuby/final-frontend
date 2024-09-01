@@ -1,10 +1,11 @@
 .top-button {
   position: fixed;
   right: calc((100% - 1400px) / 2 - 170px);
-  bottom: 132px; // Todo 경민: 추후 위치 변경 예정
+  bottom: 220px;
   transition:
     opacity 0.4s,
     visibility 0.4s;
+  z-index: $top-level;
 
   &:hover {
     opacity: 0.8;
@@ -21,10 +22,14 @@
   }
 
   @include mobile {
-    bottom: 100px;
+    bottom: 190px;
+  }
+
+  @include tablet {
+    bottom: 190px;
   }
 
   @media (max-width: 1740px) {
-    right: 40px;
+    right: 20px;
   }
 }

@@ -14,25 +14,10 @@ const FloatingTopButton = () => {
 
   // Todo 경민: 로그인 화면에서는 버튼 안보이게 추가 설정 예정
 
-  // 현재 screenWidth 체크
-  useEffect(() => {
-    const screenWidth = () => {
-      if (window.innerWidth <= 390) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
-    };
-    screenWidth();
-
-    window.addEventListener("resize", screenWidth);
-    return () => window.removeEventListener("resize", screenWidth);
-  }, []);
-
   // 현재 scroll 체크
   useEffect(() => {
     const handleTopBtn = () => {
-      if (window.scrollY > 800) {
+      if (window.scrollY > 100) {
         setShowBtn(true);
       } else {
         setShowBtn(false);
@@ -41,6 +26,16 @@ const FloatingTopButton = () => {
 
     window.addEventListener("scroll", handleTopBtn);
     return () => window.removeEventListener("scroll", handleTopBtn);
+  }, []);
+
+  useEffect(() => {
+    const screenWidth = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+    screenWidth();
+
+    window.addEventListener("resize", screenWidth);
+    return () => window.removeEventListener("resize", screenWidth);
   }, []);
 
   // 클릭시 최상단 이동
