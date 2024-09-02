@@ -57,7 +57,7 @@ const Header = () => {
                 <Link href="/">
                   <Logo />
                 </Link>
-                <Link href="/">체험단</Link>
+                <Link href="/search">체험단</Link>
                 <Link href="/">이용안내</Link>
                 <Link href="/announcement">게시판</Link>
               </div>

@@ -1,0 +1,43 @@
+.modal-wrap {
+  position: absolute;
+  left: 0;
+  top: 90px;
+  width: 512px;
+  padding: 20px 10px;
+  border: 1px solid $gray-20;
+  border-radius: 10px;
+  background-color: $white;
+  box-shadow: $box-shadow;
+
+  .city-select,
+  .county-select {
+    margin-bottom: 10px;
+
+    > button {
+      width: 60px;
+      padding: 8px 0;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      border-radius: 20px;
+      border: 1px solid $gray-20;
+      background-color: $white;
+      color: $gray-50;
+      .selected {
+        color: red;
+      }
+    }
+    > button.selected {
+      background-color: $blue-10;
+      color: $blue-40;
+      border: none;
+    }
+  }
+  .county-select {
+    margin-top: 10px;
+    > button {
+      width: 88px;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+  }
+}

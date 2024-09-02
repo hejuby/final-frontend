@@ -1,0 +1,80 @@
+.container {
+  padding-top: 50px;
+
+  h2 {
+    @include text-style(36, $black, 600);
+  }
+
+  .select-section {
+    @include flex(between, start);
+    position: relative;
+    margin-top: 20px;
+
+    &__left {
+      // @include flex(start, center);
+      @include text-style(20, $black, 500);
+      .select-title {
+        @include flex(start, center);
+        gap: 15px;
+        p {
+          @include flex(start, center);
+          gap: 15px;
+          span {
+            margin-top: 5px;
+          }
+        }
+        button {
+          @include flex(start, center);
+          gap: 15px;
+          margin-left: 10px;
+          font-weight: 500;
+          span {
+            margin-top: 4px;
+          }
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+      }
+
+      .selected-option {
+        @include flex(start, center);
+        @include text-style(16, $blue-40, 400);
+        margin-top: 10px;
+        .selected-item {
+          @include flex(start, center);
+          width: fit-content;
+          max-width: 200px;
+          margin-right: 10px;
+          padding: 8px 16px;
+          border-radius: 20px;
+          background-color: $blue-10;
+
+          button {
+            margin-top: 3px;
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+
+    &__right {
+      @include flex(start, center);
+      gap: 10px;
+
+      button {
+        @include flex(start, center);
+        flex-shrink: 0;
+        height: 38px;
+        padding: 0px 10px;
+        border: 1px solid $gray-20;
+        border-radius: 4px;
+        span {
+          display: inline-block;
+          margin-left: 5px;
+          color: $gray-60;
+        }
+      }
+    }
+  }
+}
