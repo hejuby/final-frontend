@@ -10,6 +10,8 @@ import IconClose from "@/assets/icons/icon-close-blue.svg";
 import CityModal from "./_component/CityModal";
 import useDialog from "@/hooks/useDialog";
 import Selectbox, { Option } from "@/components/Selectbox/index";
+import testData from "@/data/home_test.json";
+import Card from "@/components/Home/Card";
 
 const Search = () => {
   const { alert } = useDialog();
@@ -204,15 +206,25 @@ const Search = () => {
           </button>
         </div>
         {/* 지역선택 모달 */}
-        {isCityModal && (
-          <CityModal
-            selectedCity={selectedCity}
-            selectedCounty={selectedCounty}
-            addCity={handleCitySelect}
-            addCounty={handleCountySelect}
-            deleteCounty={handleDeleteCounty}
-          />
-        )}
+        <div
+          className={styles["modal-position"]}
+          style={selectedCounty.length > 0 ? { top: 90 } : { top: 40 }}
+        >
+          {isCityModal && (
+            <CityModal
+              selectedCity={selectedCity}
+              selectedCounty={selectedCounty}
+              addCity={handleCitySelect}
+              addCounty={handleCountySelect}
+              deleteCounty={handleDeleteCounty}
+            />
+          )}
+        </div>
+      </section>
+      <section className={styles["card-section"]}>
+        {testData.premium.map((card) => (
+          <Card key={card.id} card={card} />
+        ))}
       </section>
     </div>
   );

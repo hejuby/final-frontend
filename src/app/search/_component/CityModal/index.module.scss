@@ -1,7 +1,7 @@
 .modal-wrap {
   position: absolute;
   left: 0;
-  top: 90px;
+  z-index: $header-level;
   width: 512px;
   padding: 20px 10px;
   border: 1px solid $gray-20;

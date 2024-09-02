@@ -1,15 +1,18 @@
 .container {
   padding-top: 50px;
+  padding-bottom: 100px;
 
   h2 {
     @include text-style(36, $black, 600);
   }
 
+  // 상단 필터 섹션
   .select-section {
     @include flex(between, start);
     position: relative;
     margin-top: 20px;
 
+    // 좌측 지역선택
     &__left {
       // @include flex(start, center);
       @include text-style(20, $black, 500);
@@ -58,6 +61,7 @@
       }
     }
 
+    // 우측 셀렉트 섹션
     &__right {
       @include flex(start, center);
       gap: 10px;
@@ -75,6 +79,32 @@
           color: $gray-60;
         }
       }
+    }
+    // 모달 위치
+    .modal-position {
+      position: absolute;
+      left: 0;
+    }
+  }
+
+  // 카드 섹션
+  .card-section {
+    @include flex(start, start);
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    gap: 40px;
+    width: fit-content;
+    max-width: 100%;
+    margin: auto;
+    margin-top: 20px;
+
+    @include desktop {
+      gap: 2%;
+    }
+
+    @include tablet {
+      @include flex(between, start);
+      gap: 0;
     }
   }
 }

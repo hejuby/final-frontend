@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import ms from "@/utils/modifierSelector";
 import Line from "@/components/Line";
@@ -31,9 +33,14 @@ interface ICardProps {
   };
 }
 const Card: React.FC<ICardProps> = ({ type = "vertical", card }) => {
+  const pathname = usePathname();
+
+  const isSearchPage = pathname === "/search";
+  const optionalClass = isSearchPage ? styles["search-page"] : "";
+
   if (!card) return null;
   return (
-    <div className={cn(`--${type}`)}>
+    <div className={`${cn(`--${type}`)} ${optionalClass}`}>
       <div className={styles["image-content"]}>
         <Image src={testImg} alt="cardImage" />
         {type === "vertical" && (
