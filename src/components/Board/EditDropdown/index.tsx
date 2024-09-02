@@ -12,9 +12,15 @@ interface EditDropdownProps {
   type: "post" | "comment";
   boardType?: BoardType;
   id: number;
+  commentEdit?: () => void;
 }
 
-const EditDropdown = ({ type, boardType, id }: EditDropdownProps) => {
+const EditDropdown = ({
+  type,
+  boardType,
+  id,
+  commentEdit,
+}: EditDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   if (type === "post" && !boardType) {
@@ -44,7 +50,11 @@ const EditDropdown = ({ type, boardType, id }: EditDropdownProps) => {
                 <IconEdit viewBox="0 0 24 24" />
               </Link>
             ) : (
-              <button type="button" className={styles.dropdown__button}>
+              <button
+                type="button"
+                className={styles.dropdown__button}
+                onClick={commentEdit}
+              >
                 <p>수정하기</p>
                 <IconEdit viewBox="0 0 24 24" />
               </button>

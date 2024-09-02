@@ -1,11 +1,16 @@
+import Link from "next/link";
 import Button from "@/components/Button";
 import styles from "./index.module.scss";
 
-const PostButton = () => {
+interface PostButtonProps {
+  href: string;
+}
+
+const PostButton = ({ href }: PostButtonProps) => {
   return (
-    <div className={styles.div}>
-      <Button>글 작성</Button>
-    </div>
+    <Link href={href} className={styles.wrapper}>
+      <Button padding="23px">글 작성</Button>
+    </Link>
   );
 };
 

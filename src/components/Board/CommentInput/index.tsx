@@ -4,8 +4,14 @@ import { useState } from "react";
 import Button from "@/components/Button";
 import styles from "./index.module.scss";
 
-const CommentInput = ({ id = "comment" }: { id?: string }) => {
-  const [comment, setComment] = useState<string>("");
+const CommentInput = ({
+  id = "comment",
+  value = "",
+}: {
+  id?: string;
+  value?: string;
+}) => {
+  const [comment, setComment] = useState<string>(value);
 
   return (
     <form
@@ -20,6 +26,7 @@ const CommentInput = ({ id = "comment" }: { id?: string }) => {
         className={styles.comment__input}
         form={id}
         placeholder="댓글을 남겨보세요"
+        value={value}
         onChange={(event) => {
           setComment(event.target.value);
         }}

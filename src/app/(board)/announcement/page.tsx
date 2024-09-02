@@ -1,5 +1,5 @@
 import Search from "@/components/Board/Search";
-import PostButton from "@/components/Board/PostButton";
+// import PostButton from "@/components/Board/PostButton";
 import PostDivider from "@/components/Board/PostDivider";
 import { CommunityItemProps } from "@/components/Board/ListItem";
 import AnnouncementList from "@/components/Board/AnnouncementList";
@@ -20,7 +20,7 @@ const Board = async ({
         <nav className={styles.search}>
           <Search />
         </nav>
-        <PostButton />
+        {/* <PostButton /> */}
       </section>
       <PostDivider />
       <section className={styles.list}>

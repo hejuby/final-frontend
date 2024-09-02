@@ -1,8 +1,6 @@
-.div {
-  & > button {
-    padding: 0 23px;
-    @include tablet {
-      display: none;
-    }
+.wrapper {
+  display: block;
+  @include tablet {
+    display: none;
   }
 }

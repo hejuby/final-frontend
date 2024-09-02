@@ -28,7 +28,7 @@ const Board = async ({
             })}
           />
         </nav>
-        <PostButton />
+        <PostButton href="/follows/create" />
       </section>
       <PostDivider />
       <section className={styles.list}>

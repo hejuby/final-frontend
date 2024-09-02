@@ -28,7 +28,7 @@ const Board = async ({
             })}
           />
         </nav>
-        <PostButton />
+        <PostButton href="/community/create" />
       </section>
       <PostDivider />
       <section className={styles.list}>

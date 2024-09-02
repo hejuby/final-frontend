@@ -1,4 +1,5 @@
 import { CommunityItemProps } from "@/components/Board/ListItem";
+import PostDivider from "@/components/Board/PostDivider";
 import PostTitle from "@/components/Board/PostTitle";
 import PostContent from "@/components/Board/PostContent";
 import MobileCommentCount from "@/components/Board/MobileCommentCount";
@@ -20,6 +21,7 @@ const Post = async ({ params }: { params: { postId: string } }) => {
 
   return (
     <>
+      <PostDivider marginBottom="30px" />
       <section className={styles.post}>
         <PostTitle post={post} />
         <PostContent content={post.content} />
