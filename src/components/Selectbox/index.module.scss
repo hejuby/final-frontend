@@ -97,7 +97,7 @@
   }
 
   &--size-medium {
-    max-width: 114px;
+    min-width: 120px;
 
     .select {
       @include text-style(16, $black);
