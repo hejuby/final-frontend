@@ -12,6 +12,7 @@ import useDialog from "@/hooks/useDialog";
 import Selectbox, { Option } from "@/components/Selectbox/index";
 import testData from "@/data/home_test.json";
 import Card from "@/components/Home/Card";
+import Slide from "@/components/Slide";
 
 const Search = () => {
   const { alert } = useDialog();

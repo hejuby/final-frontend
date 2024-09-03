@@ -97,14 +97,96 @@
     max-width: 100%;
     margin: auto;
     margin-top: 20px;
+  }
 
-    @include desktop {
-      gap: 2%;
+  // 반응형
+  @include desktop {
+    .select-section {
+      flex-direction: column;
+      &__right {
+        margin-top: 20px;
+      }
     }
 
-    @include tablet {
+    .card-section {
+      gap: 2%;
+    }
+  }
+
+  @include tablet {
+    margin-top: 80px;
+    padding: 0 40px;
+
+    .card-section {
       @include flex(between, start);
       gap: 0;
+    }
+  }
+
+  @media (max-width: 815px) {
+    margin-top: 80px;
+    padding: 0 20px;
+  }
+
+  @media (max-width: 666px) {
+    h2 {
+      padding-left: 20px;
+    }
+    padding: 0px;
+    .select-section {
+      &__left {
+        width: 100%;
+        .select-title {
+          padding-left: 20px;
+        }
+        .selected-option {
+          display: flex;
+          padding: 0 20px;
+          overflow-x: auto;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          .selected-item {
+            width: fit-content;
+            font-size: 14px;
+            text-align: center;
+            white-space: nowrap;
+          }
+        }
+      }
+      &__right {
+        width: 100%;
+        height: 100%;
+        padding: 0 20px;
+        display: flex;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        > div > div {
+          position: relative;
+        }
+
+        ul {
+          position: absolute;
+          left: 0;
+          z-index: 100;
+          overflow: visible;
+        }
+      }
+    }
+
+    .card-section {
+      padding: 0 20px;
+    }
+  }
+
+  @include mobile {
+    .card-section {
+      padding: 0 20px;
     }
   }
 }

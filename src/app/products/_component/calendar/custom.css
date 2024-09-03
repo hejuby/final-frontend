@@ -1,0 +1,298 @@
+.clalendar-custom {
+  margin-top: 25px;
+}
+
+.react-calendar {
+  border: 1px solid #ededef;
+  border-radius: 8px;
+  padding: 12px 25px;
+  vertical-align: top;
+}
+
+.react-calendar__month-view {
+  abbr {
+    color: #495057;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+.react-calendar__month-view__weekdays__weekday--weekend abbr[title="일요일"] {
+  color: #f16161;
+}
+
+/* 이번 달 일자 */
+.react-calendar__tile {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 10px;
+  height: 50px;
+}
+.react-calendar__tile:hover {
+  background: none;
+}
+/* 저번 달 & 다음 달 일자 */
+.react-calendar__month-view__days__day--neighboringMonth abbr {
+  color: #b5b5b5;
+  font-size: 14px;
+}
+
+/* 요일섹션 */
+.react-calendar__month-view__weekdays {
+  abbr {
+    text-decoration: none;
+  }
+}
+
+.react-calendar__tile:disabled {
+  background-color: #fff;
+}
+
+.react-calendar__navigation__next2-button {
+  display: none;
+}
+.react-calendar__navigation__prev2-button {
+  display: none;
+}
+
+/* hover */
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: none;
+}
+
+.react-calendar__tile--active {
+  background: none;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background: none;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background: none;
+  opacity: 0.7;
+}
+
+/* 리뷰 마감일 */
+.react-calendar__tile.review-day {
+  position: relative;
+}
+.react-calendar__tile.review-day::after {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: #f16161;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -20px);
+}
+
+.react-calendar__tile.review-day::before {
+  content: "리뷰마감";
+  display: inline-block;
+  font-size: 12px;
+  width: 100px;
+  position: absolute;
+  bottom: -2px;
+  color: #f16161;
+}
+
+.react-calendar__tile.review-day abbr {
+  color: white;
+  z-index: 2;
+}
+
+/* 결과 발표 */
+.react-calendar__tile.announce-day {
+  position: relative;
+}
+.react-calendar__tile.announce-day::after {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: #f16161;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -20px);
+}
+
+.react-calendar__tile.announce-day::before {
+  content: "결과발표";
+  display: inline-block;
+  font-size: 12px;
+  width: 100px;
+  position: absolute;
+  bottom: -2px;
+  color: #f16161;
+}
+
+.react-calendar__tile.announce-day abbr {
+  color: white;
+  z-index: 2;
+}
+
+/* 지원시작, 마감일 */
+.react-calendar__tile.application-start-day,
+.react-calendar__tile.application-end-day {
+  position: relative;
+}
+.react-calendar__tile.application-start-day::after,
+.react-calendar__tile.application-end-day::after {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: #acadb3;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -20px);
+  z-index: 2;
+}
+
+.react-calendar__tile.application-start-day::before {
+  content: "모집기간";
+  display: inline-block;
+  font-size: 12px;
+  width: 100px;
+  position: absolute;
+  bottom: -2px;
+  color: #acadb3;
+}
+
+.react-calendar__tile.application-start-day abbr,
+.react-calendar__tile.application-end-day abbr {
+  color: white;
+  z-index: 3;
+}
+
+/* 지원기간 */
+.react-calendar__tile.application-period {
+  position: relative;
+}
+.react-calendar__tile.application-period::after {
+  content: "";
+  display: inline-block;
+  width: 200%;
+  height: 30px;
+  background-color: #eeeff0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -21px);
+}
+
+.react-calendar__tile.application-period:first-child abbr {
+  color: red !important;
+}
+
+.react-calendar__tile.application-period abbr {
+  color: #495057;
+  z-index: 2;
+}
+
+.react-calendar button {
+  overflow: visible !important;
+}
+
+/* 체험 시작, 마감일자 */
+.react-calendar__tile.experience-start-day,
+.react-calendar__tile.experience-end-day {
+  position: relative;
+}
+.react-calendar__tile.experience-start-day::after,
+.react-calendar__tile.experience-end-day::after {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: #4b65f7;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -20px);
+  z-index: 2;
+}
+
+.react-calendar__tile.experience-start-day::before {
+  content: "체험기간";
+  display: inline-block;
+  font-size: 12px;
+  width: 100px;
+  position: absolute;
+  bottom: -2px;
+  color: #4b65f7;
+}
+
+.react-calendar__tile.experience-start-day abbr,
+.react-calendar__tile.experience-end-day abbr {
+  color: white;
+  z-index: 3;
+}
+
+/* 체험기간 */
+.react-calendar__tile.experience-period {
+  position: relative;
+}
+.react-calendar__tile.experience-period::after {
+  content: "";
+  display: inline-block;
+  width: 200%;
+  height: 30px;
+  background-color: #f4f5ff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -21px);
+  border-radius: 0;
+}
+
+.react-calendar__tile.experience-period:first-child abbr {
+  color: red !important;
+}
+
+.react-calendar__tile.experience-period abbr {
+  color: #495057;
+  z-index: 2;
+}
+
+.react-calendar button {
+  overflow: visible !important;
+}
+
+/* 오늘 날짜 */
+.react-calendar__tile--now {
+  position: relative;
+  background-color: #fff;
+}
+.react-calendar__tile--now {
+  abbr {
+    color: #fcbe00 !important;
+  }
+}
+
+.react-calendar__tile--now::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #fcbe00;
+  position: absolute;
+  left: 50%;
+  top: 3px;
+  transform: translateX(-50%);
+  z-index: 4;
+}

@@ -31,6 +31,7 @@ const RootLayout = ({
         <MobileGnb />
         <Dialog />
         <div id="dialog" />
+        <Script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bd6cdd6d6a2dc07e1f79277450fafe&libraries=services,clusterer&autoload=false" />
       </body>
     </html>
   );

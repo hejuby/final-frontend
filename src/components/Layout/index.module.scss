@@ -14,10 +14,11 @@
   }
 
   &.main-page {
-    padding-bottom: 150px;
     @include tablet {
       max-width: 100%;
       padding: 0;
     }
+    overflow: hidden;
+    padding-bottom: 150px;
   }
 }
