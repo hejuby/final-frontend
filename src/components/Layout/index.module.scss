@@ -20,5 +20,8 @@
     }
     // overflow: hidden;
     padding-bottom: 150px;
+    @include tablet {
+      padding-top: 52px;
+    }
   }
 }

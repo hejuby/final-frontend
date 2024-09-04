@@ -6,7 +6,8 @@ import styles from "./index.module.scss";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
-  const isMainPage = pathname === "/" || pathname === "/search";
+  const isMainPage =
+    pathname === "/" || pathname === "/search" || pathname === "/products";
 
   return (
     <main

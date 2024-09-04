@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
@@ -12,8 +12,10 @@ import Tag from "@/components/Tag";
 import testImg from "../../../public/images/thumb-bg1.jpg";
 import styles from "./page.module.scss";
 import Customcalendar from "./_component/calendar";
+import Line from "@/components/Line";
 
 const Products = () => {
+  const [isTablet, setIsTablet] = useState(false);
   // 임시 데이터
   const applicationStartDate = new Date("2024-08-25T10:00:00");
   const applicationEndDate = new Date("2024-08-30T18:00:00");
@@ -28,6 +30,17 @@ const Products = () => {
   const KakaoMap = dynamic(() => import("./_component/kakaoMap"), {
     ssr: false,
   });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsTablet(window.innerWidth <= 1024);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <div className={styles.products}>
       {/* 좌측 정보 */}
@@ -56,12 +69,22 @@ const Products = () => {
             </span>
           </p>
         </div>
-
+        {/* 캠페인 정보 */}
         <div className={styles["product-info-wrap"]}>
           <div className={styles["product-info"]}>
             <div className={styles["product-info__img"]}>
               <Image src={testImg} alt="cardImage" />
             </div>
+            {isTablet && (
+              <div className={styles["product-info__update"]}>
+                <h3>
+                  모집기간이 <span>9일</span> 남았어요!
+                </h3>
+                <p>
+                  <span>지원 30 </span> / 3명
+                </p>
+              </div>
+            )}
             <div className={styles["product-info__text"]}>
               <h4>프로젝트 일정</h4>
               <ul>
@@ -91,6 +114,7 @@ const Products = () => {
               </div>
             </div>
           </div>
+          {/* 캠페인 주의사항 */}
           <div className={styles["product-notice"]}>
             <span>
               <IconWarning color="#6f717b" width={18} />
@@ -98,6 +122,22 @@ const Products = () => {
             방문&체험 후 [플랫폼] 콘텐츠를 올리는 체험단입니다.
           </div>
         </div>
+        {isTablet && (
+          <div className={styles["mobile-calendar"]}>
+            <Line type="thick" />
+            <div className={styles["mobile-calendar__wrap"]}>
+              <Customcalendar
+                applicationStartDate={applicationStartDate}
+                applicationEndDate={applicationEndDate}
+                announcementDate={announcementDate}
+                experienceStartDate={experienceStartDate}
+                experienceEndDate={experienceEndDate}
+                reviewDate={reviewDate}
+              />
+            </div>
+            <Line type="thick" />
+          </div>
+        )}
         <div className={styles["product-notice-list"]}>
           <dl>
             <dt>방문・예약 안내</dt>
@@ -170,7 +210,7 @@ const Products = () => {
           </dl>
           <dl>
             <dt>태그용 키워드</dt>
-            <dd>
+            <dd className={styles["tag-wrap"]}>
               <Tag color="light-gray">커피</Tag>
               <Tag color="light-gray">디저트카페</Tag>
               <Tag color="light-gray">분위기 맛집</Tag>
@@ -210,36 +250,42 @@ const Products = () => {
             </dd>
           </dl>
         </div>
-        <button className={styles["enterprise-info"]} type="button">
-          <div>
+        <div className={styles["enterprise-info-wrap"]}>
+          <button className={styles["enterprise-info"]} type="button">
             <div>
-              <Image src={testImg} alt="enterpriseImage" />
+              <div>
+                <Image src={testImg} alt="enterpriseImage" />
+              </div>
+              <p>24시 감자탕</p>
             </div>
-            <p>24시 감자탕</p>
-          </div>
-          <p>
-            <IconRight />
-          </p>
-        </button>
+            <p>
+              <IconRight />
+            </p>
+          </button>
+        </div>
       </section>
 
       {/* 우측 캘린더 */}
-      <section className={styles.products__right}>
-        <h3>
-          모집기간이 <span>9일</span> 남았어요!
-        </h3>
-        <p>지원 30명 / 30명</p>
-        <div className={styles["calendar-wrap"]}>
-          <Customcalendar
-            applicationStartDate={applicationStartDate}
-            applicationEndDate={applicationEndDate}
-            announcementDate={announcementDate}
-            experienceStartDate={experienceStartDate}
-            experienceEndDate={experienceEndDate}
-            reviewDate={reviewDate}
-          />
-        </div>
-      </section>
+      {!isTablet && (
+        <section className={styles.products__right}>
+          <h3>
+            모집기간이 <span>9일</span> 남았어요!
+          </h3>
+          <p>
+            <span>지원 30명</span> / 30명
+          </p>
+          <div className={styles["calendar-wrap"]}>
+            <Customcalendar
+              applicationStartDate={applicationStartDate}
+              applicationEndDate={applicationEndDate}
+              announcementDate={announcementDate}
+              experienceStartDate={experienceStartDate}
+              experienceEndDate={experienceEndDate}
+              reviewDate={reviewDate}
+            />
+          </div>
+        </section>
+      )}
     </div>
   );
 };

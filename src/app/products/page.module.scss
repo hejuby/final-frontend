@@ -48,9 +48,9 @@
           border-radius: 8px;
           overflow: hidden;
           img {
-            min-width: 100%;
-            min-height: 100%;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
           }
         }
 
@@ -103,7 +103,7 @@
     }
 
     .product-notice-list {
-      margin-top: 30px;
+      margin-top: 60px;
       dl {
         @include flex(start, start);
         padding: 30px 0 15px;
@@ -157,6 +157,11 @@
             overflow: hidden;
           }
         }
+
+        dd.tag-wrap {
+          @include flex(start, center);
+          gap: 7px;
+        }
       }
     }
 
@@ -191,6 +196,183 @@
     padding-left: 50px;
     h3 {
       margin-top: 35px;
+      span {
+        color: $blue-40;
+      }
+    }
+    > p {
+      margin-top: 20px;
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+
+  @include desktop {
+    &__left {
+      width: calc(100% - 405px);
+      padding-right: 20px;
+
+      .product-info-wrap {
+        margin-top: 10px;
+        padding: 15px;
+        border: 1px solid $gray-30;
+        border-radius: 10px;
+        .product-info {
+          @include flex(strat, start);
+          flex-direction: column;
+          flex-shrink: 0;
+
+          &__img {
+            width: 80%;
+            height: 400px;
+            margin: auto;
+          }
+
+          &__text {
+            width: 100%;
+            padding-top: 20px;
+            border-top: 1px solid $gray-20;
+            margin-top: 40px;
+            padding-left: 0;
+          }
+        }
+      }
+
+      .product-notice-list {
+        margin-top: 40px;
+        dl {
+          dt {
+            width: 200px;
+          }
+        }
+      }
+    }
+
+    &__right {
+      width: 405px;
+      padding-left: 30px;
+      h3 {
+        margin-top: 35px;
+      }
+    }
+  }
+
+  @include tablet {
+    &__left {
+      width: 100%;
+      border-right: none;
+      padding-right: 0;
+
+      h2 {
+        font-size: 30px;
+        margin-top: 25px;
+        padding: 0 40px;
+      }
+      .product-summary {
+        padding: 0 40px;
+      }
+
+      .product-info-wrap {
+        margin-top: 10px;
+        padding: 15px 40px;
+        border: 1px solid $gray-30;
+        border-radius: 10px;
+        border: none;
+        .product-info {
+          @include flex(strat, start);
+          flex-direction: column;
+          flex-shrink: 0;
+
+          &__update {
+            margin-top: 20px;
+            h3 {
+              @include text-style(20, $black, 600);
+              span {
+                color: $blue-40;
+              }
+            }
+            p {
+              margin-top: 10px;
+              span {
+                font-weight: 500;
+              }
+            }
+          }
+
+          &__text {
+            margin-top: 20px;
+          }
+        }
+      }
+      .mobile-calendar {
+        &__wrap {
+          width: fit-content;
+          margin: auto;
+          padding-bottom: 25px;
+        }
+      }
+      .product-notice-list {
+        padding: 0px 40px;
+        dl {
+          flex-direction: column;
+          dt {
+            width: 100%;
+          }
+          dd {
+            width: 100%;
+            margin-top: 20px;
+            ul {
+              li {
+                p {
+                  margin-left: 5px;
+                }
+              }
+            }
+            .map-wrap {
+              height: 248px;
+            }
+          }
+        }
+      }
+      .enterprise-info-wrap {
+        padding: 0 40px;
+      }
+    }
+  }
+
+  @include mobile {
+    &__left {
+      h2 {
+        @include text-style(24, $black, 600);
+        margin-top: 20px;
+        padding: 0 20px;
+      }
+
+      .product-summary {
+        padding: 0 20px;
+      }
+      .product-info-wrap {
+        padding: 10px 20px;
+        .product-info {
+          @include flex(strat, start);
+          flex-direction: column;
+          flex-shrink: 0;
+
+          &__img {
+            width: 100%;
+            height: 400px;
+            margin: auto;
+          }
+        }
+      }
+      .product-notice-list {
+        margin-top: 0px;
+        padding: 0 20px;
+      }
+      .enterprise-info-wrap {
+        padding: 0 20px;
+      }
     }
   }
 }
