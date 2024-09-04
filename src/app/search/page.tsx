@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Modal from "@/components/Modal";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
 import IconLeft from "@/assets/icons/icon-direction-right.svg";
@@ -29,6 +29,7 @@ const Search = () => {
   >([]);
 
   const [isTablet, setIsTablet] = useState(false);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   const handleArea = () => {
     setIsCityModal(!isCityModal);
@@ -105,6 +106,25 @@ const Search = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        setIsCityModal(false);
+      }
+    };
+
+    if (isCityModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isCityModal]);
   return (
     <div className={styles.container}>
       <h2>체험검색</h2>
@@ -235,6 +255,7 @@ const Search = () => {
         <div
           className={styles["modal-position"]}
           style={selectedCounty.length > 0 ? { top: 90 } : { top: 40 }}
+          ref={modalRef}
         >
           {!isTablet && isCityModal && (
             <CityModal
@@ -243,6 +264,7 @@ const Search = () => {
               addCity={handleCitySelect}
               addCounty={handleCountySelect}
               deleteCounty={handleDeleteCounty}
+              isTablet={isTablet}
             />
           )}
           {isTablet && isCityModal && (
@@ -253,6 +275,9 @@ const Search = () => {
                 addCity={handleCitySelect}
                 addCounty={handleCountySelect}
                 deleteCounty={handleDeleteCounty}
+                setIsModal={setIsCityModal}
+                isModal={isCityModal}
+                isTablet={isTablet}
               />
             </Modal>
           )}
