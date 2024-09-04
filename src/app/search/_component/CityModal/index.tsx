@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./index.module.scss";
 import cityList from "@/data/city_list.json";
 import Line from "@/components/Line";
+import styles from "./index.module.scss";
 
 interface CityModalProps {
   selectedCity: string | null;
@@ -61,6 +61,7 @@ const CityModal: React.FC<CityModalProps> = ({
             key={city}
             onClick={() => handleCitySelect(city)}
             className={selectedCity === city ? styles.selected : ""}
+            type="button"
           >
             {city}
           </button>
@@ -73,6 +74,7 @@ const CityModal: React.FC<CityModalProps> = ({
           {countyOptions[selectedCity]?.map((county) => (
             <button
               key={county}
+              type="button"
               onClick={() => handleCountySelect(county)}
               className={
                 selectedCounty.some(

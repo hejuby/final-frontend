@@ -69,6 +69,7 @@ const Slide: React.FC<SlideProps> = ({
         breakpoints={breakpoints}
       >
         {React.Children.map(children, (child, index) => (
+          // eslint-disable-next-line
           <SwiperSlide key={index}>{child}</SwiperSlide>
         ))}
       </Swiper>

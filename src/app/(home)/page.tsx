@@ -5,7 +5,6 @@ import Card from "@/components/Home/Card";
 import Banner from "@/components/Home/Banner";
 import Category from "@/components/Home/Category";
 import Slide from "@/components/Slide";
-import styles from "./page.module.scss";
 import Community from "@/assets/icons/icon-cate-community.svg";
 import Guide from "@/assets/icons/icon-cate-guide.svg";
 import Restaurant from "@/assets/icons/icon-cate-yummy.svg";
@@ -17,10 +16,9 @@ import Living from "@/assets/icons/icon-cate-living.svg";
 import Digital from "@/assets/icons/icon-cate-digital.svg";
 import IconSparkle from "@/assets/icons/icon-glass-sparkle.svg";
 import IconHeart from "@/assets/icons/icon-glass-heart.svg";
-
-import ms from "@/utils/modifierSelector";
-
 import testData from "@/data/home_test.json";
+import ms from "@/utils/modifierSelector";
+import styles from "./page.module.scss";
 
 const cn = ms(styles, "section");
 
@@ -59,7 +57,7 @@ const Home = () => {
           slidesPerView={1.1}
           spaceBetween={10}
           slidesPerGroup={1}
-          customNav={true}
+          customNav
           styles={styles}
           breakpoints={{
             481: { slidesPerView: 1.1, spaceBetween: 10 },
@@ -71,6 +69,7 @@ const Home = () => {
         >
           {bannerItems.map(({ title, desc, href, img }, index) => (
             <Banner
+              // eslint-disable-next-line
               key={index}
               title={title}
               desc={desc}
@@ -96,23 +95,24 @@ const Home = () => {
           }}
         >
           {categoryItems.map(({ icon, label }, index) => (
+            // eslint-disable-next-line
             <Category key={index} icon={icon} label={label} />
           ))}
         </Slide>
-        <div className={styles.line}></div>
+        <div className={styles.line}>{` `}</div>
       </section>
       <section className={cn("__slide")}>
         <h2>
           <span>
             프리미엄 체험단 <IconSparkle />
           </span>
-          <button>
+          <button type="button" aria-label="moreIcon">
             더보기 <IconMoreRight />
           </button>
         </h2>
         <Slide
           styles={styles}
-          customNav={true}
+          customNav
           slidesPerView={1.1}
           spaceBetween={5}
           breakpoints={{
@@ -140,13 +140,13 @@ const Home = () => {
           <span>
             인기 체험단 <IconHeart />
           </span>
-          <button>
+          <button type="button" aria-label="moreIcon">
             더보기 <IconMoreRight />
           </button>
         </h2>
         <Slide
           styles={styles}
-          customNav={true}
+          customNav
           slidesPerView={1.1}
           spaceBetween={5}
           breakpoints={{
@@ -173,7 +173,7 @@ const Home = () => {
         <div>
           <h2>
             신규 체험단
-            <button>
+            <button type="button">
               더보기 <IconMoreRight />
             </button>
           </h2>
@@ -185,7 +185,7 @@ const Home = () => {
         <div>
           <h2>
             마감임박 체험단
-            <button>
+            <button type="button" aria-label="moreIcon">
               더보기 <IconMoreRight />
             </button>
           </h2>

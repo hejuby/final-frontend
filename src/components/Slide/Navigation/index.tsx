@@ -14,15 +14,17 @@ const CustomNavigation: React.FC<CustomNavigationProps> = ({
   return (
     <div className={styles["custom-nav"]}>
       <button
+        type="button"
         onClick={onPrev}
         className={`${styles["custom-nav__btn"]} ${styles["left-button"]}`}
         aria-label="left-button"
-      ></button>
+      />
       <button
+        type="button"
         onClick={onNext}
         className={`${styles["custom-nav__btn"]} ${styles["right-button"]}`}
         aria-label="right-button"
-      ></button>
+      />
     </div>
   );
 };

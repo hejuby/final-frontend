@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -12,9 +13,9 @@ import IconBadgeLg from "@/assets/icons/icon-premium-badge-lg.svg";
 import IconBadgeMd from "@/assets/icons/icon-premium-badge-md.svg";
 import Tag from "@/components/Tag";
 import formatDate from "@/utils/formatDate";
+import testImg from "../../../../public/images/thumb-bg1.jpg";
 import styles from "./index.module.scss";
 
-import testImg from "../../../../public/images/thumb-bg1.jpg";
 const cn = ms(styles, "card-wrap");
 
 interface ICardProps {
@@ -51,7 +52,7 @@ const Card: React.FC<ICardProps> = ({ type = "vertical", card }) => {
                 <IconPointCoin />
               </span>
             </p>
-            <button type="button">
+            <button type="button" aria-label="icon">
               <IconHeartWhite />
             </button>
           </div>
@@ -62,7 +63,7 @@ const Card: React.FC<ICardProps> = ({ type = "vertical", card }) => {
           <h4>
             10일 남음
             {type === "horizontal" && (
-              <button>
+              <button type="button" aria-label="icon">
                 <IconHeartGray />
               </button>
             )}

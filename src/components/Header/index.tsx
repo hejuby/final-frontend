@@ -47,6 +47,16 @@ const Header = () => {
   const isAuthPage = pathname.startsWith("/auth");
   const isHomePage = pathname === "/";
 
+  let content;
+
+  if (isAuthPage) {
+    content = <MobileLogo />;
+  } else if (isHomePage) {
+    content = null;
+  } else {
+    content = <p>{title}</p>;
+  }
+
   return (
     <>
       <header className={styles.header}>
@@ -69,7 +79,11 @@ const Header = () => {
             <>
               <div className={styles["header__mobile-left"]}>
                 {!isHomePage ? (
-                  <button onClick={() => router.back()}>
+                  <button
+                    onClick={() => router.back()}
+                    type="button"
+                    aria-label="left-icon"
+                  >
                     <IconLeft />
                   </button>
                 ) : (
@@ -78,8 +92,7 @@ const Header = () => {
                   </Link>
                 )}
               </div>
-              {isAuthPage ? <MobileLogo /> : isHomePage ? null : <p>{title}</p>}
-
+              {content}
               <ul className={styles["header__mobile-right"]}>
                 <li>
                   <Link href="/">

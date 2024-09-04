@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
-import styles from "./page.module.scss";
+import React, { useEffect, useState } from "react";
+import Modal from "@/components/Modal";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
 import IconLeft from "@/assets/icons/icon-direction-right.svg";
 import IconDown from "@/assets/icons/icon-direction-down.svg";
 import IconUp from "@/assets/icons/icon-direction-up.svg";
 import IconClose from "@/assets/icons/icon-close-blue.svg";
-import CityModal from "./_component/CityModal";
 import useDialog from "@/hooks/useDialog";
 import Selectbox, { Option } from "@/components/Selectbox/index";
 import testData from "@/data/home_test.json";
 import Card from "@/components/Home/Card";
-import Slide from "@/components/Slide";
+import CityModal from "./_component/CityModal";
+import styles from "./page.module.scss";
 
 const Search = () => {
   const { alert } = useDialog();
@@ -27,6 +27,8 @@ const Search = () => {
   const [selectedCounty, setSelectedCounty] = useState<
     { city: string; county: string }[]
   >([]);
+
+  const [isTablet, setIsTablet] = useState(false);
 
   const handleArea = () => {
     setIsCityModal(!isCityModal);
@@ -93,6 +95,16 @@ const Search = () => {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsTablet(window.innerWidth <= 666);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <div className={styles.container}>
       <h2>체험검색</h2>
@@ -106,24 +118,33 @@ const Search = () => {
                 <IconLeft />
               </span>
             </p>
-            <button onClick={handleArea}>
+            <button onClick={handleArea} type="button">
               전체
               <span>{isCityModal ? <IconUp /> : <IconDown />}</span>
             </button>
           </div>
           {/* 선택지역 */}
+          {/* eslint-disable no-nested-ternary */}
           <div className={styles["selected-option"]}>
             {selectedCity === "전국" && selectedCounty.length === 0 ? (
               <p className={styles["selected-item"]}>
                 전국
-                <button onClick={() => handleDeleteCounty("전국", "")}>
+                <button
+                  onClick={() => handleDeleteCounty("전국", "")}
+                  type="button"
+                  aria-label="close-button"
+                >
                   <IconClose />
                 </button>
               </p>
             ) : selectedCity === "재택" && selectedCounty.length === 0 ? (
               <p className={styles["selected-item"]}>
                 재택
-                <button onClick={() => handleDeleteCounty("재택", "")}>
+                <button
+                  onClick={() => handleDeleteCounty("재택", "")}
+                  type="button"
+                  aria-label="close-button"
+                >
                   <IconClose />
                 </button>
               </p>
@@ -134,7 +155,11 @@ const Search = () => {
                   className={styles["selected-item"]}
                 >
                   {`${city} ${county}`}
-                  <button onClick={() => handleDeleteCounty(city, county)}>
+                  <button
+                    onClick={() => handleDeleteCounty(city, county)}
+                    type="button"
+                    aria-label="close-button"
+                  >
                     <IconClose />
                   </button>
                 </p>
@@ -211,7 +236,7 @@ const Search = () => {
           className={styles["modal-position"]}
           style={selectedCounty.length > 0 ? { top: 90 } : { top: 40 }}
         >
-          {isCityModal && (
+          {!isTablet && isCityModal && (
             <CityModal
               selectedCity={selectedCity}
               selectedCounty={selectedCounty}
@@ -219,6 +244,17 @@ const Search = () => {
               addCounty={handleCountySelect}
               deleteCounty={handleDeleteCounty}
             />
+          )}
+          {isTablet && isCityModal && (
+            <Modal isModal={isCityModal} onBackDrop={handleArea}>
+              <CityModal
+                selectedCity={selectedCity}
+                selectedCounty={selectedCounty}
+                addCity={handleCitySelect}
+                addCounty={handleCountySelect}
+                deleteCounty={handleDeleteCounty}
+              />
+            </Modal>
           )}
         </div>
       </section>
