@@ -2,6 +2,7 @@
   &-container {
     @include pos-center(fixed);
     @include column-flex(between, stretch);
+    z-index: $dialog-level;
     gap: 26px;
     max-width: 338px;
     width: 100%;
@@ -33,5 +34,6 @@
     left: 0;
     background: $black;
     opacity: 0.5;
+    z-index: $dialog-dim-level;
   }
 }

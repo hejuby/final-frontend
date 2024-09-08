@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
-import IconInsta from "@/assets/icons/icon-sns-instargram.svg";
+import IconInsta from "@/assets/icons/icon-sns-instagram.svg";
 import IconPointCoin from "@/assets/icons/icon-point-coin.svg";
 import IconWarning from "@/assets/icons/icon-warning-gray-filled.svg";
 import IconRight from "@/assets/icons/icon-direction-right-gray.svg";

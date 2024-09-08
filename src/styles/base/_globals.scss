@@ -20,3 +20,8 @@
 .text-require {
   color: $alert-blue;
 }
+
+.error-message {
+  @include text-style(12, $alert-red, 600);
+  margin-top: 3px;
+}

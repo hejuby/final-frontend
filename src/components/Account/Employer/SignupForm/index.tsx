@@ -4,18 +4,17 @@ import { useState } from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Selectbox, { Option } from "@/components/Selectbox";
-import SNSInput from "@/components/SNSInput";
 import TermsCheck from "@/components/TermsCheck";
 import styles from "./index.module.scss";
 import Authentication from "../../Authentication";
 
-const SignupInfluencer = () => {
+const SignupFormEmployer = () => {
   const [selectedItem, setSelectedItem] = useState<Option | null>(null);
 
   return (
     <section className={styles.container}>
       <header className={styles.header}>
-        <h2>인플루언서 회원가입</h2>
+        <h2>사업주 회원가입</h2>
       </header>
 
       <form className={styles.form}>
@@ -46,8 +45,8 @@ const SignupInfluencer = () => {
           id="name"
           type="text"
           full
-          label="닉네임"
-          infoMessage="한글, 영문, 숫자 10자까지 (커뮤니티에서 사용할 닉네임)"
+          label="업체명"
+          infoMessage="문자 종류 제한 없이 50자까지 가능"
         />
         <Selectbox
           label="가입경로"
@@ -61,24 +60,6 @@ const SignupInfluencer = () => {
           ]}
           onChange={setSelectedItem}
         />
-        <div className={styles["sns-container"]}>
-          <p className={styles.title}>
-            사용하실 SNS 주소{" "}
-            <span className={styles["text-underline"]}>최소 1개</span>를
-            입력해주세요.{" "}
-            <span className={styles["text-require"]}>&#40;필수&#41;</span>
-          </p>
-          <SNSInput id="blog" type="blog" placeholder="네이버 블로그" gap={5} />
-          <SNSInput
-            id="instargram"
-            type="instargram"
-            placeholder="인스타그램"
-            gap={5}
-          />
-          <SNSInput id="youtube" type="youtube" placeholder="유튜브" gap={5} />
-          <SNSInput id="tictok" type="tictok" placeholder="틱톡" gap={5} />
-          <SNSInput id="etc" type="etc" placeholder="기타" gap={5} />
-        </div>
         <TermsCheck />
       </form>
 
@@ -91,4 +72,4 @@ const SignupInfluencer = () => {
   );
 };
 
-export default SignupInfluencer;
+export default SignupFormEmployer;

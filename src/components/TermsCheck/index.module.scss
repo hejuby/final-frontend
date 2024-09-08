@@ -17,7 +17,6 @@
   }
 
   &__item {
-    @include flex;
     color: $black;
 
     a {

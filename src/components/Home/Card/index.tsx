@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import ms from "@/utils/modifierSelector";
 import Line from "@/components/Line";
-import IconInsta from "@/assets/icons/icon-sns-instargram.svg";
+import IconInsta from "@/assets/icons/icon-sns-instagram.svg";
 import IconHeartWhite from "@/assets/icons/icon-heart-white.svg";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
 import IconPointCoin from "@/assets/icons/icon-point-coin.svg";

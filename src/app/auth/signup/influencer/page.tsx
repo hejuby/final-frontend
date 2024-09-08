@@ -1,7 +1,7 @@
-import SignupInfluencer from "@/components/Account/Influencer/Signup";
+import SignupFormInfluencer from "@/components/Account/Influencer/SignupForm";
 
 const SignupInfluencerPage = () => {
-  return <SignupInfluencer />;
+  return <SignupFormInfluencer />;
 };
 
 export default SignupInfluencerPage;

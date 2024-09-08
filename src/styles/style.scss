@@ -4,13 +4,13 @@
 @import "./constants/z-indexes";
 @import "./constants/typography";
 
-// base
-@import "./base/fonts";
-@import "./base/globals";
-
 // mixins
 @import "./mixins/flex";
 @import "./mixins/responsive";
 @import "./mixins/positions";
 @import "./mixins/line-clamp";
 @import "./mixins/text-style";
+
+// base
+@import "./base/fonts";
+@import "./base/globals";

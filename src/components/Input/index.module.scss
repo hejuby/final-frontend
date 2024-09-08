@@ -20,6 +20,8 @@
   &:read-only {
     @include text-style(14, $gray-50);
     background-color: $gray-disabled;
+    border: 2px solid $gray-20;
+    cursor: unset;
   }
 
   &-field {

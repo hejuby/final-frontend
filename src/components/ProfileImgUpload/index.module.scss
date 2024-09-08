@@ -1,9 +1,11 @@
 .profile-img {
   &-container {
     @include column-flex;
+    width: fit-content;
     position: relative;
+    margin: 0 auto;
 
-    button {
+    .img-upload-button {
       position: relative;
       overflow: hidden;
       width: 95px;
@@ -27,5 +29,14 @@
   label {
     @include text-style(14, $gray-80);
     margin-top: 10px;
+  }
+
+  .img-default-button {
+    margin-top: 10px;
+
+    > button {
+      @include text-style(14, $white, 400);
+      padding: 0 20px;
+    }
   }
 }

@@ -1,6 +1,5 @@
 .container {
   @include text-style(14, $black);
-  position: relative;
 
   .header {
     margin-bottom: 40px;
@@ -153,11 +152,8 @@
     }
   }
 
-  .signiup-text {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: calc(100% + 110px);
+  .signup-text {
+    margin-top: 60px;
     color: $gray-70;
     text-align: center;
 
@@ -169,7 +165,6 @@
     }
 
     @include tablet {
-      position: relative;
       margin-top: 55px;
     }
   }

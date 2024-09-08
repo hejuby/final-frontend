@@ -3,9 +3,9 @@
 import IconAuthList from "@/assets/icons/icon-auth-list.svg";
 import IconDirectionRight from "@/assets/icons/icon-direction-right-blue.svg";
 import Button from "@/components/Button";
+import axios from "axios";
 import styles from "./index.module.scss";
 
-// types/iamport.d.ts
 interface IamportWindow extends Window {
   IMP: {
     init: (code: string) => void;
@@ -26,10 +26,13 @@ interface CertificationResponse {
   error_msg?: string;
 }
 
-// 전역적으로 IMP 객체를 추가
 declare let window: IamportWindow;
 
-const Authentication = () => {
+interface AuthenticationProps {
+  setName: (name: string) => void;
+}
+
+const Authentication: React.FC<AuthenticationProps> = ({ setName }) => {
   const Certification = async (): Promise<void> => {
     try {
       const IMP_CODE = process.env.NEXT_PUBLIC_IMP_CODE;
@@ -53,18 +56,44 @@ const Authentication = () => {
           console.log(resp);
 
           if (resp.success) {
-            // 성공적인 인증 처리
+            // 인증 성공
             console.log("인증 성공:", resp.imp_uid);
-            // 백엔드에서 만든 본인인증 조회 api에 uid 값을 넣어서 호출
-            // 여기에 성공 시 서버 호출 로직을 추가
+
+            try {
+              // imp_uid를 백엔드에서 요청한 URL로 전달
+              const backendResponse = await axios.post(
+                `${process.env.NEXT_PUBLIC_BE_URL}/port/one`,
+                {
+                  imp_uid: resp.imp_uid,
+                },
+              );
+
+              const { name } = backendResponse.data;
+              setName(name);
+
+              console.log("백엔드 응답 성공:", backendResponse.data);
+            } catch (error) {
+              if (error instanceof axios.AxiosError) {
+                console.error(
+                  "백엔드 응답 에러:",
+                  error.response?.data?.message || error.message,
+                );
+              } else {
+                console.error("백엔드 응답 중 알 수 없는 에러:", error);
+              }
+            }
           } else {
-            // 인증 실패 처리
+            // 인증 실패
             console.error("인증 실패:", resp.error_msg);
           }
         },
       );
     } catch (error) {
-      console.error("인증 중 에러 발생:", error);
+      if (error instanceof Error) {
+        console.error("인증 중 에러 발생:", error.message);
+      } else {
+        console.error("인증 중 알 수 없는 에러 발생:", error);
+      }
     }
   };
 

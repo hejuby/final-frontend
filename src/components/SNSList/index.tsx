@@ -18,8 +18,8 @@ const snsIcons: { [key in SNSType]: { active: string; inactive: string } } = {
     inactive: "/icons/icon-sns-blog-gray.svg",
   },
   INSTAGRAM: {
-    active: "/icons/icon-sns-instargram.svg",
-    inactive: "/icons/icon-sns-instargram-gray.svg",
+    active: "/icons/icon-sns-instagram.svg",
+    inactive: "/icons/icon-sns-instagram-gray.svg",
   },
   YOUTUBE: {
     active: "/icons/icon-sns-youtube.svg",

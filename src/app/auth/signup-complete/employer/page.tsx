@@ -1,7 +1,7 @@
-import SignupComplete from "@/components/Account/SignupComplete";
+import SignupCompleteEmployer from "@/components/Account/Employer/SignupComplete";
 
 const SignupCompleteEmployerPage = () => {
-  return <SignupComplete />;
+  return <SignupCompleteEmployer />;
 };
 
 export default SignupCompleteEmployerPage;

@@ -2,7 +2,8 @@
   position: relative;
 
   svg {
-    @include pos-center-y;
+    position: absolute;
+    top: 12px;
     left: 17px;
     z-index: 1;
   }

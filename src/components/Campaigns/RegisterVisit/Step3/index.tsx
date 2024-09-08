@@ -50,7 +50,7 @@ const VisitStep3 = () => {
               selected={selectedStartTime}
               options={[
                 { optionLabel: "9:00", value: "blog" },
-                { optionLabel: "10:00", value: "instargram" },
+                { optionLabel: "10:00", value: "instagram" },
                 { optionLabel: "유튜브", value: "youtube" },
                 { optionLabel: "틱톡", value: "tictock" },
                 { optionLabel: "릴스", value: "reels" },

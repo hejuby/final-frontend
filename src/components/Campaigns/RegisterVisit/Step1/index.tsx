@@ -25,7 +25,7 @@ const VisitStep1 = () => {
               selected={selectedPlatform}
               options={[
                 { optionLabel: "블로그", value: "blog" },
-                { optionLabel: "인스타그램", value: "instargram" },
+                { optionLabel: "인스타그램", value: "instagram" },
                 { optionLabel: "유튜브", value: "youtube" },
                 { optionLabel: "틱톡", value: "tictock" },
                 { optionLabel: "릴스", value: "reels" },
@@ -72,6 +72,7 @@ const VisitStep1 = () => {
             type="text"
             placeholder="예시: 자율식사권 5만원권"
             gap={6}
+            full
           />
           <p className={styles["info-message"]}>
             제공 상품명과 금액 등을 100자 이내로 입력해 주세요.

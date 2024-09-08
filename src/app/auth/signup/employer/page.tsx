@@ -1,7 +1,7 @@
-import SignupEmployer from "@/components/Account/Employer/Signup";
+import SignupFormEmployer from "@/components/Account/Employer/SignupForm";
 
 const SignupEmployerPage = () => {
-  return <SignupEmployer />;
+  return <SignupFormEmployer />;
 };
 
 export default SignupEmployerPage;

@@ -74,7 +74,7 @@ const MypageEmployerPage = () => {
                 size="medium"
                 selected={selectedItem1}
                 options={[
-                  { optionLabel: "인스타", value: "instargram" },
+                  { optionLabel: "인스타", value: "instagram" },
                   { optionLabel: "블로그", value: "blog" },
                   { optionLabel: "틱톡", value: "tictock" },
                   { optionLabel: "유튜브", value: "youtube" },

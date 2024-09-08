@@ -22,6 +22,7 @@ const VisitStep2 = () => {
             type="text"
             label="상호명"
             placeholder="업체 이름 입력"
+            full
           />
           <ImgUpload uploadImg={uploadImg} setUploadImg={setUploadImg} />
         </article>

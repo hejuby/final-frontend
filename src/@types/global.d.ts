@@ -8,3 +8,7 @@ declare module "*.svg?url" {
 
   export default content;
 }
+
+interface Window {
+  daum: any;
+}

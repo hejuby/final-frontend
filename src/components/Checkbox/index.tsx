@@ -58,7 +58,9 @@ const Checkbox = ({
           <div style={{ width: (width * 5) / 12, height: (width * 5) / 12 }} />
         )}
       </label>
-      {children}
+      <label htmlFor={id} className={label("-text")}>
+        {children}
+      </label>
     </label>
   );
 };

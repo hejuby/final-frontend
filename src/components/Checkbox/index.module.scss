@@ -19,6 +19,10 @@
     & > svg {
       display: none;
     }
+    &-text {
+      cursor: pointer;
+      border: none;
+    }
   }
   &__input:checked + &__label {
     &--type-radio {
