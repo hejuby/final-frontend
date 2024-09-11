@@ -18,7 +18,7 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({
-  isLogin = true,
+  isLogin = false,
   setShowMenu,
 }) => {
   const [showSubmenu, setShowSubmenu] = useState(false);
@@ -71,14 +71,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             </h3>
             <div>
               <Link
-                href="/"
+                href="/auth/login"
                 className={styles["login-btn"]}
                 onClick={handleCloseMenu}
               >
                 로그인
               </Link>
               <Link
-                href="/"
+                href="/auth/signup"
                 className={styles["join-btn"]}
                 onClick={handleCloseMenu}
               >
@@ -98,7 +98,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             </Link>
           </li>
           <li>
-            <Link href="/" onClick={handleCloseMenu}>
+            <Link href="/search" onClick={handleCloseMenu}>
               <Group color="#4b65f7" />
               <span>체험단</span>
             </Link>
@@ -120,17 +120,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             {showSubmenu && (
               <ul className={styles.submenu}>
                 <li>
-                  <Link href="/board/announcement" onClick={handleCloseMenu}>
+                  <Link href="/announcement" onClick={handleCloseMenu}>
                     공지사항
                   </Link>
                 </li>
                 <li>
-                  <Link href="/board/community" onClick={handleCloseMenu}>
+                  <Link href="/community" onClick={handleCloseMenu}>
                     커뮤니티
                   </Link>
                 </li>
                 <li>
-                  <Link href="/board/follows" onClick={handleCloseMenu}>
+                  <Link href="/follows" onClick={handleCloseMenu}>
                     맞팔/서이추
                   </Link>
                 </li>

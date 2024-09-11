@@ -95,7 +95,7 @@ const Header = () => {
               {content}
               <ul className={styles["header__mobile-right"]}>
                 <li>
-                  <Link href="/">
+                  <Link href="/search">
                     <IconSearch />
                   </Link>
                 </li>

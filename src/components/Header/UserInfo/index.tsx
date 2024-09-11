@@ -14,7 +14,7 @@ const cn = ms(styles, "user-info");
 
 const UserInfo: React.FC = () => {
   // 임시 로그인 상태 설정
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const userInfo = {
     userName: "감자도리",
@@ -37,7 +37,7 @@ const UserInfo: React.FC = () => {
         <ul className={cn("--logout")}>
           <li>
             <span>
-              <Link href="/">로그인</Link>
+              <Link href="/auth/login">로그인</Link>
             </span>
           </li>
           <li>
@@ -73,7 +73,7 @@ const UserInfo: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/search">
                 <IconSearch />
               </Link>
             </li>
