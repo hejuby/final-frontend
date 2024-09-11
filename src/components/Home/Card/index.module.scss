@@ -101,8 +101,8 @@
 
   &--horizontal {
     @include flex(start, start);
-    margin-top: 30px;
-    padding-bottom: 0px;
+    margin-top: 20px;
+    padding-bottom: 12px;
     border-bottom: 1px solid $gray-20;
     .image-content {
       width: 148px;
@@ -144,6 +144,21 @@
     &--vertical {
       margin-left: 34px;
     }
+
+    &--horizontal {
+      padding-bottom: 20px;
+    }
+
+    .text-content {
+      &__info {
+        margin-bottom: 5px;
+      }
+
+      &__type {
+        margin-top: 7px;
+        flex-wrap: wrap;
+      }
+    }
   }
 
   @include mobile {
@@ -168,12 +183,16 @@
       }
 
       &__type {
-        margin-top: 10px;
+        margin-top: 7px;
+        flex-wrap: wrap;
         div {
           @include flex(start, center);
+          align-items: center;
+
           div {
-            margin-left: 5px;
+            margin-left: 3px;
             padding: 0;
+            margin-bottom: 0;
           }
         }
         p {
@@ -195,8 +214,8 @@
       }
     }
     &--horizontal {
-      margin-top: 20px;
-      padding-bottom: 15px;
+      margin-top: 10px;
+      padding-bottom: 10px;
       border-bottom: 1px solid $gray-20;
       .image-content {
         width: 100px;
@@ -214,6 +233,22 @@
             span {
               margin-top: 0;
             }
+          }
+        }
+
+        &__type {
+          div {
+            margin-bottom: 4px;
+            p.point-info {
+              margin-left: 3px;
+              margin-bottom: 0;
+            }
+          }
+          p {
+            @include text-style(12, $black, 400);
+            letter-spacing: -1;
+            margin-left: 3px;
+            margin-bottom: 4px;
           }
         }
       }

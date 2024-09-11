@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Line from "@/components/Line";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
 import IconInsta from "@/assets/icons/icon-sns-instagram.svg";
 import IconPointCoin from "@/assets/icons/icon-point-coin.svg";
@@ -12,7 +13,6 @@ import Tag from "@/components/Tag";
 import testImg from "../../../public/images/thumb-bg1.jpg";
 import styles from "./page.module.scss";
 import Customcalendar from "./_component/calendar";
-import Line from "@/components/Line";
 
 const Products = () => {
   const [isTablet, setIsTablet] = useState(false);
