@@ -8,6 +8,8 @@ import Header from "@/components/Header";
 import MobileGnb from "@/components/MobileGnb";
 import Dialog from "@/components/Dialog";
 import Script from "next/script";
+import { Suspense } from "react";
+import Loading from "./Loading";
 
 export const metadata: Metadata = {
   title: "다인리뷰",
@@ -24,7 +26,9 @@ const RootLayout = ({
       <Script src="https://cdn.iamport.kr/v1/iamport.js" />
       <body>
         <Header />
-        <Layout>{children}</Layout>
+        <Suspense fallback={<Loading />}>
+          <Layout>{children}</Layout>
+        </Suspense>
         <FloatingTopButton />
         <FloatingKakaoButton />
         <Footer />

@@ -1,0 +1,44 @@
+.notfound-container {
+  @include column-flex;
+  max-width: 690px;
+  width: 100%;
+  margin: 120px auto 240px;
+  padding: 85px;
+  gap: 20px;
+  text-align: center;
+  background-color: $white;
+  border-radius: 20px;
+  word-break: keep-all;
+
+  h2 {
+    @include text-style(32, $black, 600);
+    margin-top: 20px;
+  }
+
+  p {
+    @include text-style(16, $gray-50, 400);
+    line-height: 1.6;
+  }
+
+  .button-wraaper {
+    max-width: 337px;
+    width: 100%;
+    margin-top: 20px;
+
+    button {
+      padding: 0 10px;
+    }
+  }
+
+  @include tablet {
+    max-width: 100%;
+    padding: 20px;
+    margin-top: 100px;
+    margin-bottom: 150px;
+
+    h2 {
+      margin-top: 15px;
+      font-size: 24px;
+    }
+  }
+}

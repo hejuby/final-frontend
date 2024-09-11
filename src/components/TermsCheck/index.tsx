@@ -51,7 +51,7 @@ const TermsCheck: React.FC<TermsCheckProps> = ({
       <Checkbox
         id="all-terms"
         type="checkbox"
-        {...register("termsCheck.all")}
+        register={register("termsCheck.all")}
         onChange={handleAllCheckChange}
         gap={6}
         checked={allCheck}
@@ -64,7 +64,7 @@ const TermsCheck: React.FC<TermsCheckProps> = ({
           <Checkbox
             id="terms"
             type="checkbox"
-            {...register("termsCheck.terms", {
+            register={register("termsCheck.terms", {
               required: "이용약관 동의에 체크해주세요.",
             })}
             gap={6}
@@ -84,7 +84,7 @@ const TermsCheck: React.FC<TermsCheckProps> = ({
           <Checkbox
             id="privacy"
             type="checkbox"
-            {...register("termsCheck.privacy", {
+            register={register("termsCheck.privacy", {
               required: "개인정보 수집 및 이용 동의에 체크해주세요.",
             })}
             gap={6}
@@ -104,7 +104,7 @@ const TermsCheck: React.FC<TermsCheckProps> = ({
           <Checkbox
             id="marketing"
             type="checkbox"
-            {...register("termsCheck.marketing")}
+            register={register("termsCheck.marketing")}
             gap={6}
             onChange={(e) => setValue("termsCheck.marketing", e.target.checked)}
             checked={marketingCheck}

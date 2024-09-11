@@ -1,9 +1,9 @@
 "use client";
 
-import RegisterFormStep from "@/components/Campaigns/RegisterFormStep";
 import { useEffect, useState } from "react";
+import NotFound from "@/components/NotFound";
 
-const CampaignRegisterPage = () => {
+const NotFoundPage = () => {
   const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const CampaignRegisterPage = () => {
     };
   }, [isTablet]);
 
-  return <RegisterFormStep />;
+  return <NotFound />;
 };
 
-export default CampaignRegisterPage;
+export default NotFoundPage;

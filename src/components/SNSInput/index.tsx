@@ -7,12 +7,27 @@ import IconEtc from "@/assets/icons/icon-sns-etc.svg";
 import styles from "./index.module.scss";
 import Input, { InputProps } from "../Input";
 
-type SNSInputProps = {
-  type: "NAVER_BLOG" | "INSTAGRAM" | "YOUTUBE" | "TIKTOK" | "ETC";
-} & Omit<InputProps, "type">;
+export type SNSInputType =
+  | "NAVER_BLOG"
+  | "INSTAGRAM"
+  | "YOUTUBE"
+  | "TIKTOK"
+  | "ETC";
+export type SNSInputName =
+  | "sns.naverBlog"
+  | "sns.instagram"
+  | "sns.youtube"
+  | "sns.tiktok"
+  | "sns.etc";
+
+interface SNSInputProps extends Omit<InputProps, "type"> {
+  id: string;
+  type: SNSInputType;
+  placeholder: string;
+}
 
 const SNSInput = forwardRef<HTMLInputElement, SNSInputProps>(
-  ({ type, ...props }, ref) => {
+  ({ id, type, name, placeholder, ...props }, ref) => {
     const getSNSIcon = () => {
       switch (type) {
         case "NAVER_BLOG":
@@ -34,12 +49,13 @@ const SNSInput = forwardRef<HTMLInputElement, SNSInputProps>(
       <div className={styles.sns}>
         {getSNSIcon()}
         <Input
-          {...props}
           ref={ref}
-          id={props.id || "sns"}
+          id={id}
+          placeholder={placeholder}
           full
           gap={5}
           maxLength={300}
+          {...props}
         />
       </div>
     );

@@ -17,6 +17,7 @@
 
   .email-check {
     @include flex;
+    position: relative;
     gap: 5px;
 
     input {
@@ -30,18 +31,12 @@
       padding: 0 10px;
       margin-top: 5px;
     }
-  }
 
-  .sns-container {
-    margin-top: 38px;
-
-    .title {
-      @include text-style(14, $gray-80);
-      margin-bottom: 6px;
-
-      .text-underline {
-        font-weight: 500;
-      }
+    .error-message {
+      @include text-style(12, $alert-red, 600);
+      position: absolute;
+      bottom: 3px;
+      left: 0;
     }
   }
 

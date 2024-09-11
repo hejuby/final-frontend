@@ -10,50 +10,65 @@ import Button from "@/components/Button";
 import Checkbox from "@/components/Checkbox";
 import IconInfluencer from "@/assets/icons/icon-signup-influencer.svg";
 import IconEmployer from "@/assets/icons/icon-signup-employer.svg";
+import useDialog from "@/hooks/useDialog";
 import styles from "./index.module.scss";
 
 const Signup = () => {
   const router = useRouter();
 
+  const { alert } = useDialog();
+
+  // 카카오
   const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
   const KAKAO_REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
+  // 네이버
   const NAVER_CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
   const NAVER_REDIRECT_URI = process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI;
+  const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${NAVER_REDIRECT_URI}`;
 
+  // 구글
   const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
   const GOOGLE_REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
+  const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}.apps.googleusercontent.com&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile%20openid&access_type=offline`;
 
-  const handleKakaoLogin = () => {
-    const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
-    router.push(kakaoAuthURL);
-  };
-
-  const handleNaverLogin = () => {
-    const naverAuthURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${NAVER_REDIRECT_URI}`;
-    router.push(naverAuthURL);
-  };
-
-  const handleGoogleLogin = () => {
-    const googleAuthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}.apps.googleusercontent.com&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile%20openid&access_type=offline`;
-    router.push(googleAuthURL);
-  };
-
-  const [selectedSignupType, setSelectedSignupType] = useState("");
+  const [selectSignupType, setSelectSignupType] = useState<string>("");
 
   const handleTypeChange = (type: string) => {
-    setSelectedSignupType(type);
+    setSelectSignupType(type);
   };
 
-  const getSignupPath = () => {
-    if (selectedSignupType === "influencer") {
-      return "/auth/signup/influencer";
+  const isSignupTypeSelect = (): boolean => {
+    if (!selectSignupType) {
+      alert("인플루언서 또는 사업주를 선택해 주세요.");
+      return false;
     }
-    if (selectedSignupType === "employer") {
-      return "/auth/signup/employer";
-    }
-    return "/auth/signup";
+    return true;
   };
+
+  const handleSocialLogin = (url: string) => {
+    if (isSignupTypeSelect()) {
+      router.push(url);
+    }
+  };
+  // const handleKakaoLogin = async () => {
+  //   if (await isSignupTypeSelect()) {
+  //     router.push(KAKAO_AUTH_URL);
+  //   }
+  // };
+
+  // const handleNaverLogin = async () => {
+  //   if (await isSignupTypeSelect()) {
+  //     router.push(NAVER_AUTH_URL);
+  //   }
+  // };
+
+  // const handleGoogleLogin = async () => {
+  //   if (await isSignupTypeSelect()) {
+  //     router.push(GOOGLE_AUTH_URL);
+  //   }
+  // };
 
   return (
     <section className={styles.container}>
@@ -90,11 +105,17 @@ const Signup = () => {
         </div>
       </form>
       <div className={styles["button-container"]}>
-        <Link href={getSignupPath()}>
-          <Button size="medium" full>
-            회원가입 하기
-          </Button>
-        </Link>
+        <Button
+          size="medium"
+          full
+          onClick={async () => {
+            if (isSignupTypeSelect()) {
+              router.push(`/auth/signup/${selectSignupType}`);
+            }
+          }}
+        >
+          회원가입 하기
+        </Button>
       </div>
       <div className={styles["social-container"]}>
         <h3>
@@ -106,7 +127,7 @@ const Signup = () => {
               type="button"
               className={`${styles.social__item} ${styles["social__item-kakao"]}`}
               aria-label="카카오로 회원가입"
-              onClick={handleKakaoLogin}
+              onClick={() => handleSocialLogin(KAKAO_AUTH_URL)}
             >
               <IconKakao width="26px" height="24px" />
               카카오로 회원가입
@@ -117,7 +138,7 @@ const Signup = () => {
               type="button"
               className={`${styles.social__item} ${styles["social__item-naver"]}`}
               aria-label="네이버 로그인"
-              onClick={handleNaverLogin}
+              onClick={() => handleSocialLogin(NAVER_AUTH_URL)}
             >
               <IconNaver width="21px" height="20px" />
               네이버로 회원가입
@@ -128,7 +149,7 @@ const Signup = () => {
               type="button"
               className={`${styles.social__item} ${styles["social__item-google"]}`}
               aria-label="구글 로그인"
-              onClick={handleGoogleLogin}
+              onClick={() => handleSocialLogin(GOOGLE_AUTH_URL)}
             >
               <IconGoogle width="22px" height="22px" />
               구글로 회원가입

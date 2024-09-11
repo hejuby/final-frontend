@@ -8,7 +8,7 @@ import useDialog from "@/hooks/useDialog";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Selectbox, { Option } from "@/components/Selectbox";
-import SNSInput from "@/components/SNSInput";
+import SNSInput, { SNSInputName, SNSInputType } from "@/components/SNSInput";
 import TermsCheck from "@/components/TermsCheck";
 import styles from "./index.module.scss";
 import Authentication from "../../Authentication";
@@ -19,7 +19,7 @@ const initialState = {
   passwordConfirm: "",
   name: "",
   nickname: "",
-  signupPath: "",
+  joinPath: "",
   sns: {
     naverBlog: "",
     instagram: "",
@@ -35,13 +35,9 @@ const initialState = {
 };
 
 const SignupFormInfluencer = () => {
-  const [selectedItem, setSelectedItem] = useState<Option | null>(null);
-  const [isEmailChecked, setIsEmailChecked] = useState(false);
-
-  const { alert } = useDialog();
-
   const router = useRouter();
-
+  const { alert } = useDialog();
+  const [selectedItem, setSelectedItem] = useState<Option | null>(null);
   const {
     register,
     handleSubmit,
@@ -51,78 +47,184 @@ const SignupFormInfluencer = () => {
     setError,
     clearErrors,
     setValue,
-    trigger,
   } = useForm({
     shouldFocusError: true,
     defaultValues: initialState,
   });
 
+  const [isEmailChecked, setIsEmailChecked] = useState(false);
   const emailValue = watch("email");
-
+  const [impUid, setImpUid] = useState("");
   const [name, setName] = useState("");
+  const [certified, setCertified] = useState<boolean>(false);
+
+  const snsInputs: {
+    id: string;
+    type: SNSInputType;
+    name: SNSInputName;
+    placeholder: string;
+  }[] = [
+    {
+      id: "naverBlog",
+      type: "NAVER_BLOG",
+      name: "sns.naverBlog",
+      placeholder: "네이버 블로그",
+    },
+    {
+      id: "instagram",
+      type: "INSTAGRAM",
+      name: "sns.instagram",
+      placeholder: "인스타그램",
+    },
+    {
+      id: "youtube",
+      type: "YOUTUBE",
+      name: "sns.youtube",
+      placeholder: "유튜브",
+    },
+    { id: "tiktok", type: "TIKTOK", name: "sns.tiktok", placeholder: "틱톡" },
+    { id: "etc", type: "ETC", name: "sns.etc", placeholder: "기타 SNS" },
+  ];
 
   // 이메일 중복체크
-  const handleCheckEmailOverlap = async () => {
+  const handleCheckEmail = async () => {
     if (!emailValue) {
       await alert("이메일을 입력해 주세요.");
       return;
     }
 
     try {
-      const response = await axios.post("/api/sign-up/email/check", {
-        email: emailValue,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/sing-up/email/check`,
+        {
+          email: emailValue,
+        },
+      );
 
       if (response.data.exists) {
         setError("email", {
           type: "manual",
           message: "이미 사용 중인 이메일입니다.",
         });
-        setIsEmailChecked(false);
       } else {
         clearErrors("email");
-        setIsEmailChecked(true);
         await alert("사용 가능한 이메일입니다.");
+        setIsEmailChecked(true);
       }
     } catch (error) {
       console.error("이메일 중복체크 오류:", error);
-      await alert("이메일 중복체크에 실패했습니다.");
+      if (axios.isAxiosError(error) && error.response?.data?.message) {
+        await alert(error.response.data.message);
+      } else {
+        await alert("이메일 중복체크에 실패했습니다.");
+      }
+      setIsEmailChecked(false);
     }
   };
 
   // 회원가입 제출
   const onSubmit: SubmitHandler<typeof initialState> = async (formData) => {
-    // 이메일 중복체크
-    // if (!isEmailChecked) {
-    //   await alert("이메일 중복체크를 해주세요.");
-    //   return;
-    // }
-
-    // SNS 체크
-    const { naverBlog, instagram, youtube, tiktok, etc } = formData.sns;
-    if (!naverBlog && !instagram && !youtube && !tiktok && !etc) {
-      setError("sns", {
-        type: "manual",
-        message: "최소 1개의 값을 입력해주세요.",
-      });
-      await trigger("sns");
+    // 이메일 중복 체크
+    if (!isEmailChecked) {
+      await alert("이메일 중복체크를 해주세요.");
       return;
-    } else {
-      clearErrors("sns"); // 유효한 경우 에러를 지웁니다.
     }
 
-    // console.log("폼 제출:", formData);
+    if (!certified) {
+      await alert("통합인증을 완료해주세요.");
+      return;
+    }
 
-    localStorage.setItem("name", formData.name);
+    // SNS 필드 체크
+    const snsResponseList = Object.entries(formData.sns)
+      .filter(([, value]) => value.trim() !== "")
+      .map(([key, value]) => {
+        let snsType = "";
+        switch (key) {
+          case "naverBlog":
+            snsType = "NAVER_BLOG";
+            break;
+          case "instagram":
+            snsType = "INSTAGRAM";
+            break;
+          case "youtube":
+            snsType = "YOUTUBE";
+            break;
+          case "tiktok":
+            snsType = "TIKTOK";
+            break;
+          case "etc":
+            snsType = "ETC";
+            break;
+          default:
+            break;
+        }
+        return {
+          snsType,
+          url: value,
+        };
+      });
 
-    router.push("/auth/signup-complete/influencer");
+    if (snsResponseList.length === 0) {
+      setError("sns.naverBlog", { type: "manual" });
+      setError("sns.instagram", { type: "manual" });
+      setError("sns.youtube", { type: "manual" });
+      setError("sns.tiktok", { type: "manual" });
+      setError("sns.etc", { type: "manual" });
+      await alert("최소 1개의 SNS를 입력해주세요.");
+      return;
+    }
+
+    const requestBody = {
+      email: formData.email,
+      password: formData.password,
+      name: formData.name,
+      nickname: formData.nickname,
+      snsResponseList,
+      joinPath: formData.joinPath,
+      terms: formData.termsCheck.terms,
+      personalInformation: formData.termsCheck.privacy,
+      marketing: formData.termsCheck.marketing,
+      impId: impUid,
+    };
+
+    console.log("폼 제출:", requestBody);
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer/sing-up`,
+        requestBody,
+      );
+
+      if (response.status === 200) {
+        localStorage.setItem("name", formData.name);
+        router.push("/auth/signup-complete/influencer");
+      } else {
+        await alert(response.data.message || "회원가입에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("회원가입 오류:", error);
+      await alert("회원가입에 실패했습니다.");
+    }
   };
 
-  // 회원가입 제출 실패
-  const onError = async (errors) => {
-    await alert("필수 항목을 모두 입력해 주세요.");
-    console.log(errors);
-    console.log(errors.sns);
+  // 회원가입 제출 실패 - 필수 항목 입력
+  const onError = async (formErrors: any) => {
+    if (formErrors.email) {
+      await alert("이메일을 확인해 주세요.");
+    } else if (formErrors.password) {
+      await alert("비밀번호를 확인해 주세요.");
+    } else if (formErrors.nickname) {
+      await alert("닉네임을 확인해 주세요.");
+    } else if (formErrors.sns) {
+      await alert("SNS 주소를 확인해 주세요.");
+    } else if (formErrors.joinPath) {
+      await alert("가입경로를 확인해 주세요.");
+    } else if (formErrors.termsCheck) {
+      await alert("이용약관 동의를 확인해 주세요.");
+    } else {
+      await alert("필수 항목을 모두 입력해 주세요.");
+    }
   };
 
   return (
@@ -139,11 +241,10 @@ const SignupFormInfluencer = () => {
             label="이메일"
             maxLength={100}
             full
-            {...register("email", {
+            register={register("email", {
               required: "이메일을 입력해주세요",
               pattern: {
-                value:
-                  /^[a-zA-Z0-9.!#$%&'*+\/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: "유효한 이메일을 입력해주세요",
               },
             })}
@@ -152,7 +253,7 @@ const SignupFormInfluencer = () => {
             size="medium"
             color="outline"
             type="button"
-            onClick={handleCheckEmailOverlap}
+            onClick={handleCheckEmail}
           >
             중복체크
           </Button>
@@ -167,7 +268,7 @@ const SignupFormInfluencer = () => {
             maxLength={50}
             full
             gap={5}
-            {...register("password", {
+            register={register("password", {
               required: "비밀번호를 입력해주세요",
               minLength: {
                 value: 8,
@@ -188,20 +289,25 @@ const SignupFormInfluencer = () => {
             maxLength={50}
             full
             infoMessage="8자 이상의 영문, 숫자, 특수문자 중 2가지이상"
-            {...register("passwordConfirm", {
+            register={register("passwordConfirm", {
               required: "비밀번호를 한번 더 입력해주세요.",
               validate: {
                 check: (passwordConfirm) => {
                   if (getValues("password") !== passwordConfirm) {
                     return "비밀번호가 일치하지 않습니다.";
                   }
+                  return true;
                 },
               },
             })}
             error={errors.passwordConfirm?.message}
           />
         </div>
-        <Authentication setName={setName} />
+        <Authentication
+          setName={setName}
+          setImpUid={setImpUid}
+          setCertified={setCertified}
+        />
         <Input
           id="name"
           type="text"
@@ -218,7 +324,7 @@ const SignupFormInfluencer = () => {
           label="닉네임"
           maxLength={10}
           infoMessage="한글, 영문, 숫자 10자까지 (커뮤니티에서 사용할 닉네임)"
-          {...register("nickname", {
+          register={register("nickname", {
             required: "닉네임을 입력해 주세요.",
             maxLength: {
               value: 10,
@@ -241,18 +347,18 @@ const SignupFormInfluencer = () => {
             { optionLabel: "지인소개", value: "introduce" },
             { optionLabel: "기타", value: "etc" },
           ]}
-          {...register("signupPath", {
+          {...register("joinPath", {
             required: "가입경로를 선택해 주세요.",
           })}
           onChange={(option) => {
             setSelectedItem(option);
-            setValue("signupPath", String(option?.value), {
+            setValue("joinPath", String(option?.value), {
               shouldValidate: true,
             });
           }}
         />
-        {errors.signupPath && (
-          <p className={styles["error-message"]}>{errors.signupPath.message}</p>
+        {errors.joinPath && (
+          <p className={styles["error-message"]}>{errors.joinPath.message}</p>
         )}
         <div className={styles["sns-container"]}>
           <p className={styles.title}>
@@ -261,39 +367,28 @@ const SignupFormInfluencer = () => {
             입력해주세요.{" "}
             <span className={styles["text-require"]}>&#40;필수&#41;</span>
           </p>
-          <SNSInput
-            id="naverBlog"
-            type="NAVER_BLOG"
-            {...register("sns.naverBlog")}
-            placeholder="네이버 블로그"
-          />
-          <SNSInput
-            id="instagram"
-            type="INSTAGRAM"
-            {...register("sns.instagram")}
-            placeholder="인스타그램"
-          />
-          <SNSInput
-            id="youtube"
-            type="YOUTUBE"
-            {...register("sns.youtube")}
-            placeholder="유튜브"
-          />
-          <SNSInput
-            id="tiktok"
-            type="TIKTOK"
-            {...register("sns.tiktok")}
-            placeholder="틱톡"
-          />
-          <SNSInput
-            id="etc"
-            type="ETC"
-            {...register("sns.etc")}
-            placeholder="기타 SNS"
-          />
-          {errors.sns && (
-            <p className={styles["error-message"]}>{errors.sns.message}</p>
-          )}
+          {snsInputs.map((sns) => (
+            <SNSInput
+              key={sns.id}
+              id={sns.id}
+              type={sns.type}
+              register={register(sns.name, {
+                pattern: {
+                  value:
+                    /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+                  message: "유효한 주소 형식을 입력해 주세요.",
+                },
+              })}
+              placeholder={sns.placeholder}
+            />
+          ))}
+          <p className={styles["error-message"]}>
+            {errors.sns?.naverBlog?.message ||
+              errors.sns?.instagram?.message ||
+              errors.sns?.tiktok?.message ||
+              errors.sns?.youtube?.message ||
+              errors.sns?.etc?.message}
+          </p>
         </div>
         <TermsCheck
           register={register}
@@ -301,7 +396,6 @@ const SignupFormInfluencer = () => {
           setValue={setValue}
           errors={errors}
         />
-
         <div className={styles["button-container"]}>
           <Button size="medium" full type="submit">
             회원가입 하기

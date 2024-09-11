@@ -28,52 +28,63 @@ const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<typeof initialState> = async (formData) => {
-    // console.log(formData);
-
     try {
-      const response = await axios.post("/api/login", {
-        email: formData.email,
-        password: formData.password,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/login`,
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+        {
+          withCredentials: true,
+        },
+      );
 
-      if (response.status === 200) {
-        const result = response.data;
+      const result = response.data;
+      console.log(result);
 
-        if (result.success) {
-          // 로그인 성공
-          router.push("/");
-        } else {
-          // 로그인 실패
-          await alert("아이디 또는 비밀번호를 확인해주세요.");
-        }
+      if (response.status === 200 && result.success) {
+        // 로그인 성공
+        router.push("/");
       } else {
-        // 상태 코드가 200이 아닌 경우
-        await alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        // 로그인 실패
+        await alert("아이디 또는 비밀번호를 확인해주세요.");
       }
     } catch (error) {
-      // 네트워크 오류 또는 서버 오류
-      console.error("로그인 에러:", error);
-      await alert("서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      console.error("에러:", error);
+      await alert("네트워크 오류입니다. 잠시 후 다시 시도해주세요.");
     }
   };
 
-  // const onError = async () => {
-  //   await alert("아이디 또는 비밀번호를 확인해주세요.");
-  // };
+  // 폼 입력하지 않은 경우
+  const onError = (formErrors: any) => {
+    if (formErrors.email || formErrors.password) {
+      alert("아이디 또는 비밀번호를 입력해주세요.");
+    }
+  };
+
+  const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
+  const KAKAO_REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  const NAVER_CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
+  const NAVER_REDIRECT_URI = process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI;
+  const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${NAVER_REDIRECT_URI}`;
+
+  const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+  const GOOGLE_REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
+  const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}.apps.googleusercontent.com&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile%20openid&access_type=offline`;
 
   const handleKakaoLogin = () => {
-    const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
-    router.push(kakaoAuthURL);
+    router.push(KAKAO_AUTH_URL);
   };
 
   const handleNaverLogin = () => {
-    const naverAuthURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}`;
-    router.push(naverAuthURL);
+    router.push(NAVER_AUTH_URL);
   };
 
   const handleGoogleLogin = () => {
-    const googleAuthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}.apps.googleusercontent.com&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile%20openid&access_type=offline`;
-    router.push(googleAuthURL);
+    router.push(GOOGLE_AUTH_URL);
   };
 
   return (
@@ -81,18 +92,17 @@ const LoginForm = () => {
       <header className={styles.header}>
         <h2>로그인</h2>
       </header>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
         <div>
           <Input
             id="email"
             type="email"
             label="이메일"
             full
-            {...register("email", {
+            register={register("email", {
               required: "이메일을 입력해주세요",
               pattern: {
-                value:
-                  /^[a-zA-Z0-9.!#$%&'*+\/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: "유효한 이메일을 입력해주세요",
               },
             })}
@@ -105,7 +115,7 @@ const LoginForm = () => {
             type="password"
             label="비밀번호"
             full
-            {...register("password", {
+            register={register("password", {
               required: "비밀번호를 입력해주세요",
               minLength: {
                 value: 8,

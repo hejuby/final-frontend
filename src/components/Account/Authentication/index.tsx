@@ -30,9 +30,15 @@ declare let window: IamportWindow;
 
 interface AuthenticationProps {
   setName: (name: string) => void;
+  setImpUid: (impUid: string) => void;
+  setCertified: (certified: boolean) => void;
 }
 
-const Authentication: React.FC<AuthenticationProps> = ({ setName }) => {
+const Authentication: React.FC<AuthenticationProps> = ({
+  setName,
+  setImpUid,
+  setCertified,
+}) => {
   const Certification = async (): Promise<void> => {
     try {
       const IMP_CODE = process.env.NEXT_PUBLIC_IMP_CODE;
@@ -52,17 +58,15 @@ const Authentication: React.FC<AuthenticationProps> = ({ setName }) => {
           merchant_uid: `mer_id_${Date.now()}`,
         },
         async (resp: CertificationResponse) => {
-          console.log(`=== IMP 모달 인증 결과 ===`);
-          console.log(resp);
-
           if (resp.success) {
             // 인증 성공
-            console.log("인증 성공:", resp.imp_uid);
+            setImpUid(resp.imp_uid);
+            setCertified(true);
 
             try {
               // imp_uid를 백엔드에서 요청한 URL로 전달
               const backendResponse = await axios.post(
-                `${process.env.NEXT_PUBLIC_BE_URL}/port/one`,
+                `${process.env.NEXT_PUBLIC_BASE_URL}/port/one`,
                 {
                   imp_uid: resp.imp_uid,
                 },
@@ -70,8 +74,6 @@ const Authentication: React.FC<AuthenticationProps> = ({ setName }) => {
 
               const { name } = backendResponse.data;
               setName(name);
-
-              console.log("백엔드 응답 성공:", backendResponse.data);
             } catch (error) {
               if (error instanceof axios.AxiosError) {
                 console.error(

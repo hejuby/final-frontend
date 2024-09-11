@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import useDialog from "@/hooks/useDialog";
+import axios from "axios";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import ProfileImgUpload from "@/components/ProfileImgUpload";
@@ -29,6 +29,15 @@ const ProfileInfluencer = () => {
     setBirthday(e.target.value);
   };
 
+  const convertToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   // 다음 API 호출
   useEffect(() => {
     const script = document.createElement("script");
@@ -36,23 +45,27 @@ const ProfileInfluencer = () => {
       "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
     script.async = true;
     document.body.appendChild(script);
+
     return () => {
-      document.body.removeChild(script);
+      if (script) {
+        document.body.removeChild(script);
+      }
     };
   }, []);
 
-  const handlePostcodeClick = () => {
-    new window.daum.Postcode({
-      // eslint-disable-next-line
-      oncomplete: function (data: any) {
-        setAddress({
-          ...address,
-          address: data.address,
-          zonecode: data.zonecode,
-        });
-        setIsDetailAddressEditable(true);
-      },
-    }).open();
+  const handleAddressClick = () => {
+    if (typeof window !== "undefined" && window.daum) {
+      new window.daum.Postcode({
+        oncomplete(data: any) {
+          setAddress({
+            ...address,
+            address: data.address,
+            zonecode: data.zonecode,
+          });
+          setIsDetailAddressEditable(true);
+        },
+      }).open();
+    }
   };
 
   const handleDetailAddressChange = (
@@ -71,29 +84,41 @@ const ProfileInfluencer = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    let base64Image = null;
     if (profileImg) {
-      formData.append("profileImage", profileImg);
+      base64Image = await convertToBase64(profileImg);
     }
-    formData.append("birthday", birthday);
-    formData.append("gender", gender === "male" ? "MALE" : "FEMALE");
-    formData.append("address", address.address);
-    formData.append("addressDetail", address.detailAddress);
-    formData.append("postalCode", address.zonecode);
+
+    const requestBody: Record<string, any> = {};
+
+    if (base64Image) {
+      requestBody.profileImage = base64Image;
+    }
+    if (birthday) {
+      requestBody.birthday = birthday;
+    }
+    if (gender) {
+      requestBody.gender = gender === "male" ? "MALE" : "FEMALE";
+    }
+    if (address.address) {
+      requestBody.address = address.address;
+      requestBody.addressDetail = address.detailAddress;
+      requestBody.postalCode = address.zonecode;
+    }
 
     try {
       const response = await axios.post(
-        "/api/influencer/sign-up/extra",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer/sign-up/extra`,
+        requestBody,
       );
-      console.log("제출 성공적으로 완료", response.data);
+
+      if (response.status === 200) {
+        console.log("제출 성공적으로 완료", response.data);
+      } else {
+        throw new Error("서버 에러 발생");
+      }
     } catch (error) {
-      console.error("실패실패", error);
+      console.error("제출 실패, 요청 데이터:", requestBody);
     }
   };
 
@@ -154,7 +179,7 @@ const ProfileInfluencer = () => {
             readOnly
             value={address.zonecode}
           />
-          <Button size="medium" color="outline" onClick={handlePostcodeClick}>
+          <Button size="medium" color="outline" onClick={handleAddressClick}>
             주소 검색
           </Button>
         </div>
