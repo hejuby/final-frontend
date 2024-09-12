@@ -58,10 +58,15 @@ const Authentication: React.FC<AuthenticationProps> = ({
           merchant_uid: `mer_id_${Date.now()}`,
         },
         async (resp: CertificationResponse) => {
+          console.log(`=== IMP 모달 인증 결과 ===`);
+          console.log(resp);
+
           if (resp.success) {
             // 인증 성공
             setImpUid(resp.imp_uid);
             setCertified(true);
+
+            console.log("인증 성공:", resp.imp_uid);
 
             try {
               // imp_uid를 백엔드에서 요청한 URL로 전달
@@ -74,6 +79,8 @@ const Authentication: React.FC<AuthenticationProps> = ({
 
               const { name } = backendResponse.data;
               setName(name);
+
+              console.log("백엔드 응답 성공:", backendResponse.data);
             } catch (error) {
               if (error instanceof axios.AxiosError) {
                 console.error(

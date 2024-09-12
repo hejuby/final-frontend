@@ -26,7 +26,7 @@ const ProfileInfoEmployer = () => {
             id="newPassword2"
             type="password"
             label="새 비밀번호 확인"
-            infoMessage="8자 이상의 영문, 숫자, 특수문자 중 2가지이상"
+            infoMessage="8자 이상의 영문, 숫자, 특수문자 중 2가지 이상"
             horizontal
           />
           <Input

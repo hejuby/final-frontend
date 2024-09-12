@@ -95,15 +95,15 @@ const SignupFormEmployer = () => {
   // 회원가입 제출
   const onSubmit: SubmitHandler<typeof initialState> = async (formData) => {
     // 이메일 중복 체크
-    // if (!isEmailChecked) {
-    //   await alert("이메일 중복체크를 해주세요.");
-    //   return;
-    // }
+    if (!isEmailChecked) {
+      await alert("이메일 중복체크를 해주세요.");
+      return;
+    }
 
-    // if (!certified) {
-    //   await alert("통합인증을 완료해주세요.");
-    //   return;
-    // }
+    if (!certified) {
+      await alert("통합인증을 완료해주세요.");
+      return;
+    }
 
     const submitData = {
       email: formData.email,
@@ -215,7 +215,7 @@ const SignupFormEmployer = () => {
             type="password"
             maxLength={50}
             full
-            infoMessage="8자 이상의 영문, 숫자, 특수문자 중 2가지이상"
+            infoMessage="8자 이상의 영문, 숫자, 특수문자 중 2가지 이상"
             register={register("passwordConfirm", {
               required: "비밀번호를 한번 더 입력해주세요.",
               validate: {

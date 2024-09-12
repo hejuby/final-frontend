@@ -9,9 +9,8 @@ import Tag from "@/components/Tag";
 import styles from "./index.module.scss";
 
 const ProfileBoxEmployer = () => {
-  const [profileImg, setProfileImg] = useState(
-    "/images/profile-default-mypage.svg",
-  );
+  const [profileImg, setProfileImg] = useState<File | null>(null);
+  const defaultImg = "/images/profile-default-mypage.svg";
 
   const [isTablet, setIsTablet] = useState(false);
 
@@ -33,6 +32,7 @@ const ProfileBoxEmployer = () => {
         <ProfileImgUpload
           profileImg={profileImg}
           setProfileImg={setProfileImg}
+          defaultImg={defaultImg}
           cameraButon
         />
       </div>

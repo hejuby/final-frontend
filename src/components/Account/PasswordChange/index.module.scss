@@ -1,7 +1,5 @@
 .container {
-  @include column-flex(between, stretch);
   @include text-style(14, $black);
-  min-height: 66vh;
 
   .header {
     margin-bottom: 40px;
@@ -14,6 +12,10 @@
     > p {
       margin-top: 15px;
     }
+  }
+  .form {
+    @include column-flex(between, stretch);
+    min-height: 56vh;
   }
 
   .button-container {

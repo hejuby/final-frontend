@@ -288,7 +288,7 @@ const SignupFormInfluencer = () => {
             type="password"
             maxLength={50}
             full
-            infoMessage="8자 이상의 영문, 숫자, 특수문자 중 2가지이상"
+            infoMessage="8자 이상의 영문, 숫자, 특수문자 중 2가지 이상"
             register={register("passwordConfirm", {
               required: "비밀번호를 한번 더 입력해주세요.",
               validate: {

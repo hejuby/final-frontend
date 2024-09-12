@@ -9,9 +9,8 @@ import IconDirection from "@/assets/icons/icon-direction-right.svg";
 import styles from "./index.module.scss";
 
 const ProfileBoxInfluencer = () => {
-  const [profileImg, setProfileImg] = useState(
-    "/images/profile-default-mypage.svg",
-  );
+  const [profileImg, setProfileImg] = useState<File | null>(null);
+  const defaultImg = "/images/profile-default-mypage.svg";
 
   const [isTablet, setIsTablet] = useState(false);
 
@@ -46,6 +45,7 @@ const ProfileBoxInfluencer = () => {
           profileImg={profileImg}
           setProfileImg={setProfileImg}
           cameraButon
+          defaultImg={defaultImg}
         />
       </div>
       <div className={styles["name-container"]}>
