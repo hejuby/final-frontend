@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { ReadonlyURLSearchParams } from "next/navigation";
 import createPaginationArray from "@/utils/createPaginationArray";
+import createParamsURL from "@/utils/createParamsURL";
 import IconDirectionLeft from "@/assets/icons/icon-direction-left-white.svg";
 import IconDirectionRight from "@/assets/icons/icon-direction-right-white.svg";
 import PaginationButton from "./PaginationButton";
@@ -10,7 +12,7 @@ import styles from "./index.module.scss";
 
 interface PaginationProps {
   pathname: string;
-  searchParams: Record<string, string>;
+  searchParams: { page: string };
   chunkSize: number;
   totalPages: number;
 }
@@ -35,11 +37,14 @@ const Pagination = ({
     return pageNumber;
   };
 
-  const createPageURL = (pageNumber: number | string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("page", filterPageNumber(pageNumber).toString());
-    return `${pathname}?${params.toString()}`;
-  };
+  const createPageURL = (pageNumber: number | string) =>
+    createParamsURL(
+      "set",
+      searchParams,
+      pathname,
+      "page",
+      filterPageNumber(pageNumber).toString(),
+    );
 
   const handleResize = () => {
     if (window.innerWidth <= 1024) {

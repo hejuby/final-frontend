@@ -15,6 +15,7 @@
   &__message {
     @include text-style(16);
     text-align: center;
+    line-height: 1.4;
   }
 
   &__button-container {

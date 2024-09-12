@@ -2,14 +2,16 @@ import { createElement, InputHTMLAttributes } from "react";
 import styles from "./index.module.scss";
 
 interface TitleInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  value?: string;
+  defaultValue?: string;
 }
 
-const TitleInput = ({ value, ...props }: TitleInputProps) =>
+const TitleInput = ({ defaultValue, ...props }: TitleInputProps) =>
   createElement("input", {
     className: styles.input,
     placeholder: "제목을 입력해 주세요.",
-    value,
+    name: "formTitle",
+    type: "text",
+    defaultValue,
     ...props,
   });
 

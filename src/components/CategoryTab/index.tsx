@@ -1,48 +1,56 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import ms from "@/utils/modifierSelector";
 import styles from "./index.module.scss";
 
-interface ICategoryTab {
+interface Tab {
   id: string;
   label: string;
   content?: React.ReactNode;
 }
 
-interface ICategoryTabsProps {
-  tabs: ICategoryTab[];
+interface CategoryTabProps {
+  tabs: Tab[];
   activeTabId?: string;
-  onChange?: (id: string) => void;
+  handleSelect?: (id: string) => void;
+  handleDeselect?: (id: string) => void;
 }
 
 const cn = ms(styles, "category-tab__button");
 
-const CategoryTab: React.FC<ICategoryTabsProps> = ({
+const CategoryTab = ({
   tabs,
   activeTabId,
-  onChange,
-}) => {
-  const activeTabIdx = tabs.findIndex((tab) => tab.id === activeTabId);
-  const [selectedTab, setSelectedTab] = useState(activeTabIdx);
+  handleSelect,
+  handleDeselect,
+}: CategoryTabProps) => {
+  const [selectedTab, setSelectedTab] = useState<string | null>(
+    activeTabId ?? null,
+  );
 
-  const handleTabClick = (index: number) => {
-    const selectedId = tabs[index].id;
-    setSelectedTab(index);
-    if (onChange) {
-      onChange(selectedId);
+  const handleTabClick = (id: string) => {
+    if (selectedTab === id) {
+      setSelectedTab(null);
+      if (handleDeselect) {
+        handleDeselect(id);
+      }
+      return;
+    }
+
+    setSelectedTab(id);
+    if (handleSelect) {
+      handleSelect(id);
     }
   };
 
-  const activeTab = onChange ? activeTabIdx : selectedTab;
-
   return (
     <ul className={styles["category-tab"]}>
-      {tabs.map((tab, index) => (
+      {tabs.map((tab) => (
         <li key={tab.id}>
           <button
-            className={cn(index === activeTab && "--active")}
-            onClick={() => handleTabClick(index)}
+            className={cn(tab.id === selectedTab && "--active")}
+            onClick={() => handleTabClick(tab.id)}
             type="button"
           >
             {tab.label}

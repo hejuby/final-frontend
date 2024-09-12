@@ -10,14 +10,15 @@
   text-align: center;
   line-height: 1.4;
   &__title {
-    width: 695px;
+    width: 632px;
   }
   &__date {
-    width: 120px;
+    width: 111px;
     flex-shrink: 0;
+    margin-right: 35px;
   }
   &__views {
-    width: 75px;
+    width: 112px;
     flex-shrink: 0;
   }
   @include mobile {

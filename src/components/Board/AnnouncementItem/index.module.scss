@@ -12,7 +12,7 @@
   }
   &__link {
     @include text-style(16, false, 600);
-    width: 695px;
+    width: 632px;
     &:hover {
       text-decoration: underline;
     }
@@ -33,7 +33,9 @@
 
 .date {
   @include flex();
-  width: 120px;
+  align-self: flex-start;
+  width: 111px;
+  margin-right: 35px;
   @include mobile {
     width: auto;
   }
@@ -41,7 +43,7 @@
 
 .views {
   @include flex();
-  width: 75px;
+  width: 112px;
   @include mobile {
     width: auto;
   }

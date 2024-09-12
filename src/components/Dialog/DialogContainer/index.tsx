@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 import styles from "./index.module.scss";
 
 interface DialogContainerProps {
-  message: string;
+  messages: string[];
   type: "alert" | "confirm";
   onConfirm: () => void;
   onCancel: () => void;
@@ -13,7 +13,7 @@ interface DialogContainerProps {
 const cn = ms(styles, "dialog");
 
 const DialogContainer: React.FC<DialogContainerProps> = ({
-  message,
+  messages,
   type,
   onConfirm,
   onCancel,
@@ -21,7 +21,13 @@ const DialogContainer: React.FC<DialogContainerProps> = ({
   <>
     <div className={cn("-dim")} onClick={onCancel} aria-hidden="true" />
     <div className={cn("-container")}>
-      {message && <p className={styles.dialog__message}>{message}</p>}
+      {messages && (
+        <section>
+          {messages.map((message) => (
+            <p className={styles.dialog__message}>{message}</p>
+          ))}
+        </section>
+      )}
       <div className={cn("__button-container")}>
         {type !== "alert" && (
           <Button type="button" onClick={onCancel} color="outline--gray">

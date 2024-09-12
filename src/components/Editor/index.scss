@@ -1,0 +1,8 @@
+.ck.ck-editor {
+  &__editable {
+    height: 640px;
+    @include tablet {
+      height: 420px;
+    }
+  }
+}

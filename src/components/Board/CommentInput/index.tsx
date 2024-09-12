@@ -26,7 +26,7 @@ const CommentInput = ({
         className={styles.comment__input}
         form={id}
         placeholder="댓글을 남겨보세요"
-        value={value}
+        defaultValue={value}
         onChange={(event) => {
           setComment(event.target.value);
         }}

@@ -16,22 +16,22 @@ export default function useDialog() {
     setMessage("");
   };
 
-  const setAttributes = (type: DialogType, message: string) => {
+  const setAttributes = (type: DialogType, messages: string[]) => {
     setRevealed(true);
-    setMessage(message);
+    setMessage(...messages);
     setType(type);
   };
 
-  const confirm = (message = "") => {
-    setAttributes("confirm", message);
+  const confirm = (...messages: string[]) => {
+    setAttributes("confirm", messages);
 
     return new Promise<boolean>((res) => {
       setResponseHandler(res);
     });
   };
 
-  const alert = (message = "") => {
-    setAttributes("alert", message);
+  const alert = (...messages: string[]) => {
+    setAttributes("alert", messages);
 
     return new Promise<boolean>((res) => {
       setResponseHandler(res);

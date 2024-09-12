@@ -8,7 +8,7 @@ import DialogContainer from "./DialogContainer";
 
 const Dialog = () => {
   const [mounted, setMounted] = useState(false);
-  const { revealed, message, type } = useDialogStore();
+  const { revealed, messages, type } = useDialogStore();
   const { onInteractionEnd } = useDialog();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const Dialog = () => {
     revealed ? (
       <div>
         <DialogContainer
-          message={message}
+          messages={messages}
           type={type}
           onConfirm={handleConfirmClick}
           onCancel={handleCancelClick}

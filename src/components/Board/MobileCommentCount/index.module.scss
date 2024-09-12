@@ -1,12 +1,12 @@
 .wrapper {
+  @include inline-flex();
   @include text-style(12, false, 400);
-  display: none;
   width: fit-content;
   padding: 10px;
   border: 1px solid $gray-40;
   border-radius: 2px;
   @include tablet {
-    @include inline-flex();
+    border-radius: 4px;
   }
 }
 

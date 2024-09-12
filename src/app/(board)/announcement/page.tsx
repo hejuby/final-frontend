@@ -7,18 +7,14 @@ import Pagination from "@/components/Pagination";
 import mockData from "@/assets/mockData.json";
 import styles from "./page.module.scss";
 
-const Board = async ({
-  searchParams,
-}: {
-  searchParams: Record<string, string>;
-}) => {
+const Board = async ({ searchParams }: { searchParams: { page: string } }) => {
   const data = mockData.announcement as CommunityItemProps[];
 
   return (
     <>
       <section className={styles.control}>
         <nav className={styles.search}>
-          <Search />
+          <Search pathname="announcement" searchParams={searchParams} />
         </nav>
         {/* <PostButton /> */}
       </section>

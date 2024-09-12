@@ -18,8 +18,10 @@
     &--active,
     &:hover {
       border: 1px solid $blue-10;
-      color: $blue-40;
       background-color: $blue-10;
+    }
+    &--active {
+      color: $blue-40;
     }
 
     @include tablet {

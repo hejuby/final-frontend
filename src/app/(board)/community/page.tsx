@@ -1,4 +1,5 @@
 import Search from "@/components/Board/Search";
+import BoardCategory from "@/components/Board/BoardCategory";
 import CategoryTab from "@/components/CategoryTab";
 import PostButton from "@/components/Board/PostButton";
 import PostDivider from "@/components/Board/PostDivider";
@@ -12,7 +13,7 @@ import styles from "./page.module.scss";
 const Board = async ({
   searchParams,
 }: {
-  searchParams: Record<string, string>;
+  searchParams: { page: string; category: string };
 }) => {
   const data = mockData.community as CommunityItemProps[];
 
@@ -20,12 +21,11 @@ const Board = async ({
     <>
       <section className={styles.control}>
         <nav className={styles.search}>
-          <Search />
-          <CategoryTab
-            tabs={CATEGORY_LIST.community.map((category) => {
-              const { categoryType: id, categoryName: label } = category;
-              return { id, label };
-            })}
+          <Search pathname="community" searchParams={searchParams} />
+          <BoardCategory
+            pathname="community"
+            searchParams={searchParams}
+            activeTab={searchParams.category}
           />
         </nav>
         <PostButton href="/community/create" />

@@ -1,10 +1,37 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import createParamsURL from "@/utils/createParamsURL";
 import IconSearch from "@/assets/icons/icon-search.svg";
 import styles from "./index.module.scss";
 
-const Search = () => {
+interface SearchProps {
+  pathname: string;
+  searchParams: { page: string; category?: string };
+}
+
+const Search = ({ pathname, searchParams }: SearchProps) => {
+  const router = useRouter();
+
   return (
-    <form className={styles.form}>
+    <form
+      className={styles.form}
+      onSubmit={(event) => {
+        event.preventDefault();
+        router.push(
+          createParamsURL(
+            "set",
+            searchParams,
+            pathname,
+            "query",
+            (event.target as HTMLFormElement).query.value,
+          ),
+        );
+      }}
+    >
       <input
+        type="text"
+        name="query"
         className={styles.form__input}
         placeholder="원하는 글을 찾아보세요"
       />
