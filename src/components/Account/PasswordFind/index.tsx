@@ -16,7 +16,7 @@ const PasswordFind = () => {
         <Input id="email" type="email" label="이메일" full />
         <Input id="email" type="text" label="이름" full />
       </form>
-      <Authentication />
+      {/* <Authentication /> */}
       <div className={styles["button-container"]}>
         <Link href="/auth/pw-change">
           <Button size="medium" full>

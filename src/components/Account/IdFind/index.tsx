@@ -13,7 +13,7 @@ const IdFind = () => {
       <form className={styles.form}>
         <Input id="email" type="text" label="이름" full />
       </form>
-      <Authentication />
+      {/* <Authentication /> */}
       <div className={styles["button-container"]}>
         <Link href="/auth/id-find-complete">
           <Button size="medium" full>
