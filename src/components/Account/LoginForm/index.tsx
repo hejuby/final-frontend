@@ -40,10 +40,7 @@ const LoginForm = () => {
         },
       );
 
-      const result = response.data;
-      console.log(result);
-
-      if (response.status === 200 && result.success) {
+      if (response.status === 200) {
         // 로그인 성공
         router.push("/");
       } else {
@@ -51,7 +48,6 @@ const LoginForm = () => {
         await alert("아이디 또는 비밀번호를 확인해주세요.");
       }
     } catch (error) {
-      console.error("에러:", error);
       await alert("네트워크 오류입니다. 잠시 후 다시 시도해주세요.");
     }
   };
