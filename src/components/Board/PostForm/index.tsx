@@ -1,13 +1,18 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import dynamic from "next/dynamic";
 import useDialog from "@/hooks/useDialog";
 import CategoryTab from "@/components/CategoryTab";
 import TitleInput from "../TitleInput";
-import Editor from "@/components/Editor";
 import PostControlButtons from "../PostControlButtons";
 import { BoardType, CATEGORY_LIST } from "@/@types/board";
 import styles from "./index.module.scss";
+
+const Editor = dynamic(() => import("@/components/Editor"), {
+  loading: () => <div className={styles.skeleton} />,
+  ssr: false,
+});
 
 interface PostFormProps {
   pathname: BoardType;
