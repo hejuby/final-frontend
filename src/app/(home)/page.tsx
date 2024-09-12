@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import IconMoreRight from "@/assets/icons/icon-caret-right.svg";
 import Card from "@/components/Home/Card";
@@ -16,8 +18,9 @@ import Living from "@/assets/icons/icon-cate-living.svg";
 import Digital from "@/assets/icons/icon-cate-digital.svg";
 import IconSparkle from "@/assets/icons/icon-glass-sparkle.svg";
 import IconHeart from "@/assets/icons/icon-glass-heart.svg";
-import testData from "@/data/home_test.json";
 import ms from "@/utils/modifierSelector";
+import { ICampaignItems } from "@/@types/campaignItems";
+import axios from "axios";
 import styles from "./page.module.scss";
 
 const cn = ms(styles, "section");
@@ -26,30 +29,69 @@ const bannerItems = [
   {
     title: "신규 가입 이벤트",
     desc: "다인리뷰와의 첫 만남을 환영합니다.",
-    href: "",
+    href: "/",
     img: "/images/top-banner01.png",
   },
   {
     title: "클린체험단",
     desc: "먹튀 걱정 하지말고 편하게 활동하세요!",
-    href: "",
+    href: "/",
     img: "/images/top-banner02.png",
   },
 ];
 
 const categoryItems = [
-  { icon: Community, label: "커뮤니티" },
-  { icon: Guide, label: "이용가이드" },
-  { icon: Restaurant, label: "맛집" },
-  { icon: Beauty, label: "뷰티" },
-  { icon: Travel, label: "여행" },
-  { icon: Culture, label: "문화" },
-  { icon: Food, label: "식품" },
-  { icon: Living, label: "생활" },
-  { icon: Digital, label: "디지털" },
+  {
+    icon: <Community width={52} height={52} />,
+    label: "커뮤니티",
+    href: "/community",
+  },
+  { icon: <Guide width={52} height={52} />, label: "이용가이드", href: "/" },
+  {
+    icon: <Restaurant width={52} height={52} />,
+    label: "맛집",
+    href: "/search",
+  },
+  { icon: <Beauty width={52} height={52} />, label: "뷰티", href: "/search" },
+  { icon: <Travel width={52} height={52} />, label: "여행", href: "/search" },
+  { icon: <Culture width={52} height={52} />, label: "문화", href: "/search" },
+  { icon: <Food width={52} height={52} />, label: "식품", href: "/search" },
+  { icon: <Living width={52} height={52} />, label: "생활", href: "/search" },
+  {
+    icon: <Digital width={52} height={52} />,
+    label: "디지털",
+    href: "/search",
+  },
 ];
 
 const Home = () => {
+  const [campaignData, setCampaignData] = useState<{
+    premium: ICampaignItems[];
+    popular: ICampaignItems[];
+    newest: ICampaignItems[];
+    imminent: ICampaignItems[];
+  }>({
+    premium: [],
+    popular: [],
+    newest: [],
+    imminent: [],
+  });
+
+  useEffect(() => {
+    const fetchCampaignData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/campaigns/home`,
+        );
+        setCampaignData(response.data);
+      } catch (error) {
+        // eslint-disable-next-line
+        console.error("Failed to fetch campaign data", error);
+      }
+    };
+
+    fetchCampaignData();
+  }, []);
   return (
     <main>
       <section className={cn("__top-banner")}>
@@ -94,9 +136,9 @@ const Home = () => {
             1200: { slidesPerView: 9 },
           }}
         >
-          {categoryItems.map(({ icon, label }, index) => (
+          {categoryItems.map(({ icon, label, href }, index) => (
             // eslint-disable-next-line
-            <Category key={index} icon={icon} label={label} />
+            <Category key={index} icon={icon} label={label} href={href} />
           ))}
         </Slide>
         <div className={styles.line}>{` `}</div>
@@ -130,8 +172,9 @@ const Home = () => {
             1400: { slidesPerView: 4 },
           }}
         >
-          {testData.premium.map((card) => (
-            <Card key={card.id} card={card} />
+          {campaignData.premium.map((premium) => (
+            // eslint-disable-next-line
+            <Card key={premium.id} {...premium} />
           ))}
         </Slide>
       </section>
@@ -164,8 +207,9 @@ const Home = () => {
             1400: { slidesPerView: 4 },
           }}
         >
-          {testData.popular.map((card) => (
-            <Card key={card.id} card={card} />
+          {campaignData.popular.map((card) => (
+            // eslint-disable-next-line
+            <Card key={card.id} {...card} />
           ))}
         </Slide>
       </section>
@@ -178,8 +222,9 @@ const Home = () => {
             </button>
           </h2>
 
-          {testData.newest.slice(0, 3).map((card) => (
-            <Card key={card.id} card={card} type="horizontal" />
+          {campaignData.newest.slice(0, 3).map((card) => (
+            // eslint-disable-next-line
+            <Card key={card.id} {...card} pattern="horizontal" />
           ))}
         </div>
         <div>
@@ -189,8 +234,9 @@ const Home = () => {
               더보기 <IconMoreRight />
             </button>
           </h2>
-          {testData.imminent.slice(0, 3).map((card) => (
-            <Card key={card.id} card={card} type="horizontal" />
+          {campaignData.imminent.slice(0, 3).map((card) => (
+            // eslint-disable-next-line
+            <Card key={card.id} {...card} pattern="horizontal" />
           ))}
         </div>
       </section>

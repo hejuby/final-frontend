@@ -7,10 +7,12 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+  cursor: pointer;
 
-  h2 {
+  > h2.main-title {
     @include text-style(32, $white, 600);
     margin-bottom: 15px;
+    padding: 0;
   }
   p {
     @include text-style(16, $white, 400);
@@ -56,9 +58,10 @@
     padding: 30px 20px;
     box-sizing: border-box;
     background-position: center right;
-    h2 {
+    h2.main-title {
       @include text-style(20, $white, 500);
       margin-bottom: 7px;
+      margin-left: 0;
     }
     p {
       @include text-style(14, $white, 400);

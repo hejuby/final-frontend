@@ -1,4 +1,10 @@
-const formatDate = (dateString: string, format: "YMD" | "MDMH" | "AbbrYMD") => {
+const formatDate = (
+  dateString: string | undefined,
+  format: "YMD" | "MDMH" | "AbbrYMD",
+) => {
+  if (!dateString) {
+    return null;
+  }
   // YYYY-MM-DD-HH-MM-SS
   const [year, month, day, hour, minute] = dateString.split("-");
   const shortYear = year.slice(2);
