@@ -1,30 +1,54 @@
-import React from "react";
-import testData from "@/data/home_test.json";
+"use client";
 
-interface Params {
-  productId: string;
-}
-const products = ({ params }: { params: Params }) => {
-  const allProducts = [
-    ...testData.premium,
-    ...testData.popular,
-    ...testData.newest,
-    ...testData.imminent,
-  ];
+import { useParams } from "next/navigation";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { ICampaignDetails } from "@/@types/campaignItems";
+import Loading from "@/app/Loading";
+import DeatilComponent from "../page";
 
-  const product = allProducts.find(
-    (item) => item.id.toString() === params.productId,
+const Product = () => {
+  const { productsId } = useParams();
+  const [campaignData, setCampaignData] = useState<ICampaignDetails | null>(
+    null,
   );
+  const [isLoading, setIsLoading] = useState(false);
 
-  if (!product) {
+  // 캠페인 상세 데이터 호출
+  useEffect(() => {
+    const getProductData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/campaigns/${productsId}`,
+        );
+        setCampaignData(response.data);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (productsId) {
+      getProductData();
+    }
+  }, [productsId]);
+
+  if (isLoading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
+
+  if (!campaignData) {
     return null;
   }
 
   return (
-    <div style={{ marginTop: 200 }}>
-      <h1>{product.name}</h1>
+    <div>
+      <DeatilComponent campaignData={campaignData} />
     </div>
   );
 };
 
-export default products;
+export default Product;

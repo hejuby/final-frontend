@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import setComma from "@/utils/numberUtils";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Line from "@/components/Line";
+import { ICampaignDetails } from "@/@types/campaignItems";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
 import IconInsta from "@/assets/icons/icon-sns-instagram.svg";
 import IconPointCoin from "@/assets/icons/icon-point-coin.svg";
@@ -14,7 +16,10 @@ import testImg from "../../../public/images/thumb-bg1.jpg";
 import styles from "./page.module.scss";
 import Customcalendar from "./_component/calendar";
 
-const Products = () => {
+interface DeatilComponentProps {
+  campaignData: ICampaignDetails;
+}
+const Products = ({ campaignData }: DeatilComponentProps) => {
   const [isTablet, setIsTablet] = useState(false);
   // 임시 데이터
   const applicationStartDate = new Date("2024-08-25T10:00:00");
@@ -31,6 +36,7 @@ const Products = () => {
     ssr: false,
   });
 
+  // 화면 사이즈 상태 업데이트
   useEffect(() => {
     const handleResize = () => {
       setIsTablet(window.innerWidth <= 1024);
@@ -46,24 +52,26 @@ const Products = () => {
       {/* 좌측 정보 */}
       <section className={styles.products__left}>
         <h2>
-          [서울/광진구] 레스트레또 커피
+          {/* 지역 누락 */} [지역1/지역2]
+          {campaignData.businessName}
           <button aria-label="like" type="button">
             <IconHeartGray />
           </button>
         </h2>
         <div className={styles["product-summary"]}>
           <span>
+            {campaignData.platform}
             <IconInsta />
           </span>
           <span>REELS</span>
           <span>
-            <Tag>방문형</Tag>
+            <Tag>{campaignData.type}</Tag>
           </span>
           <span>
-            <Tag color="light-gray">맛집</Tag>
+            <Tag color="light-gray">{campaignData.category}</Tag>
           </span>
           <p className={styles["point-info"]}>
-            1,000
+            {setComma(Number(campaignData.pointPerPerson))}
             <span>
               <IconPointCoin />
             </span>
@@ -72,9 +80,10 @@ const Products = () => {
         {/* 캠페인 정보 */}
         <div className={styles["product-info-wrap"]}>
           <div className={styles["product-info"]}>
-            <div className={styles["product-info__img"]}>
-              <Image src={testImg} alt="cardImage" />
-            </div>
+            <div
+              className={styles["product-info__img"]}
+              style={{ backgroundImage: `url(${campaignData.imageUrl})` }}
+            >{` `}</div>
             {isTablet && (
               <div className={styles["product-info__update"]}>
                 <h3>
@@ -107,10 +116,7 @@ const Products = () => {
               </ul>
               <div className={styles.reward}>
                 <h4>제공내역</h4>
-                <p>
-                  3만원 상당 음료 및 디저트 제공 - 음료 2잔(블로거+동반1인) +
-                  크로플 1종 / + 5000포인트
-                </p>
+                <p>{campaignData.serviceProvided}</p>
               </div>
             </div>
           </div>
@@ -221,6 +227,8 @@ const Products = () => {
           </dl>
           <dl>
             <dt>사업주 요청사항</dt>
+            {/* requirement 배열로 내려줄 수 있는지? */}
+            {campaignData.requirement}
             <dd>
               <ul>
                 <li>
@@ -239,7 +247,7 @@ const Products = () => {
             <dt>방문주소</dt>
             <dd>
               <div className={styles.address}>
-                <p>인천 계양구 봉오대로 677번길 천사 빌딩</p>
+                <p>{campaignData.address}</p>
                 <button type="button">
                   <Tag shape="rounded">복사</Tag>
                 </button>
@@ -250,6 +258,7 @@ const Products = () => {
             </dd>
           </dl>
         </div>
+        {/* 이건 클릭해서 어디로,,? */}
         <div className={styles["enterprise-info-wrap"]}>
           <button className={styles["enterprise-info"]} type="button">
             <div>

@@ -16,3 +16,33 @@ export interface ICampaignItems {
   applicationDeadline?: number; // 지원 마감일
   isCancel?: boolean; // 취소여부
 }
+
+export interface ICampaignDetails {
+  id: number;
+  businessName: string;
+  imageUrl: string;
+  contactNumber: string;
+  address: string;
+  postalCode: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  availableDays: string[];
+  type: string;
+  category: string;
+  platform: string;
+  label: string;
+  capacity: number;
+  currentApplicants: number;
+  serviceProvided: string;
+  requirement: string;
+  keywords: string[];
+  pointPayment: boolean;
+  pointPerPerson: number;
+  totalPoints: number;
+  applicationStartDate: string;
+  applicationEndDate: string;
+  announcementDate: string;
+  experienceStartDate: string;
+  experienceEndDate: string;
+  reviewDate: string;
+}
