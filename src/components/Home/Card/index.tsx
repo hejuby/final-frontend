@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import setComma from "@/utils/numberUtils";
 import formatDate from "@/utils/formatDate";
 import Image from "next/image";
@@ -34,6 +34,7 @@ interface CardProps extends ICampaignItems {
   pattern?: "horizontal" | "vertical";
 }
 
+// 플랫폼 아이콘
 const getIconForPlatform = (platform: string) => {
   switch (platform) {
     case "유튜브":
@@ -56,7 +57,7 @@ const getIconForPlatform = (platform: string) => {
 };
 
 const Card: React.FC<CardProps> = ({
-  // id,
+  id,
   businessName,
   imageUrl,
   city,
@@ -73,7 +74,9 @@ const Card: React.FC<CardProps> = ({
   pattern = "vertical",
 }) => {
   const pathname = usePathname();
+  const router = useRouter();
 
+  // 홈, 검색 페이지에서 카드 스타일 설정
   const isSearchPage = pathname === "/search";
   const optionalClass = isSearchPage ? styles["search-page"] : "";
 
@@ -81,6 +84,19 @@ const Card: React.FC<CardProps> = ({
 
   const platformIconSrc = getIconForPlatform(platform);
 
+  // 상세 페이지 이동 이벤트
+  const handleClick = () => {
+    router.push(`/products/${id}`);
+  };
+
+  // 키보드 이벤트 핸들러
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      handleClick();
+    }
+  };
+
+  // 화면 사이즈 업데이트
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 520);
@@ -93,15 +109,17 @@ const Card: React.FC<CardProps> = ({
   }, []);
 
   return (
-    <div className={`${cn(`--${pattern}`)} ${optionalClass}`}>
-      <div className={styles["image-content"]}>
-        <Image
-          src={imageUrl}
-          alt="cardImage"
-          width={320}
-          height={320}
-          loader={({ src }) => src}
-        />
+    <div
+      className={`${cn(`--${pattern}`)} ${optionalClass}`}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+    >
+      <div
+        className={styles["image-content"]}
+        style={{ backgroundImage: `url(${imageUrl})` }}
+      >
         {pattern === "vertical" && (
           <div className={styles["like-info"]}>
             {pointPerPerson > 0 ? (

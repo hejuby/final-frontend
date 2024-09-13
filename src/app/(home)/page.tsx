@@ -25,6 +25,7 @@ import styles from "./page.module.scss";
 
 const cn = ms(styles, "section");
 
+// 최상단 배너 데이터
 const bannerItems = [
   {
     title: "신규 가입 이벤트",
@@ -40,6 +41,7 @@ const bannerItems = [
   },
 ];
 
+// 카테고리 데이터
 const categoryItems = [
   {
     icon: <Community width={52} height={52} />,
@@ -77,6 +79,7 @@ const Home = () => {
     imminent: [],
   });
 
+  // 홈 데이터 호출
   useEffect(() => {
     const fetchCampaignData = async () => {
       try {
@@ -92,6 +95,7 @@ const Home = () => {
 
     fetchCampaignData();
   }, []);
+
   return (
     <main>
       <section className={cn("__top-banner")}>
@@ -99,7 +103,7 @@ const Home = () => {
           slidesPerView={1.1}
           spaceBetween={10}
           slidesPerGroup={1}
-          customNav
+          customNav={bannerItems.length > 2}
           styles={styles}
           breakpoints={{
             481: { slidesPerView: 1.1, spaceBetween: 10 },

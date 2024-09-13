@@ -68,11 +68,9 @@
       border-top-left-radius: 16px;
       border-top-right-radius: 16px;
       overflow: hidden;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
 
       .like-info {
         @include flex(between, center);
@@ -108,12 +106,10 @@
       width: 148px;
       height: 148px;
       border-radius: 8px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
       overflow: hidden;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
     }
 
     .text-content {
@@ -217,9 +213,10 @@
       margin-top: 10px;
       padding-bottom: 10px;
       border-bottom: 1px solid $gray-20;
+      align-items: center;
       .image-content {
         width: 100px;
-        height: 120px;
+        height: 100px;
       }
       .text-content {
         width: calc(100% - 100px);

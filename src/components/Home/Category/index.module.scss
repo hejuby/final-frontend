@@ -6,6 +6,12 @@
   border-radius: 20px;
   text-align: center;
   background-color: $gray-10;
+  transition: 0.4s;
+  margin-bottom: 20px;
+
+  &:hover {
+    box-shadow: $box-shadow;
+  }
 
   @include tablet {
     &:first-child {
