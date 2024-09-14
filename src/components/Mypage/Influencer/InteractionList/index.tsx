@@ -47,7 +47,7 @@ const InteractionListInfluencer = () => {
             aria-label="패널티 정보 버튼"
             onClick={handleOpenPenaltyModal}
           >
-            <IconWarning width="24" height="24" />
+            <IconWarning width={24} color="var(--gray-40)" />
           </button>
         </div>
       </div>

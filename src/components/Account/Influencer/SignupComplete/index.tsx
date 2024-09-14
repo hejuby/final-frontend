@@ -7,12 +7,12 @@ import IconWelcome from "@/assets/icons/icon-welcome.svg";
 import styles from "./index.module.scss";
 
 const SignupCompleteInfluencer = () => {
-  const [name, setName] = useState("");
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
-    const storedName = localStorage.getItem("name");
-    if (storedName) {
-      setName(storedName);
+    const storageNickname = localStorage.getItem("nickname");
+    if (storageNickname) {
+      setNickname(storageNickname);
     }
   }, []);
 
@@ -22,7 +22,7 @@ const SignupCompleteInfluencer = () => {
         <h2>
           만나서 반가워요.
           <br />
-          <span>{name}</span>님
+          <span>{nickname}</span>님
         </h2>
         <p>
           원활한 체험 활동을 위해

@@ -86,43 +86,59 @@ const SignupFormInfluencer = () => {
     { id: "etc", type: "ETC", name: "sns.etc", placeholder: "기타 SNS" },
   ];
 
-  // 이메일 중복체크
+  // 이메일 중복 체크
   const handleCheckEmail = async () => {
     if (!emailValue) {
+      setError("email", {
+        type: "manual",
+        message: "이메일을 입력해 주세요.",
+      });
       await alert("이메일을 입력해 주세요.");
+      return;
+    }
+
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(emailValue)) {
+      setError("email", {
+        type: "manual",
+        message: "유효한 이메일 형식을 입력해 주세요.",
+      });
+      await alert("유효한 이메일 형식을 입력해 주세요.");
       return;
     }
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/sing-up/email/check`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/sign-up/email/check`,
         {
           email: emailValue,
         },
       );
 
-      if (response.data.exists) {
-        setError("email", {
-          type: "manual",
-          message: "이미 사용 중인 이메일입니다.",
-        });
-      } else {
+      // 200 - 사용 가능한 이메일
+      if (response.status === 200) {
         clearErrors("email");
         await alert("사용 가능한 이메일입니다.");
         setIsEmailChecked(true);
       }
     } catch (error) {
       console.error("이메일 중복체크 오류:", error);
-      if (axios.isAxiosError(error) && error.response?.data?.message) {
-        await alert(error.response.data.message);
+
+      // 400 - 이메일 중복
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        setError("email", {
+          type: "manual",
+          message: "이미 사용 중인 이메일입니다.",
+        });
+        await alert("이미 사용 중인 이메일입니다.");
       } else {
+        // 그 외의 오류
         await alert("이메일 중복체크에 실패했습니다.");
       }
       setIsEmailChecked(false);
     }
   };
 
-  // 회원가입 제출
   const onSubmit: SubmitHandler<typeof initialState> = async (formData) => {
     // 이메일 중복 체크
     if (!isEmailChecked) {
@@ -130,6 +146,7 @@ const SignupFormInfluencer = () => {
       return;
     }
 
+    // 통합 인증 체크
     if (!certified) {
       await alert("통합인증을 완료해주세요.");
       return;
@@ -178,26 +195,24 @@ const SignupFormInfluencer = () => {
     const requestBody = {
       email: formData.email,
       password: formData.password,
-      name: formData.name,
+      name,
       nickname: formData.nickname,
       snsResponseList,
-      joinPath: formData.joinPath,
+      joinPath: selectedItem?.optionLabel || "",
       terms: formData.termsCheck.terms,
       personalInformation: formData.termsCheck.privacy,
       marketing: formData.termsCheck.marketing,
       impId: impUid,
     };
 
-    console.log("폼 제출:", requestBody);
-
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer/sing-up`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer/sign-up`,
         requestBody,
       );
 
       if (response.status === 200) {
-        localStorage.setItem("name", formData.name);
+        localStorage.setItem("nickname", formData.nickname);
         router.push("/auth/signup-complete/influencer");
       } else {
         await alert(response.data.message || "회원가입에 실패했습니다.");
@@ -208,7 +223,6 @@ const SignupFormInfluencer = () => {
     }
   };
 
-  // 회원가입 제출 실패 - 필수 항목 입력
   const onError = async (formErrors: any) => {
     if (formErrors.email) {
       await alert("이메일을 확인해 주세요.");

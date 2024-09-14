@@ -41,8 +41,8 @@ const Authentication: React.FC<AuthenticationProps> = ({
 }) => {
   const Certification = async (): Promise<void> => {
     try {
-      const IMP_CODE = process.env.NEXT_PUBLIC_IMP_CODE;
-      const MID = process.env.NEXT_PUBLIC_MID;
+      const IMP_CODE = process.env.NEXT_PUBLIC_IMP_CODE ?? "";
+      const MID = process.env.NEXT_PUBLIC_MID ?? "";
 
       if (!IMP_CODE) {
         throw new Error("IMP_CODE가 설정되지 않았습니다.");
@@ -58,31 +58,27 @@ const Authentication: React.FC<AuthenticationProps> = ({
           merchant_uid: `mer_id_${Date.now()}`,
         },
         async (resp: CertificationResponse) => {
-          console.log(`=== IMP 모달 인증 결과 ===`);
-          console.log(resp);
-
           if (resp.success) {
             // 인증 성공
             setImpUid(resp.imp_uid);
             setCertified(true);
 
-            console.log("인증 성공:", resp.imp_uid);
-
             try {
-              // imp_uid를 백엔드에서 요청한 URL로 전달
+              // impId 백엔드에서 요청한 URL로 전달
               const backendResponse = await axios.post(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/port/one`,
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/info/imp`,
                 {
-                  imp_uid: resp.imp_uid,
+                  impId: resp.imp_uid,
                 },
               );
 
               const { name } = backendResponse.data;
-              setName(name);
-
-              console.log("백엔드 응답 성공:", backendResponse.data);
+              if (name) {
+                setName(name);
+              }
             } catch (error) {
-              if (error instanceof axios.AxiosError) {
+              // AxiosError 처리
+              if (axios.isAxiosError(error)) {
                 console.error(
                   "백엔드 응답 에러:",
                   error.response?.data?.message || error.message,

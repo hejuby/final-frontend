@@ -6,6 +6,7 @@ type SNSType = "NAVER_BLOG" | "INSTAGRAM" | "YOUTUBE" | "TIKTOK" | "ETC";
 
 export interface SNSResponse {
   snsType: SNSType;
+  url: string;
 }
 
 interface SNSListProps {

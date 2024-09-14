@@ -70,7 +70,7 @@ const SignupSocialEmployer = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer/sing-up`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer/sign-up`,
         requestBody,
       );
 

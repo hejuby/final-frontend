@@ -21,15 +21,6 @@ const ProfileEmployer = () => {
 
   const { confirm } = useDialog();
 
-  const convertToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
   // 다음 API 호출
   useEffect(() => {
     const script = document.createElement("script");
@@ -72,36 +63,45 @@ const ProfileEmployer = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let base64Image = null;
+    const formData = new FormData();
+
+    // JSON 데이터
+    const data = {
+      address: address.address,
+      addressDetail: address.detailAddress,
+      postalCode: address.zonecode,
+    };
+
+    // data를 Blob으로 변환하여 application/json 타입으로 전송
+    const jsonBlob = new Blob([JSON.stringify(data)], {
+      type: "application/json",
+    });
+    formData.append("data", jsonBlob);
+
+    // 이미지 파일
     if (profileImg) {
-      base64Image = await convertToBase64(profileImg);
-    }
-
-    const requestBody: Record<string, any> = {};
-
-    if (base64Image) {
-      requestBody.profileImage = base64Image;
-    }
-
-    if (address.address) {
-      requestBody.address = address.address;
-      requestBody.addressDetail = address.detailAddress;
-      requestBody.postalCode = address.zonecode;
+      formData.append("imageFile", profileImg);
     }
 
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer/sign-up/extra`,
-        requestBody,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        },
       );
 
       if (response.status === 200) {
-        console.log("제출 성공적으로 완료", response.data);
+        router.push("/");
       } else {
         throw new Error("서버 에러 발생");
       }
     } catch (error) {
-      console.error("제출 실패, 요청 데이터:", requestBody);
+      console.error("제출 실패, 요청 데이터:", formData);
     }
   };
 
@@ -147,7 +147,6 @@ const ProfileEmployer = () => {
             주소 검색
           </Button>
         </div>
-
         <Input
           id="address"
           type="text"
@@ -157,7 +156,6 @@ const ProfileEmployer = () => {
           value={address.address}
           readOnly
         />
-
         <Input
           id="addressDetail"
           type="text"
