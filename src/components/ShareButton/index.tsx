@@ -1,17 +1,19 @@
 "use client";
 
 import React from "react";
+import useDialog from "@/hooks/useDialog";
 import IconShare from "@/assets/icons/icon-share.svg";
 import styles from "./index.module.scss";
 
 const ShareButton = () => {
+  const { alert } = useDialog();
   // 클립보드로 복사
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      // console.log("복사완료", text);  //Todo 경민: alert 컴포넌트 완료 후 수정 예정
+      alert("클립보드에 url이 복사되었습니다.");
     } catch (error) {
-      // console.error("복사실패");
+      alert("url 복사에 실패했습니다.");
     }
   };
 
@@ -36,7 +38,7 @@ const ShareButton = () => {
         });
         return true;
       }
-      // alert('해당 기기는 공유기능이 지원되지 않습니다.') //Todo 경민: alert 컴포넌트 완료 후 수정 예정
+      alert("해당 기기는 공유기능이 지원되지 않습니다.");
       return false;
     }
 
