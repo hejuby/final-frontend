@@ -36,10 +36,11 @@ const getIconForPlatform = (platform: string) => {
   }
 };
 
-interface CampaignTopInfoProps {
+const CampaignTopInfo = ({
+  campaignData,
+}: {
   campaignData: ICampaignDetails;
-}
-const CampaignTopInfo = ({ campaignData }: CampaignTopInfoProps) => {
+}) => {
   const platformIconSrc = getIconForPlatform(campaignData.platform);
 
   return (

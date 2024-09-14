@@ -4,12 +4,13 @@ import formatDate from "@/utils/formatDate";
 import IconWarning from "@/assets/icons/icon-warning-gray-filled.svg";
 import styles from "../../page.module.scss";
 
-interface CampaignInfoProps {
+const CampaignInfo = ({
+  campaignData,
+  isTablet,
+}: {
   campaignData: ICampaignDetails;
   isTablet: boolean;
-}
-
-const CampaignInfo = ({ campaignData, isTablet }: CampaignInfoProps) => {
+}) => {
   return (
     <div className={styles["product-info-wrap"]}>
       <div className={styles["product-info"]}>

@@ -14,11 +14,7 @@ import CampaignNotice from "./_component/campaignNotice/page";
 import Customcalendar from "./_component/calendar";
 import styles from "./page.module.scss";
 
-interface DeatailComponentProps {
-  campaignData: ICampaignDetails;
-}
-
-const Page = ({ campaignData }: DeatailComponentProps) => {
+const Page = ({ campaignData }: { campaignData: ICampaignDetails }) => {
   const { alert } = useDialog();
   const [isTablet, setIsTablet] = useState(false);
   // 임시 데이터

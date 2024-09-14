@@ -12,11 +12,11 @@ import IconMissionAd from "@/assets/icons/icon-mission-advertise.svg?url";
 import Tag from "@/components/Tag";
 import styles from "../../page.module.scss";
 
-interface CampaignNoticeProps {
+const CampaignNotice = ({
+  campaignData,
+}: {
   campaignData: ICampaignDetails;
-}
-
-const CampaignNotice = ({ campaignData }: CampaignNoticeProps) => {
+}) => {
   const { alert } = useDialog();
   // 임시 데이터
   const latitude: number = 37.123456;
