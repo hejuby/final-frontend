@@ -9,8 +9,8 @@ import IconUp from "@/assets/icons/icon-direction-up.svg";
 import IconClose from "@/assets/icons/icon-close-blue.svg";
 import useDialog from "@/hooks/useDialog";
 import Selectbox, { Option } from "@/components/Selectbox/index";
-import testData from "@/data/home_test.json";
-import Card from "@/components/Home/Card";
+// import testData from "@/data/home_test.json";
+// import Card from "@/components/Home/Card";
 import CityModal from "./_component/CityModal";
 import styles from "./page.module.scss";
 
@@ -284,9 +284,9 @@ const Search = () => {
         </div>
       </section>
       <section className={styles["card-section"]}>
-        {testData.premium.map((card) => (
+        {/* {premium.map((card) => (
           <Card key={card.id} card={card} />
-        ))}
+        ))} */}
       </section>
     </div>
   );
