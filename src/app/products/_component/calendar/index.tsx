@@ -11,12 +11,12 @@ import "react-calendar/dist/Calendar.css";
 import "./custom.css";
 
 interface CustomCalendarProps {
-  applicationStartDate: Date;
-  applicationEndDate: Date;
-  announcementDate: Date;
-  experienceStartDate: Date;
-  experienceEndDate: Date;
-  reviewDate: Date;
+  applicationStartDate: string;
+  applicationEndDate: string;
+  announcementDate: string;
+  experienceStartDate: string;
+  experienceEndDate: string;
+  reviewDate: string;
 }
 
 const Customcalendar: React.FC<CustomCalendarProps> = ({

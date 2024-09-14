@@ -7,9 +7,12 @@ const formatDate = (
   }
   // YYYY-MM-DD-HH-MM-SS
   const [year, month, day, hour, minute] = dateString.split("-");
+
   const shortYear = year.slice(2);
-  const parseMonth = parseInt(month, 10).toString();
-  const parseDay = parseInt(day, 10).toString();
+  const date = new Date(`${year}-${month}-${day}`);
+  const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+  const dayOfWeek = weekdays[date.getDay()];
+
   if (format === "YMD") {
     return `${year}년 ${month}월 ${day}월`;
   }
@@ -17,7 +20,10 @@ const formatDate = (
     return `${month}/${day} ${hour}:${minute}`;
   }
   if (format === "AbbrYMD") {
-    return `${shortYear}년 ${parseMonth}월 ${parseDay}일`;
+    return `${shortYear}년 ${parseInt(month)}월 ${parseInt(day)}일`;
+  }
+  if (format === "YMDDay") {
+    return `${shortYear}년 ${parseInt(month)}월 ${parseInt(day)}일 (${dayOfWeek})`;
   }
   return null;
 };
