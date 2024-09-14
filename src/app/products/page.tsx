@@ -14,11 +14,11 @@ import CampaignNotice from "./_component/campaignNotice/page";
 import Customcalendar from "./_component/calendar";
 import styles from "./page.module.scss";
 
-interface DeatilComponentProps {
+interface DeatailComponentProps {
   campaignData: ICampaignDetails;
 }
 
-const Products = ({ campaignData }: DeatilComponentProps) => {
+const Page = ({ campaignData }: DeatailComponentProps) => {
   const { alert } = useDialog();
   const [isTablet, setIsTablet] = useState(false);
   // 임시 데이터
@@ -118,4 +118,4 @@ const Products = ({ campaignData }: DeatilComponentProps) => {
   );
 };
 
-export default Products;
+export default Page;
