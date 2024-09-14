@@ -1,4 +1,5 @@
 .icon {
+  @include flex();
   width: 80px;
   @include tablet {
     width: 56px;

@@ -1,6 +1,27 @@
-.wrapper {
+.desktop {
   display: block;
+  width: max-content;
   @include tablet {
     display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @include tablet {
+    display: block;
+    & > button {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: $purple-30;
+      & > svg {
+        width: 30px;
+        height: 30px;
+        & > path {
+          stroke: $white;
+        }
+      }
+    }
   }
 }

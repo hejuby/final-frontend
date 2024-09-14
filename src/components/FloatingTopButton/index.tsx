@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import IconTopBtnDesk from "@/assets/icons/icon-top-button-desktop.svg";
 import IconTopBtnMobile from "@/assets/icons/icon-top-button-mobile.svg";
 import ms from "@/utils/modifierSelector";
@@ -11,6 +12,9 @@ const cn = ms(styles, "top-button");
 const FloatingTopButton = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [showBtn, setShowBtn] = useState(false);
+
+  const pathname = usePathname().split("/")[1];
+  const isBoard = pathname === "community" || pathname === "follows";
 
   // Todo 경민: 로그인 화면에서는 버튼 안보이게 추가 설정 예정
 
@@ -48,6 +52,7 @@ const FloatingTopButton = () => {
       type="button"
       className={cn(showBtn ? "--show" : "--hide")}
       onClick={handleTopBtn}
+      style={{ bottom: isBoard ? "260px" : "" }}
     >
       {isMobile ? <IconTopBtnMobile /> : <IconTopBtnDesk />}
     </button>
