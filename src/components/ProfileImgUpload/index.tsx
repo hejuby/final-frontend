@@ -102,36 +102,39 @@ const ProfileImgUpload: React.FC<ProfileImgUploadProps> = ({
   };
 
   return (
-    <div
-      className={`${cn("-container")} ${isDrag ? styles["drag-over"] : ""}`}
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-    >
-      <button
-        type="button"
-        onClick={() => fileInput.current?.click()}
-        onKeyDown={handleKeyDown}
-        aria-label="이미지 업로드"
-        className={styles["img-upload-button"]}
+    <div className={styles.container}>
+      <div
+        className={`${cn("-container")} ${isDrag ? styles["drag-over"] : ""}`}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
       >
-        <Image src={previewImg} width={95} height={95} alt="프로필 이미지" />
-      </button>
+        <button
+          type="button"
+          onClick={() => fileInput.current?.click()}
+          onKeyDown={handleKeyDown}
+          aria-label="이미지 업로드"
+          className={styles["img-upload-button"]}
+        >
+          <Image src={previewImg} width={95} height={95} alt="프로필 이미지" />
+        </button>
 
-      <input
-        type="file"
-        name="image_URL"
-        id="input-file"
-        accept="image/*"
-        style={{ display: "none" }}
-        ref={fileInput}
-        onChange={handleFileInputChange}
-      />
+        <input
+          type="file"
+          name="image_URL"
+          id="input-file"
+          accept="image/*"
+          style={{ display: "none" }}
+          ref={fileInput}
+          onChange={handleFileInputChange}
+        />
 
-      {cameraButon && <IconCamera onClick={() => fileInput.current?.click()} />}
-      {label && <label htmlFor="input-file">프로필 이미지</label>}
-
-      <div className={styles["img-default-button"]}>
+        {cameraButon && (
+          <IconCamera onClick={() => fileInput.current?.click()} />
+        )}
+        {label && <label htmlFor="input-file">프로필 이미지</label>}
+      </div>
+      <span className={styles["img-default-button"]}>
         {isUpload && (
           <Button
             type="button"
@@ -141,7 +144,7 @@ const ProfileImgUpload: React.FC<ProfileImgUploadProps> = ({
             기본 이미지로 설정하기
           </Button>
         )}
-      </div>
+      </span>
     </div>
   );
 };

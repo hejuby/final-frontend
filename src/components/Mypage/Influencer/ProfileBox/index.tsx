@@ -8,23 +8,21 @@ import Button from "@/components/Button";
 import IconDirection from "@/assets/icons/icon-direction-right.svg";
 import styles from "./index.module.scss";
 
-const ProfileBoxInfluencer = () => {
+interface ProfileBoxInfluencerProps {
+  nickname: string;
+  profileImage: string;
+  snsResponseList: SNSResponse[];
+}
+
+const ProfileBoxInfluencer = ({
+  nickname,
+  profileImage,
+  snsResponseList,
+}: ProfileBoxInfluencerProps) => {
   const [profileImg, setProfileImg] = useState<File | null>(null);
-  const defaultImg = "/images/profile-default-mypage.svg";
+  const defaultImg = profileImage || "/images/profile-default-mypage.svg";
 
   const [isTablet, setIsTablet] = useState(false);
-
-  const snsResponseList: SNSResponse[] = [
-    {
-      snsType: "INSTAGRAM",
-    },
-    {
-      snsType: "NAVER_BLOG",
-    },
-    {
-      snsType: "YOUTUBE",
-    },
-  ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -44,12 +42,12 @@ const ProfileBoxInfluencer = () => {
         <ProfileImgUpload
           profileImg={profileImg}
           setProfileImg={setProfileImg}
-          cameraButon
           defaultImg={defaultImg}
+          cameraButon
         />
       </div>
       <div className={styles["name-container"]}>
-        <strong>감자도리</strong>
+        <strong>{nickname}</strong>
         {isTablet && (
           <Link href="/">
             <IconDirection />

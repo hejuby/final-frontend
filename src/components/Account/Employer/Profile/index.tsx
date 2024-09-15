@@ -85,7 +85,7 @@ const ProfileEmployer = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer/sign-up/extra`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/enterpriser/sign-up/extra`,
         formData,
         {
           headers: {

@@ -8,9 +8,17 @@ import IconDirection from "@/assets/icons/icon-direction-right.svg";
 import Tag from "@/components/Tag";
 import styles from "./index.module.scss";
 
-const ProfileBoxEmployer = () => {
+interface ProfileBoxEmployerProps {
+  nickname: string;
+  profileImage: string;
+}
+
+const ProfileBoxEmployer = ({
+  nickname,
+  profileImage,
+}: ProfileBoxEmployerProps) => {
   const [profileImg, setProfileImg] = useState<File | null>(null);
-  const defaultImg = "/images/profile-default-mypage.svg";
+  const defaultImg = profileImage || "/images/profile-default-mypage.svg";
 
   const [isTablet, setIsTablet] = useState(false);
 
@@ -37,7 +45,7 @@ const ProfileBoxEmployer = () => {
         />
       </div>
       <div className={styles["name-container"]}>
-        <strong>24시 감자탕</strong>
+        <strong>{nickname}</strong>
         {isTablet && (
           <Link href="/">
             <IconDirection />

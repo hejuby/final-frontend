@@ -6,7 +6,16 @@ import CampaignItemInfluencer from "@/components/Mypage/Influencer/CampaignItem"
 import CountBox from "@/components/Mypage/Influencer/CountBox";
 import Searchbox from "@/components/Mypage/Searchbox";
 // import CampaignEmpty from "@/components/Mypage/CampaignEmpty";
+import axios from "axios";
+import Loading from "@/app/Loading";
 import styles from "./page.module.scss";
+
+interface ProfileData {
+  appliedCampaignCount: number;
+  selectedCampaignCount: number;
+  ongoingCampaignCount: number;
+  cancelledApplicationCount: number;
+}
 
 const campaignItems = [
   {
@@ -46,8 +55,8 @@ const campaignItems = [
 const MypageInfluencerPage = () => {
   const [selectedItem1, setSelectedItem1] = useState<Option | null>(null);
   const [selectedItem2, setSelectedItem2] = useState<Option | null>(null);
-
   const [isTablet, setIsTablet] = useState(false);
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -60,15 +69,41 @@ const MypageInfluencerPage = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer`,
+          {
+            withCredentials: true,
+          },
+        );
+        setProfileData(response.data);
+      } catch (error) {
+        console.error("프로필 데이터를 가져오는 중 오류 발생:", error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
+  if (!profileData) return <Loading />;
+
   return (
     <div className={styles.container}>
       <section>
         <CountBox
           countItems={[
-            { title: "신청한 체험단", count: 0 },
-            { title: "선정된 체험단", count: 0 },
-            { title: "진행중 체험단", count: 0 },
-            { title: "최소 횟수", count: 0 },
+            { title: "신청한 체험단", count: profileData.appliedCampaignCount },
+            {
+              title: "선정된 체험단",
+              count: profileData.selectedCampaignCount,
+            },
+            { title: "진행중 체험단", count: profileData.ongoingCampaignCount },
+            {
+              title: "최소 횟수",
+              count: profileData.cancelledApplicationCount,
+            },
           ]}
         />
       </section>
