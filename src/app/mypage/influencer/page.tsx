@@ -3,10 +3,11 @@
 import React, { useEffect, useState } from "react";
 import Selectbox, { Option } from "@/components/Selectbox/index";
 import CampaignItemInfluencer from "@/components/Mypage/Influencer/CampaignItem";
+import { CampaignItem } from "@/@types/myCampaignItems";
+import axios from "axios";
 import CountBox from "@/components/Mypage/Influencer/CountBox";
 import Searchbox from "@/components/Mypage/Searchbox";
-// import CampaignEmpty from "@/components/Mypage/CampaignEmpty";
-import axios from "axios";
+import CampaignEmpty from "@/components/Mypage/CampaignEmpty";
 import Loading from "@/app/Loading";
 import styles from "./page.module.scss";
 
@@ -17,46 +18,13 @@ interface ProfileData {
   cancelledApplicationCount: number;
 }
 
-const campaignItems = [
-  {
-    id: 1,
-    applicationDeadline: 11,
-    name: "별이네 커피집",
-    region1: "서울",
-    region2: "강서구",
-    reward: "1만 5천원 체험권 (2인 기준)",
-    experienceStartDate: "2024-09-01",
-    experienceEndDate: "2024-10-01",
-    campaignState: "모집중",
-    platform: "",
-    type: "방문형",
-    applicant: 8,
-    capacity: 5,
-    label: "다인리뷰",
-  },
-  {
-    id: 2,
-    applicationDeadline: 11,
-    name: "별이네 커피집",
-    region1: "서울",
-    region2: "강서구",
-    reward: "1만 5천원 체험권 (2인 기준)",
-    experienceStartDate: "2024-09-01",
-    experienceEndDate: "2024-10-01",
-    campaignState: "모집중",
-    platform: "",
-    type: "방문형",
-    applicant: 8,
-    capacity: 5,
-    label: "다인리뷰",
-  },
-];
-
 const MypageInfluencerPage = () => {
-  const [selectedItem1, setSelectedItem1] = useState<Option | null>(null);
-  const [selectedItem2, setSelectedItem2] = useState<Option | null>(null);
+  const [selectedPlatform, setSelectedPlatform] = useState<Option | null>(null);
+  const [selectedState, setSelectedState] = useState<Option | null>(null);
   const [isTablet, setIsTablet] = useState(false);
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [campaignItems, setCampaignItems] = useState<CampaignItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -84,10 +52,44 @@ const MypageInfluencerPage = () => {
       }
     };
 
+    const fetchCampaignData = async () => {
+      try {
+        const response = await axios.get("/api/test");
+        const campaignData = response.data.content.map(
+          (item: CampaignItem) => ({
+            id: item.id,
+            businessName: item.businessName,
+            imageUrl: item.imageUrl,
+            serviceProvided: item.serviceProvided,
+            currentApplicants: item.currentApplicants,
+            capacity: item.capacity,
+            campaignState: item.campaignState,
+            pointPerPerson: item.pointPerPerson,
+            city: item.city,
+            district: item.district,
+            type: item.type,
+            label: item.label,
+            platform: item.platform,
+            experienceStartDate: item.experienceStartDate,
+            experienceEndDate: item.experienceEndDate,
+            applicationDeadline: item.applicationDeadline,
+            isLike: item.isLike,
+            isCancellable: item.isCancellable,
+          }),
+        );
+        setCampaignItems(campaignData);
+      } catch (error) {
+        console.error("체험단 데이터를 가져오는 중 오류 발생:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     fetchProfileData();
+    fetchCampaignData();
   }, []);
 
-  if (!profileData) return <Loading />;
+  if (isLoading || !profileData) return <Loading />;
 
   return (
     <div className={styles.container}>
@@ -101,7 +103,7 @@ const MypageInfluencerPage = () => {
             },
             { title: "진행중 체험단", count: profileData.ongoingCampaignCount },
             {
-              title: "최소 횟수",
+              title: "취소 횟수",
               count: profileData.cancelledApplicationCount,
             },
           ]}
@@ -115,7 +117,7 @@ const MypageInfluencerPage = () => {
             <Selectbox
               placeholder="플랫폼"
               size="medium"
-              selected={selectedItem1}
+              selected={selectedPlatform}
               options={[
                 { optionLabel: "인스타", value: "instagram" },
                 { optionLabel: "블로그", value: "blog" },
@@ -123,26 +125,29 @@ const MypageInfluencerPage = () => {
                 { optionLabel: "유튜브", value: "youtube" },
                 { optionLabel: "기타", value: "etc" },
               ]}
-              onChange={setSelectedItem1}
+              onChange={setSelectedPlatform}
             />
             <Selectbox
               placeholder="상태"
               size="medium"
-              selected={selectedItem2}
+              selected={selectedState}
               options={[
                 { optionLabel: "모집중", value: "recruitment" },
                 { optionLabel: "모집완료", value: "complete" },
                 { optionLabel: "체험&리뷰", value: "review" },
                 { optionLabel: "리뷰마감", value: "deadline" },
               ]}
-              onChange={setSelectedItem2}
+              onChange={setSelectedState}
             />
           </div>
           <Searchbox />
         </div>
         <div className={styles.campaign__list}>
-          <CampaignItemInfluencer campaignItems={campaignItems} />
-          {/* <CampaignEmpty /> */}
+          {campaignItems.length > 0 ? (
+            <CampaignItemInfluencer campaignItems={campaignItems} />
+          ) : (
+            <CampaignEmpty />
+          )}
         </div>
       </section>
     </div>

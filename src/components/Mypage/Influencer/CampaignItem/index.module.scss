@@ -7,9 +7,31 @@
     margin-top: 16px;
     border: 1px solid $gray-20;
     border-radius: 8px;
+
+    &.review-closed {
+      .campaign-label {
+        filter: grayscale(1);
+      }
+
+      .img-wrapper {
+        opacity: 0.5;
+      }
+
+      .info-container {
+        opacity: 0.5;
+        filter: grayscale(1);
+
+        .state {
+          > div {
+            background-color: $gray-30;
+            color: $black;
+          }
+        }
+      }
+    }
   }
 
-  &__img-container {
+  .img-container {
     position: relative;
     overflow: hidden;
     flex-shrink: 1;
@@ -27,14 +49,15 @@
       }
     }
 
-    button {
+    .like-button {
       position: absolute;
       bottom: 12px;
       right: 12px;
+      cursor: default;
     }
   }
 
-  &__info-container {
+  .info-container {
     position: relative;
     flex-grow: 1;
     padding: 18px 16px 18px 0;
@@ -65,6 +88,7 @@
         position: absolute;
         top: 18px;
         right: 16px;
+        z-index: 1;
 
         > div {
           @include flex;
@@ -157,6 +181,10 @@
   }
 
   @include desktop {
+    .img-container {
+      height: 245px;
+    }
+
     .info-bottom {
       @include column-flex(center, start);
       gap: 14px;
@@ -166,6 +194,7 @@
         @include flex(start);
         flex-wrap: wrap;
         gap: 8px;
+        margin-right: auto;
 
         @include mobile {
           max-width: 165px;
@@ -199,8 +228,9 @@
       }
     }
 
-    &__img-container {
+    .img-container {
       width: 100px;
+      height: 100%;
       border-radius: 8px;
 
       .img-wrapper {
@@ -213,7 +243,7 @@
       }
     }
 
-    &__info-container {
+    .info-container {
       padding: 0;
 
       .info-top {

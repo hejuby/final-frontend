@@ -10,17 +10,17 @@ import styles from "./index.module.scss";
 
 interface ProfileBoxInfluencerProps {
   nickname: string;
-  profileImage: string;
+  profileImageUrl: string;
   snsResponseList: SNSResponse[];
 }
 
 const ProfileBoxInfluencer = ({
   nickname,
-  profileImage,
+  profileImageUrl,
   snsResponseList,
 }: ProfileBoxInfluencerProps) => {
   const [profileImg, setProfileImg] = useState<File | null>(null);
-  const defaultImg = profileImage || "/images/profile-default-mypage.svg";
+  const defaultImg = profileImageUrl || "/images/profile-default-mypage.svg";
 
   const [isTablet, setIsTablet] = useState(false);
 
@@ -49,7 +49,7 @@ const ProfileBoxInfluencer = ({
       <div className={styles["name-container"]}>
         <strong>{nickname}</strong>
         {isTablet && (
-          <Link href="/">
+          <Link href="/mypage/influencer/profile">
             <IconDirection />
           </Link>
         )}

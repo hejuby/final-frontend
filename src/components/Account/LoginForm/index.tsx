@@ -2,7 +2,7 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import useDialog from "@/hooks/useDialog";
 import IconKakao from "@/assets/icons/icon-kakao.svg";
 import IconNaver from "@/assets/icons/icon-naver.svg";
@@ -43,12 +43,22 @@ const LoginForm = () => {
       if (response.status === 200) {
         // 로그인 성공
         router.push("/");
-      } else {
-        // 로그인 실패
+      } else if (response.status === 400) {
+        // 아이디 또는 비밀번호 확인
         await alert("아이디 또는 비밀번호를 확인해주세요.");
+      } else {
+        // 그 외 상태 코드 처리
+        await alert("네트워크 오류입니다. 잠시 후 다시 시도해주세요.");
       }
-    } catch (error) {
-      await alert("네트워크 오류입니다. 잠시 후 다시 시도해주세요.");
+    } catch (error: unknown) {
+      const err = error as AxiosError;
+      if (err.response && err.response.status === 400) {
+        // 아이디 또는 비밀번호 오류
+        await alert("아이디 또는 비밀번호를 확인해주세요.");
+      } else {
+        // 네트워크 오류
+        await alert("네트워크 오류입니다. 잠시 후 다시 시도해주세요.");
+      }
     }
   };
 
@@ -96,10 +106,10 @@ const LoginForm = () => {
             label="이메일"
             full
             register={register("email", {
-              required: "이메일을 입력해주세요",
+              required: "이메일을 입력해주세요.",
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "유효한 이메일을 입력해주세요",
+                message: "유효한 이메일을 입력해주세요.",
               },
             })}
             error={errors.email?.message}
@@ -112,16 +122,16 @@ const LoginForm = () => {
             label="비밀번호"
             full
             register={register("password", {
-              required: "비밀번호를 입력해주세요",
+              required: "비밀번호를 입력해주세요.",
               minLength: {
                 value: 8,
-                message: "비밀번호는 최소 8자 이상이어야 합니다",
+                message: "비밀번호는 최소 8자 이상이어야 합니다.",
               },
               pattern: {
                 value:
                   /((?=.*[a-zA-Z])(?=.*[\W_]))|((?=.*[a-zA-Z])(?=.*\d))|((?=.*\d)(?=.*[\W_]))/,
                 message:
-                  "비밀번호는 영문, 숫자, 특수문자 중 2가지를 포함해야 합니다",
+                  "비밀번호는 영문, 숫자, 특수문자 중 2가지를 포함해야 합니다.",
               },
             })}
             error={errors.password?.message}

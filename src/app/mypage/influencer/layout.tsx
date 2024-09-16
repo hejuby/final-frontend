@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import axios from "axios";
 import ProfileBoxInfluencer from "@/components/Mypage/Influencer/ProfileBox";
 import InteractionListInfluencer from "@/components/Mypage/Influencer/InteractionList";
@@ -10,7 +11,7 @@ import styles from "./layout.module.scss";
 
 interface ProfileData {
   nickname: string;
-  profileImage: string;
+  profileImageUrl: string;
   snsResponseList: SNSResponse[];
 }
 
@@ -20,6 +21,19 @@ const MypageLayoutInfluencer = ({
   children: React.ReactNode;
 }) => {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const pathname = usePathname();
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsTablet(window.innerWidth <= 1024);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -38,15 +52,21 @@ const MypageLayoutInfluencer = ({
 
     fetchProfileData();
   }, []);
+
+  const isProfilePage = pathname === "/mypage/influencer/profile";
+
   if (!profileData) return <Loading />;
 
   return (
     <div className={styles.layout}>
       <h2 className="visually-hidden">마이페이지</h2>
-      <div className={styles.layout__left}>
+      <div
+        className={styles.layout__left}
+        style={{ display: isProfilePage && isTablet ? "none" : "block" }}
+      >
         <ProfileBoxInfluencer
           nickname={profileData.nickname}
-          profileImage={profileData.profileImage}
+          profileImageUrl={profileData.profileImageUrl}
           snsResponseList={profileData.snsResponseList}
         />
         <InteractionListInfluencer />

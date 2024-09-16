@@ -4,9 +4,11 @@ import { useState } from "react";
 import IconDirection from "@/assets/icons/icon-direction-right-gray.svg";
 import IconWarning from "@/assets/icons/icon-warning-gray-filled.svg";
 import IconClose from "@/assets/icons/icon-close.svg";
+import useDialog from "@/hooks/useDialog";
 import styles from "./index.module.scss";
 
 const InteractionListEmployer = () => {
+  const { alert } = useDialog();
   const [isOpenPenaltyModal, setIsOpenPenaltyModal] = useState(false);
 
   const handleOpenPenaltyModal = () => {
@@ -17,18 +19,24 @@ const InteractionListEmployer = () => {
     setIsOpenPenaltyModal(false);
   };
 
+  const hancdleClickAlert = () => {
+    alert("서비스 준비중입니다.");
+  };
+
   return (
     <div className={styles["interaction-container"]}>
       <h3 className="visually-hidden">보유포인트, 찜하기, 패널티 정보</h3>
       <div className={styles.interaction__list}>
-        <div className={styles.interaction__item}>
+        <button
+          type="button"
+          className={styles.interaction__item}
+          onClick={hancdleClickAlert}
+        >
           <p className={styles.title}>
             보유포인트 <span>0P</span>
           </p>
-          <button type="button" className="" aria-hidden>
-            <IconDirection />
-          </button>
-        </div>
+          <IconDirection />
+        </button>
         <div className={styles.interaction__item}>
           <p className={styles.title}>
             패널티 <span>0</span>

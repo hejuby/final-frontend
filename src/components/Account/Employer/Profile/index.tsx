@@ -12,7 +12,7 @@ import styles from "./index.module.scss";
 const ProfileEmployer = () => {
   const router = useRouter();
   const [profileImg, setProfileImg] = useState<File | null>(null);
-  const [isDetailAddressEditable, setIsDetailAddressEditable] = useState(false);
+  const [isDetailAddressEdit, setIsDetailAddressEdit] = useState(false);
   const [address, setAddress] = useState({
     zonecode: "",
     address: "",
@@ -45,7 +45,7 @@ const ProfileEmployer = () => {
             address: data.address,
             zonecode: data.zonecode,
           });
-          setIsDetailAddressEditable(true);
+          setIsDetailAddressEdit(true);
         },
       }).open();
     }
@@ -165,7 +165,7 @@ const ProfileEmployer = () => {
           gap={0}
           value={address.detailAddress}
           onChange={handleDetailAddressChange}
-          readOnly={!isDetailAddressEditable}
+          readOnly={!isDetailAddressEdit}
         />
         <div className={styles["button-container"]}>
           <Button size="medium" full type="submit">

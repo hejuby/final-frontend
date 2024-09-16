@@ -10,15 +10,15 @@ import styles from "./index.module.scss";
 
 interface ProfileBoxEmployerProps {
   nickname: string;
-  profileImage: string;
+  profileImageUrl: string;
 }
 
 const ProfileBoxEmployer = ({
   nickname,
-  profileImage,
+  profileImageUrl,
 }: ProfileBoxEmployerProps) => {
   const [profileImg, setProfileImg] = useState<File | null>(null);
-  const defaultImg = profileImage || "/images/profile-default-mypage.svg";
+  const defaultImg = profileImageUrl || "/images/profile-default-mypage.svg";
 
   const [isTablet, setIsTablet] = useState(false);
 
@@ -47,7 +47,7 @@ const ProfileBoxEmployer = ({
       <div className={styles["name-container"]}>
         <strong>{nickname}</strong>
         {isTablet && (
-          <Link href="/">
+          <Link href="/mypage/employer/profile">
             <IconDirection />
           </Link>
         )}

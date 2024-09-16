@@ -256,10 +256,10 @@ const SignupFormInfluencer = () => {
             maxLength={100}
             full
             register={register("email", {
-              required: "이메일을 입력해주세요",
+              required: "이메일을 입력해주세요.",
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "유효한 이메일을 입력해주세요",
+                message: "유효한 이메일을 입력해주세요.",
               },
             })}
           />
@@ -283,16 +283,16 @@ const SignupFormInfluencer = () => {
             full
             gap={5}
             register={register("password", {
-              required: "비밀번호를 입력해주세요",
+              required: "비밀번호를 입력해주세요.",
               minLength: {
                 value: 8,
-                message: "비밀번호는 최소 8자 이상이어야 합니다",
+                message: "비밀번호는 최소 8자 이상이어야 합니다.",
               },
               pattern: {
                 value:
                   /((?=.*[a-zA-Z])(?=.*[\W_]))|((?=.*[a-zA-Z])(?=.*\d))|((?=.*\d)(?=.*[\W_]))/,
                 message:
-                  "비밀번호는 영문, 숫자, 특수문자 중 2가지를 포함해야 합니다",
+                  "비밀번호는 영문, 숫자, 특수문자 중 2가지를 포함해야 합니다.",
               },
             })}
             error={errors.password?.message}

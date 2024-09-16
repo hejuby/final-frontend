@@ -8,6 +8,10 @@
   .header {
     margin-bottom: 20px;
 
+    @include tablet {
+      padding-top: 20px;
+    }
+
     .title {
       @include text-style(24, $black, 600);
       display: inline-block;

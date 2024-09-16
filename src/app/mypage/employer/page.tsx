@@ -1,54 +1,23 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { CampaignItem } from "@/@types/myCampaignItems";
 import Selectbox, { Option } from "@/components/Selectbox/index";
 import CampaignItemEmployer from "@/components/Mypage/Employer/CampaignItem";
+import axios from "axios";
 import Searchbox from "@/components/Mypage/Searchbox";
-// import CampaignEmpty from "@/components/Mypage/CampaignEmpty";
+import CampaignEmpty from "@/components/Mypage/CampaignEmpty";
+import Loading from "@/app/Loading";
 import Link from "next/link";
 import Button from "@/components/Button";
 import styles from "./page.module.scss";
 
-const campaignItems = [
-  {
-    id: 1,
-    applicationDeadline: 11,
-    name: "별이네 커피집",
-    region1: "서울",
-    region2: "강서구",
-    reward: "1만 5천원 체험권 (2인 기준)",
-    experienceStartDate: "2024-09-01",
-    experienceEndDate: "2024-10-01",
-    campaignState: "모집중",
-    platform: "",
-    type: "방문형",
-    applicant: 8,
-    capacity: 5,
-    label: "다인리뷰",
-  },
-  {
-    id: 2,
-    applicationDeadline: 11,
-    name: "별이네 커피집",
-    region1: "서울",
-    region2: "강서구",
-    reward: "1만 5천원 체험권 (2인 기준)",
-    experienceStartDate: "2024-09-01",
-    experienceEndDate: "2024-10-01",
-    campaignState: "모집중",
-    platform: "",
-    type: "방문형",
-    applicant: 8,
-    capacity: 5,
-    label: "다인리뷰",
-  },
-];
-
 const MypageEmployerPage = () => {
-  const [selectedItem1, setSelectedItem1] = useState<Option | null>(null);
-  const [selectedItem2, setSelectedItem2] = useState<Option | null>(null);
-
+  const [selectedPlatform, setSelectedPlatform] = useState<Option | null>(null);
+  const [selectedState, setSelectedState] = useState<Option | null>(null);
   const [isTablet, setIsTablet] = useState(false);
+  const [campaignItems, setCampaignItems] = useState<CampaignItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -61,6 +30,45 @@ const MypageEmployerPage = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const fetchCampaignData = async () => {
+      try {
+        const response = await axios.get("/api/test");
+        const campaignData = response.data.content.map(
+          (item: CampaignItem) => ({
+            id: item.id,
+            businessName: item.businessName,
+            imageUrl: item.imageUrl,
+            serviceProvided: item.serviceProvided,
+            currentApplicants: item.currentApplicants,
+            capacity: item.capacity,
+            campaignState: item.campaignState,
+            pointPerPerson: item.pointPerPerson,
+            city: item.city,
+            district: item.district,
+            type: item.type,
+            label: item.label,
+            platform: item.platform,
+            experienceStartDate: item.experienceStartDate,
+            experienceEndDate: item.experienceEndDate,
+            applicationDeadline: item.applicationDeadline,
+            isLike: item.isLike,
+            isCancellable: item.isCancellable,
+          }),
+        );
+        setCampaignItems(campaignData);
+      } catch (error) {
+        console.error("체험단 데이터를 가져오는 중 오류 발생:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCampaignData();
+  }, []);
+
+  if (isLoading) return <Loading />;
+
   return (
     <div className={styles.container}>
       {isTablet && <div className={styles.divider} />}
@@ -72,7 +80,7 @@ const MypageEmployerPage = () => {
               <Selectbox
                 placeholder="플랫폼"
                 size="medium"
-                selected={selectedItem1}
+                selected={selectedPlatform}
                 options={[
                   { optionLabel: "인스타", value: "instagram" },
                   { optionLabel: "블로그", value: "blog" },
@@ -80,30 +88,36 @@ const MypageEmployerPage = () => {
                   { optionLabel: "유튜브", value: "youtube" },
                   { optionLabel: "기타", value: "etc" },
                 ]}
-                onChange={setSelectedItem1}
+                onChange={setSelectedPlatform}
               />
               <Selectbox
                 placeholder="상태"
                 size="medium"
-                selected={selectedItem2}
+                selected={selectedState}
                 options={[
                   { optionLabel: "모집중", value: "recruitment" },
                   { optionLabel: "모집완료", value: "complete" },
                   { optionLabel: "체험&리뷰", value: "review" },
                   { optionLabel: "리뷰마감", value: "deadline" },
                 ]}
-                onChange={setSelectedItem2}
+                onChange={setSelectedState}
               />
             </div>
             <Searchbox />
           </div>
-          <Link href="/" className={styles["campaign-button"]}>
+          <Link
+            href="/campaigns/register"
+            className={styles["campaign-button"]}
+          >
             <Button>체험단 등록</Button>
           </Link>
         </div>
         <div className={styles.campaign__list}>
-          <CampaignItemEmployer campaignItems={campaignItems} />
-          {/* <CampaignEmpty /> */}
+          {campaignItems.length > 0 ? (
+            <CampaignItemEmployer campaignItems={campaignItems} />
+          ) : (
+            <CampaignEmpty />
+          )}
         </div>
       </section>
     </div>

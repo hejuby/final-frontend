@@ -15,7 +15,7 @@ const ProfileInfluencer = () => {
   const [profileImg, setProfileImg] = useState<File | null>(null);
   const [birthday, setBirthday] = useState("");
   const [gender, setGender] = useState<string | null>(null);
-  const [isDetailAddressEditable, setIsDetailAddressEditable] = useState(false);
+  const [isDetailAddressEdit, setIsDetailAddressEdit] = useState(false);
   const [address, setAddress] = useState({
     zonecode: "",
     address: "",
@@ -52,7 +52,7 @@ const ProfileInfluencer = () => {
             address: data.address,
             zonecode: data.zonecode,
           });
-          setIsDetailAddressEditable(true);
+          setIsDetailAddressEdit(true);
         },
       }).open();
     }
@@ -194,7 +194,7 @@ const ProfileInfluencer = () => {
           gap={0}
           value={address.detailAddress}
           onChange={handleDetailAddressChange}
-          readOnly={!isDetailAddressEditable}
+          readOnly={!isDetailAddressEdit}
         />
         <div className={styles["button-container"]}>
           <Button size="medium" full type="submit">

@@ -24,10 +24,11 @@ interface SNSInputProps extends Omit<InputProps, "type"> {
   id: string;
   type: SNSInputType;
   placeholder: string;
+  onSNSChange?: (id: string, value: string) => void;
 }
 
 const SNSInput = forwardRef<HTMLInputElement, SNSInputProps>(
-  ({ id, type, name, placeholder, ...props }, ref) => {
+  ({ id, type, name, placeholder, onSNSChange, ...props }, ref) => {
     const getSNSIcon = () => {
       switch (type) {
         case "NAVER_BLOG":
@@ -45,6 +46,12 @@ const SNSInput = forwardRef<HTMLInputElement, SNSInputProps>(
       }
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (onSNSChange) {
+        onSNSChange(id, e.target.value);
+      }
+    };
+
     return (
       <div className={styles.sns}>
         {getSNSIcon()}
@@ -56,6 +63,7 @@ const SNSInput = forwardRef<HTMLInputElement, SNSInputProps>(
           gap={5}
           maxLength={300}
           {...props}
+          onChange={handleChange}
         />
       </div>
     );
