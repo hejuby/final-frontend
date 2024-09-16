@@ -20,10 +20,10 @@ const formatDate = (
     return `${month}/${day} ${hour}:${minute}`;
   }
   if (format === "AbbrYMD") {
-    return `${shortYear}년 ${parseInt(month)}월 ${parseInt(day)}일`;
+    return `${shortYear}년 ${parseInt(month, 10)}월 ${parseInt(day, 10)}일`;
   }
   if (format === "YMDDay") {
-    return `${shortYear}년 ${parseInt(month)}월 ${parseInt(day)}일 (${dayOfWeek})`;
+    return `${shortYear}년 ${parseInt(month, 10)}월 ${parseInt(day, 10)}일 (${dayOfWeek})`;
   }
   return null;
 };

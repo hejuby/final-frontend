@@ -10,7 +10,7 @@ import IconMissionLink from "@/assets/icons/icon-mission-link.svg?url";
 import IconMissionImage from "@/assets/icons/icon-mission-image.svg?url";
 import IconMissionAd from "@/assets/icons/icon-mission-advertise.svg?url";
 import Tag from "@/components/Tag";
-import styles from "../../page.module.scss";
+import styles from "../../[productsId]/page.module.scss";
 
 const CampaignNotice = ({
   campaignData,

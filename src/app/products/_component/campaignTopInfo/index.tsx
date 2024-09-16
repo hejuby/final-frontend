@@ -12,7 +12,7 @@ import IconShorts from "@/assets/icons/icon-sns-shorts.svg?url";
 import IconEtc from "@/assets/icons/icon-sns-etc.svg?url";
 import IconPointCoin from "@/assets/icons/icon-point-coin.svg";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
-import styles from "../../page.module.scss";
+import styles from "../../[productsId]/page.module.scss";
 
 // 플랫폼 아이콘
 const getIconForPlatform = (platform: string) => {

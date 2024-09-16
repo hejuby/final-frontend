@@ -2,7 +2,7 @@ import React from "react";
 import { ICampaignDetails } from "@/@types/campaignItems";
 import formatDate from "@/utils/formatDate";
 import IconWarning from "@/assets/icons/icon-warning-gray-filled.svg";
-import styles from "../../page.module.scss";
+import styles from "../../[productsId]/page.module.scss";
 
 const CampaignInfo = ({
   campaignData,
