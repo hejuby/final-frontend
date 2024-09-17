@@ -1,32 +1,30 @@
-import Link from "next/link";
-import { CATEGORY_LIST } from "@/@types/board";
+import { BoardPost, BoardType, CATEGORY_LIST } from "@/@types/board";
 import formatDate from "@/utils/formatDate";
 import IconProfile from "@/assets/icons/icon-profile.svg";
 import IconComment from "@/assets/icons/icon-comment.svg";
 import Category from "../Category";
 import EditDropdown from "../EditDropdown";
-import { CommunityItemProps } from "../ListItem";
 import styles from "./index.module.scss";
 
-const PostTitle = ({ post }: { post: CommunityItemProps }) => {
+const PostTitle = ({ post }: { post: BoardPost }) => {
   const {
-    boardType,
     id,
-    userId,
-    userNickname,
-    categoryId,
+    authorNickName,
+    authorProfileImageUrl,
     title,
-    date,
+    noticeBoardType,
+    categoryType: categoryName,
+    attachedFileUrls,
+    createdAt,
     viewCount,
     commentCount,
   } = post;
+  const boardType: BoardType =
+    noticeBoardType === "커뮤니티" ? "communities" : "follows";
   const category = CATEGORY_LIST[boardType].find(
-    (item) => item.categoryId === categoryId,
+    (categoryItem) => categoryItem.categoryName === categoryName,
   );
-
-  if (!category) {
-    return null;
-  }
+  const { categoryType } = category || CATEGORY_LIST[boardType][0];
 
   return (
     <section className={styles.title}>
@@ -34,20 +32,30 @@ const PostTitle = ({ post }: { post: CommunityItemProps }) => {
         <Category
           pageType="post"
           boardType={boardType}
-          categoryType={category.categoryType}
+          categoryType={categoryType}
         >
-          {category.categoryName}
+          {categoryName}
         </Category>
-        <EditDropdown type="post" boardType={boardType} id={id} />
+        <EditDropdown type="post" boardType={boardType} postId={id} />
       </aside>
       <h3 className={styles.title__text}>{title}</h3>
       <ul className={styles.title__info}>
         <li className={styles["info-group"]}>
-          <Link href={`/profile/${userId}`} className={styles.profile}>
-            <IconProfile viewBox="0 0 36 36" />
-            <p>{userNickname}</p>
-          </Link>
-          <p>{formatDate(date, "MDMH")}</p>
+          <section className={styles.profile}>
+            {authorProfileImageUrl ? (
+              <img
+                src={authorProfileImageUrl}
+                width="24px"
+                height="24px"
+                alt="작성자 프로필"
+                sizes="(max-width: 1024px) 20px, 20px"
+              />
+            ) : (
+              <IconProfile viewBox="0 0 36 36" />
+            )}
+            <p>{authorNickName}</p>
+          </section>
+          <p>{formatDate(createdAt, "MDMH")}</p>
         </li>
         <li className={styles["info-group"]}>
           <p>{`조회 ${viewCount.toLocaleString()}`}</p>

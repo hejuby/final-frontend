@@ -18,10 +18,10 @@ const Board = ({
   searchParams: { page: string; category: string; keyword: string };
 }) => {
   const { data } = useQuery<unknown, unknown, BoardResponse>({
-    queryKey: ["follows"],
+    queryKey: ["communities"],
     queryFn: () =>
       axios.get(
-        `https://g6-server.dainreview.kr/api/post/follows${createRequestParamsURI(searchParams)}`,
+        `https://g6-server.dainreview.kr/api/post/communities${createRequestParamsURI(searchParams)}`,
         { withCredentials: true },
       ),
   });
@@ -36,20 +36,20 @@ const Board = ({
     <>
       <section className={styles.control}>
         <nav className={styles.search}>
-          <Search pathname="follows" searchParams={searchParams} />
+          <Search pathname="communities" searchParams={searchParams} />
           <BoardCategory
-            pathname="follows"
+            pathname="communities"
             searchParams={searchParams}
             activeTab={searchParams.category}
           />
         </nav>
-        <PostButton href="/follows/create" />
+        <PostButton href="/communities/create" />
       </section>
       <PostDivider />
       <section className={styles.list}>
         <List items={content} />
         <Pagination
-          pathname="/follows"
+          pathname="/communities"
           searchParams={searchParams}
           chunkSize={10}
           totalPages={totalPages}

@@ -46,7 +46,7 @@ const categoryItems = [
   {
     icon: <Community width={52} height={52} />,
     label: "커뮤니티",
-    href: "/community",
+    href: "/communities",
   },
   { icon: <Guide width={52} height={52} />, label: "이용가이드", href: "/" },
   {
@@ -245,7 +245,7 @@ const Home = () => {
         </div>
       </section>
       <section className={cn("__banner")}>
-        <Link href="/community">
+        <Link href="/communities">
           <h4>커뮤니티에서 맞팔 친구들을 찾아보세요!</h4>
           <p>다인리뷰에서 다양한 분야의 리뷰어들을 만나보세요!</p>
         </Link>

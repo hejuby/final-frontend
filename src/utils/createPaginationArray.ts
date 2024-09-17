@@ -7,9 +7,7 @@ const createPaginationArray = (
     { length: chunkSize },
     (_, i) =>
       i +
-      1 +
-      Math.floor((currentPage < 1 ? 1 : currentPage - 1) / chunkSize) *
-        chunkSize,
-  ).filter((index) => index <= totalPages);
+      Math.floor((currentPage < 0 ? 0 : currentPage) / chunkSize) * chunkSize,
+  ).filter((index) => index < totalPages);
 
 export default createPaginationArray;

@@ -5,8 +5,8 @@ import styles from "./index.module.scss";
 
 interface PostNavigationProps {
   list: string;
-  previous?: string;
-  next?: string;
+  previous: number | null;
+  next: number | null;
 }
 
 const PostNavigation = ({ list, previous, next }: PostNavigationProps) => {
@@ -15,7 +15,7 @@ const PostNavigation = ({ list, previous, next }: PostNavigationProps) => {
       <ul className={styles.navigation}>
         {previous && (
           <li>
-            <Link href={previous} className={styles.direction}>
+            <Link href={`${list}/${previous}`} className={styles.direction}>
               <IconDirectionLeft viewBox="0 0 24 24" />
               <p>이전글</p>
             </Link>
@@ -28,7 +28,7 @@ const PostNavigation = ({ list, previous, next }: PostNavigationProps) => {
         </li>
         {next && (
           <li>
-            <Link href={next} className={styles.direction}>
+            <Link href={`${list}/${next}`} className={styles.direction}>
               <p>다음글</p>
               <IconDirectionRight viewBox="0 0 24 24" />
             </Link>

@@ -47,13 +47,17 @@
   @include tablet {
     gap: 4px;
   }
-  & > svg {
+  & > img,
+  svg {
     width: 24px;
     height: 24px;
     @include tablet {
       width: 20px;
       height: 20px;
     }
+  }
+  & > img {
+    object-fit: cover;
   }
 }
 

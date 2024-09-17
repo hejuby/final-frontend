@@ -23,7 +23,7 @@ const Search = ({ pathname, searchParams }: SearchProps) => {
             "set",
             searchParams,
             pathname,
-            "query",
+            "keyword",
             (event.target as HTMLFormElement).query.value,
           ),
         );

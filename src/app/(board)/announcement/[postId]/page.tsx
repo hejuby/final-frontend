@@ -1,13 +1,17 @@
-import { CommunityItemProps } from "@/components/Board/ListItem";
+import axios from "axios";
+import { BoardPostResponse } from "@/@types/board";
 import AnnouncementTitle from "@/components/Board/AnnouncementTitle";
 import PostContent from "@/components/Board/PostContent";
 import PostNavigation from "@/components/Board/PostNavigation";
-import mockData from "@/assets/mockData.json";
 import styles from "./page.module.scss";
 
 const Post = async ({ params }: { params: { postId: string } }) => {
-  const data = mockData.announcement as CommunityItemProps[];
-  const post = data.find((item) => item.id === Number(params.postId));
+  const data: BoardPostResponse = await axios.get(
+    `https://g6-server.dainreview.kr/api/post/notices/${params.postId}`,
+  );
+  const post = data.data;
+
+  console.log(post);
 
   if (!post) {
     return null;
@@ -20,8 +24,8 @@ const Post = async ({ params }: { params: { postId: string } }) => {
         <PostContent content={post.content} />
       </section>
       <PostNavigation
-        previous="/announcement/0"
-        next="/announcement/0"
+        previous={post.previousPostId}
+        next={post.nextPostId}
         list="/announcement"
       />
     </>

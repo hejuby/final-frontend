@@ -1,8 +1,9 @@
-import ListItem, { CommunityItemProps } from "../ListItem";
+import { BoardItem } from "@/@types/board";
+import ListItem from "../ListItem";
 import styles from "./index.module.scss";
 
 interface ListProps {
-  items: CommunityItemProps[];
+  items: BoardItem[];
 }
 
 const List = ({ items }: ListProps) => {

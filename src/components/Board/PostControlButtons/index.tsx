@@ -5,7 +5,11 @@ import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
 import styles from "./index.module.scss";
 
-const PostControlButtons = () => {
+interface PostControlButtonsProps {
+  disabled?: boolean;
+}
+
+const PostControlButtons = ({ disabled = false }) => {
   const router = useRouter();
   const { confirm } = useDialog();
 
@@ -25,7 +29,9 @@ const PostControlButtons = () => {
       >
         취소
       </Button>
-      <Button type="submit">등록</Button>
+      <Button type="submit" disabled={disabled}>
+        등록
+      </Button>
     </nav>
   );
 };

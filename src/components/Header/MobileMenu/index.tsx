@@ -125,7 +125,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                   </Link>
                 </li>
                 <li>
-                  <Link href="/community" onClick={handleCloseMenu}>
+                  <Link href="/communities" onClick={handleCloseMenu}>
                     커뮤니티
                   </Link>
                 </li>

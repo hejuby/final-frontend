@@ -24,7 +24,9 @@ const DialogContainer: React.FC<DialogContainerProps> = ({
       {messages && (
         <section>
           {messages.map((message) => (
-            <p className={styles.dialog__message}>{message}</p>
+            <p key={message} className={styles.dialog__message}>
+              {message}
+            </p>
           ))}
         </section>
       )}

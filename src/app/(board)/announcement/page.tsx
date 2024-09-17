@@ -1,14 +1,24 @@
+import axios from "axios";
+import createRequestParamsURI from "@/utils/createRequestParamsURI";
 import Search from "@/components/Board/Search";
 // import PostButton from "@/components/Board/PostButton";
 import PostDivider from "@/components/Board/PostDivider";
-import { CommunityItemProps } from "@/components/Board/ListItem";
+import { BoardResponse } from "@/@types/board";
 import AnnouncementList from "@/components/Board/AnnouncementList";
 import Pagination from "@/components/Pagination";
-import mockData from "@/assets/mockData.json";
 import styles from "./page.module.scss";
 
-const Board = async ({ searchParams }: { searchParams: { page: string } }) => {
-  const data = mockData.announcement as CommunityItemProps[];
+const Board = async ({
+  searchParams,
+}: {
+  searchParams: { page: string; keyword: string };
+}) => {
+  const data: BoardResponse = await axios.get(
+    `https://g6-server.dainreview.kr/api/post/notices${createRequestParamsURI(
+      searchParams,
+    )}`,
+  );
+  const { content, totalPages } = data.data;
 
   return (
     <>
@@ -20,17 +30,12 @@ const Board = async ({ searchParams }: { searchParams: { page: string } }) => {
       </section>
       <PostDivider />
       <section className={styles.list}>
-        <AnnouncementList
-          items={data.slice(
-            10 * (Number(searchParams.page || 1) - 1),
-            10 * Number(searchParams.page || 1),
-          )}
-        />
+        <AnnouncementList items={content} />
         <Pagination
           pathname="/announcement"
           searchParams={searchParams}
           chunkSize={10}
-          totalPages={Math.ceil(data.length / 10)}
+          totalPages={totalPages}
         />
       </section>
     </>

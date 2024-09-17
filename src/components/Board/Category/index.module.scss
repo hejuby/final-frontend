@@ -16,34 +16,34 @@
       line-height: 1.2;
     }
   }
-  &--board-community {
-    &--category-question {
+  &--board-communities {
+    &--category-QUESTION {
       color: $category-yellow;
     }
-    &--category-know-how {
+    &--category-KNOWHOW {
       color: $category-purple;
     }
-    &--category-accompany {
+    &--category-COMPANION {
       color: $category-mint;
     }
-    &--category-others {
+    &--category-ETC {
       color: $category-pink;
     }
   }
   &--board-follows {
-    &--category-blog {
+    &--category-BLOG {
       color: $category-green;
     }
-    &--category-instagram {
+    &--category-INSTAGRAM {
       color: $category-purple;
     }
-    &--category-youtube {
+    &--category-YOUTUBE {
       color: $category-pink;
     }
-    &--category-tictoc {
+    &--category-TIKTOK {
       color: $category-mint;
     }
-    &--category-others {
+    &--category-ETC {
       color: $category-yellow;
     }
   }

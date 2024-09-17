@@ -5,7 +5,7 @@ const CommunityCreate = () => {
   return (
     <>
       <PostDivider marginBottom="20px" />
-      <PostForm pathname="community" />
+      <PostForm pathname="communities" />
     </>
   );
 };

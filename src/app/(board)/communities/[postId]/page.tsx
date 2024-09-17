@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import {
   BoardPostResponse,
   CommentResponse,
@@ -22,11 +22,11 @@ import styles from "./page.module.scss";
 const Post = ({ params }: { params: { postId: string } }) => {
   const [temporaryCommentDeleteCount, setTemporaryCommentDeleteCount] =
     useState<number>(0);
-  const { data } = useQuery<unknown, unknown, BoardPostResponse>({
-    queryKey: ["follows", params.postId],
+  const { data: postData } = useQuery<unknown, unknown, BoardPostResponse>({
+    queryKey: ["communities", params.postId],
     queryFn: () =>
       axios.get(
-        `https://g6-server.dainreview.kr/api/post/follows/${params.postId}`,
+        `https://g6-server.dainreview.kr/api/post/communities/${params.postId}`,
         { withCredentials: true },
       ),
   });
@@ -57,11 +57,11 @@ const Post = ({ params }: { params: { postId: string } }) => {
     },
   });
 
-  if (!data || !commentPages) {
+  if (!postData || !commentPages) {
     return null;
   }
 
-  const post = data.data;
+  const post = postData.data;
 
   return (
     <>
@@ -109,7 +109,7 @@ const Post = ({ params }: { params: { postId: string } }) => {
       <PostNavigation
         previous={post.previousPostId}
         next={post.nextPostId}
-        list="/follows"
+        list="/communities"
       />
       <MobileTopButton />
     </>

@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useDialog from "@/hooks/useDialog";
 import { BoardType } from "@/@types/board";
 import IconKebab from "@/assets/icons/icon-kebab.svg";
@@ -11,19 +14,42 @@ import styles from "./index.module.scss";
 
 interface EditDropdownProps {
   type: "post" | "comment";
+  postId: number;
   boardType?: BoardType;
-  id: number;
+  commentId?: number;
   commentEdit?: () => void;
+  commentDelete?: () => void;
 }
 
 const EditDropdown = ({
   type,
+  postId,
   boardType,
-  id,
+  commentId,
   commentEdit,
+  commentDelete,
 }: EditDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { confirm } = useDialog();
+  const { confirm, alert } = useDialog();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { mutate, isSuccess, isError } = useMutation({
+    mutationFn: () => {
+      return type === "post"
+        ? axios.delete(
+            `https://g6-server.dainreview.kr/api/post/${boardType}/${postId}`,
+            {
+              withCredentials: true,
+            },
+          )
+        : axios.delete(
+            `https://g6-server.dainreview.kr/api/post/${postId}/comments/${commentId}`,
+            {
+              withCredentials: true,
+            },
+          );
+    },
+  });
 
   useEffect(() => {
     window.addEventListener("click", () => {
@@ -39,6 +65,39 @@ const EditDropdown = ({
   if (type === "post" && !boardType) {
     return null;
   }
+
+  useEffect(() => {
+    if (!isSuccess) {
+      return;
+    }
+    if (type === "comment") {
+      if (commentId) {
+        queryClient.invalidateQueries({
+          queryKey: ["comments", commentId.toString()],
+        });
+      }
+      if (commentDelete) {
+        commentDelete();
+      }
+    }
+    if (type === "post") {
+      queryClient.invalidateQueries({
+        queryKey: [boardType],
+        refetchType: "all",
+      });
+      router.push(`/${boardType}`);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (!isError) {
+      return;
+    }
+    const alertError = async () => {
+      await alert("삭제에 실패했습니다!");
+    };
+    alertError();
+  }, [isError]);
 
   return (
     <nav className={styles.wrapper}>
@@ -57,7 +116,7 @@ const EditDropdown = ({
           <li>
             {type === "post" ? (
               <Link
-                href={`/${boardType}/${id}/edit`}
+                href={`/${boardType}/${postId}/edit`}
                 className={styles.dropdown__button}
               >
                 <p>수정하기</p>
@@ -91,6 +150,8 @@ const EditDropdown = ({
                 );
 
                 if (confirmed) {
+                  mutate();
+                  setIsOpen(false);
                 }
               }}
             >

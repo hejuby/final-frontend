@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ReadonlyURLSearchParams } from "next/navigation";
 import createPaginationArray from "@/utils/createPaginationArray";
 import createParamsURL from "@/utils/createParamsURL";
 import IconDirectionLeft from "@/assets/icons/icon-direction-left-white.svg";
@@ -23,16 +22,16 @@ const Pagination = ({
   chunkSize,
   totalPages,
 }: PaginationProps) => {
-  const currentPage = Number(searchParams.page) || 1;
+  const currentPage = Number(searchParams.page) || 0;
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [currentChunk, setCurrentChunk] = useState<number>(chunkSize);
 
   const filterPageNumber = (pageNumber: number | string) => {
-    if (Number(pageNumber) < 1) {
-      return 1;
+    if (Number(pageNumber) < 0) {
+      return 0;
     }
-    if (Number(pageNumber) > totalPages) {
-      return totalPages;
+    if (Number(pageNumber) > totalPages - 1) {
+      return totalPages - 1;
     }
     return pageNumber;
   };
@@ -71,7 +70,7 @@ const Pagination = ({
     <nav className={styles.flex}>
       <Link
         href={createPageURL(
-          currentPage - chunkSize - (currentPage % currentChunk) + 1,
+          currentPage - chunkSize - (currentPage % currentChunk),
         )}
         aria-label="이전 페이지로 가기"
       >
@@ -95,7 +94,7 @@ const Pagination = ({
                   isActive={currentPage === index}
                   label={`${index}번 페이지`}
                 >
-                  {index}
+                  {index + 1}
                 </PaginationButton>
               </Link>
             </li>
@@ -104,7 +103,7 @@ const Pagination = ({
       </ul>
       <Link
         href={createPageURL(
-          currentPage + currentChunk - (currentPage % currentChunk) + 1,
+          currentPage + currentChunk - (currentPage % currentChunk),
         )}
         aria-label="다음 페이지로 가기"
       >

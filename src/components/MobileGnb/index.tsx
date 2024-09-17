@@ -15,7 +15,7 @@ const gnbItems = [
   { href: "/experience", icon: Group, label: "체험단", segment: "experience" },
   { href: "/guide", icon: Guide, label: "이용안내", segment: "guide" },
   {
-    href: "/board/community",
+    href: "/communities",
     icon: Community,
     label: "게시판",
     segment: "board",

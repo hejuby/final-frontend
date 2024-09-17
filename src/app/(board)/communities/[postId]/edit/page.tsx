@@ -7,12 +7,12 @@ import PostDivider from "@/components/Board/PostDivider";
 import PostForm from "@/components/Board/PostForm";
 import { CATEGORY_LIST } from "@/@types/board";
 
-const FollowsEdit = async ({ params }: { params: { postId: string } }) => {
+const CommunityEdit = ({ params }: { params: { postId: string } }) => {
   const { data } = useQuery<unknown, unknown, BoardPostResponse>({
-    queryKey: ["follows", params.postId],
+    queryKey: ["communities", params.postId],
     queryFn: () =>
       axios.get(
-        `https://g6-server.dainreview.kr/api/post/follows/${params.postId}`,
+        `https://g6-server.dainreview.kr/api/post/communities/${params.postId}`,
         { withCredentials: true },
       ),
   });
@@ -27,10 +27,10 @@ const FollowsEdit = async ({ params }: { params: { postId: string } }) => {
     <>
       <PostDivider marginBottom="20px" />
       <PostForm
-        pathname="follows"
+        pathname="communities"
         postId={params.postId}
         category={
-          CATEGORY_LIST.follows.find(
+          CATEGORY_LIST.communities.find(
             (category) => category.categoryName === post.categoryType,
           )?.categoryType
         }
@@ -42,4 +42,4 @@ const FollowsEdit = async ({ params }: { params: { postId: string } }) => {
   );
 };
 
-export default FollowsEdit;
+export default CommunityEdit;

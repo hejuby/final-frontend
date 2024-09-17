@@ -14,7 +14,7 @@ const FloatingTopButton = () => {
   const [showBtn, setShowBtn] = useState(false);
 
   const pathname = usePathname().split("/")[1];
-  const isBoard = pathname === "community" || pathname === "follows";
+  const isBoard = pathname === "communities" || pathname === "follows";
 
   // Todo 경민: 로그인 화면에서는 버튼 안보이게 추가 설정 예정
 

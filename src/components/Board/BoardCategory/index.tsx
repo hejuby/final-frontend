@@ -6,7 +6,7 @@ import CategoryTab from "@/components/CategoryTab";
 import { CATEGORY_LIST } from "@/@types/board";
 
 interface BoardCategoryProps {
-  pathname: "community" | "follows";
+  pathname: "communities" | "follows";
   searchParams: { category: string };
   activeTab?: string;
 }
@@ -21,8 +21,10 @@ const BoardCategory = ({
   return (
     <CategoryTab
       tabs={CATEGORY_LIST[pathname].map((category) => {
-        const { categoryType: id, categoryName: label } = category;
-        return { id, label };
+        return {
+          id: category.categoryType,
+          label: category.categoryName,
+        };
       })}
       activeTabId={activeTab}
       handleSelect={(id: string) => {
@@ -30,12 +32,12 @@ const BoardCategory = ({
           "set",
           searchParams,
           `/${pathname}`,
-          "category",
+          pathname === "communities" ? "communityType" : "followType",
           id,
         );
         router.push(url);
       }}
-      handleDeselect={(id: string) => {
+      handleDeselect={() => {
         const url = createParamsURL(
           "delete",
           searchParams,
