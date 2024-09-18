@@ -101,12 +101,14 @@ const Search = ({
     const getCampaignData = async () => {
       setLoading(true);
       try {
-        const cities = selectedCity ? [selectedCity] : [];
-        const districts = selectedCounty.map((county) => county.county);
+        const cities = selectedCity || "";
+        const districts = selectedCounty
+          .map((county) => county.county)
+          .join(", ");
         const sortBy = searchParams.sortBy || "RECOMMENDED";
 
-        // console.log(cities, "cities");
-        // console.log(districts, "districts");
+        console.log(cities, "cities");
+        console.log(districts, "districts");
 
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/campaigns/search`,
