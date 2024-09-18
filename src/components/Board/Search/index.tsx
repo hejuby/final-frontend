@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import createParamsURL from "@/utils/createParamsURL";
 import IconSearch from "@/assets/icons/icon-search.svg";
 import styles from "./index.module.scss";
@@ -12,6 +13,7 @@ interface SearchProps {
 
 const Search = ({ pathname, searchParams }: SearchProps) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   return (
     <form
@@ -27,6 +29,7 @@ const Search = ({ pathname, searchParams }: SearchProps) => {
             (event.target as HTMLFormElement).query.value,
           ),
         );
+        queryClient.invalidateQueries({ queryKey: [pathname] });
       }}
     >
       <input

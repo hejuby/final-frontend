@@ -50,7 +50,7 @@ const Post = ({ params }: { params: { postId: string } }) => {
       ),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPageParam + 1 === allPages[0].data.comments.totalPages) {
+      if (lastPageParam + 1 >= allPages[0].data.comments.totalPages) {
         return undefined;
       }
       return lastPageParam + 1;

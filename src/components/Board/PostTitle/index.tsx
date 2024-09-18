@@ -1,4 +1,5 @@
 import { BoardPost, BoardType, CATEGORY_LIST } from "@/@types/board";
+import useUserStore from "@/store/useUserStore";
 import formatDate from "@/utils/formatDate";
 import IconProfile from "@/assets/icons/icon-profile.svg";
 import IconComment from "@/assets/icons/icon-comment.svg";
@@ -6,7 +7,11 @@ import Category from "../Category";
 import EditDropdown from "../EditDropdown";
 import styles from "./index.module.scss";
 
-const PostTitle = ({ post }: { post: BoardPost }) => {
+interface PostTitleProps {
+  post: BoardPost;
+}
+
+const PostTitle = ({ post }: PostTitleProps) => {
   const {
     id,
     authorNickName,
@@ -19,6 +24,8 @@ const PostTitle = ({ post }: { post: BoardPost }) => {
     viewCount,
     commentCount,
   } = post;
+  const name = useUserStore((state) => state.name);
+  const isAuthor = authorNickName === name;
   const boardType: BoardType =
     noticeBoardType === "커뮤니티" ? "communities" : "follows";
   const category = CATEGORY_LIST[boardType].find(
@@ -36,7 +43,9 @@ const PostTitle = ({ post }: { post: BoardPost }) => {
         >
           {categoryName}
         </Category>
-        <EditDropdown type="post" boardType={boardType} postId={id} />
+        {isAuthor && (
+          <EditDropdown type="post" boardType={boardType} postId={id} />
+        )}
       </aside>
       <h3 className={styles.title__text}>{title}</h3>
       <ul className={styles.title__info}>

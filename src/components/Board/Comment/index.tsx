@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import useUserStore from "@/store/useUserStore";
 import formatDate from "@/utils/formatDate";
 import { CommentItem } from "@/@types/board";
 import IconProfile from "@/assets/icons/icon-profile.svg";
@@ -18,6 +19,9 @@ interface CommentProps {
 
 const Comment = ({ comment, postId, handleDelete, replies }: CommentProps) => {
   const { id, userName, userProfileImage, content, createdAt } = comment;
+  const name = useUserStore((state) => state.name);
+  const isAuthor = userName === name;
+
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isTemporaryHidden, setIsTemporaryHidden] = useState<boolean>(false);
   const [isReplyInputShown, setIsReplyInputShown] = useState<boolean>(false);
@@ -47,18 +51,20 @@ const Comment = ({ comment, postId, handleDelete, replies }: CommentProps) => {
                   {formatDate(createdAt, "MDMH")}
                 </p>
               </div>
-              <EditDropdown
-                type="comment"
-                postId={postId}
-                commentId={id}
-                commentEdit={() => {
-                  setIsEdit(true);
-                }}
-                commentDelete={() => {
-                  handleDelete();
-                  setIsTemporaryHidden(true);
-                }}
-              />
+              {isAuthor && (
+                <EditDropdown
+                  type="comment"
+                  postId={postId}
+                  commentId={id}
+                  commentEdit={() => {
+                    setIsEdit(true);
+                  }}
+                  commentDelete={() => {
+                    handleDelete();
+                    setIsTemporaryHidden(true);
+                  }}
+                />
+              )}
             </aside>
             {isEdit ? (
               <CommentInput
@@ -94,6 +100,7 @@ const Comment = ({ comment, postId, handleDelete, replies }: CommentProps) => {
                   comment={reply}
                   postId={postId}
                   handleDelete={handleDelete}
+                  isAuthor={isAuthor}
                 />
               </li>
             ))}

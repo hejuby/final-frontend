@@ -81,15 +81,15 @@ const PostForm = ({
       content: formContent,
     };
     if (!isEdit) {
-      data["categoryType"] =
+      data.categoryType =
         BOARD_LIST.find((board) => board.boardType === pathname)?.boardCode ??
         "";
     }
     if (pathname === "communities") {
-      data["communityType"] = formCategory;
+      data.communityType = formCategory;
     }
     if (pathname === "follows") {
-      data["followType"] = formCategory;
+      data.followType = formCategory;
     }
     formData.append(
       "data",
@@ -120,32 +120,30 @@ const PostForm = ({
   }, [isSuccess]);
 
   return (
-    <>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <section className={styles.category}>
-          <CategoryTab
-            tabs={CATEGORY_LIST[pathname].map((category) => {
-              const { categoryType: id, categoryName: label } = category;
-              return { id, label };
-            })}
-            activeTabId={formCategory ?? undefined}
-            handleSelect={(id) => {
-              setFormCategory(id);
-            }}
-            handleDeselect={() => {
-              setFormCategory(null);
-            }}
-          />
-        </section>
-        <TitleInput defaultValue={title} />
-        <Editor
-          initialData={formContent}
-          placeholder="회원님들과 함께 나누고 싶은 글을 마음껏 작성해 보세요!"
-          setContent={setFormContent}
+    <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <section className={styles.category}>
+        <CategoryTab
+          tabs={CATEGORY_LIST[pathname].map((categoryItem) => {
+            const { categoryType: id, categoryName: label } = categoryItem;
+            return { id, label };
+          })}
+          activeTabId={formCategory ?? undefined}
+          handleSelect={(id) => {
+            setFormCategory(id);
+          }}
+          handleDeselect={() => {
+            setFormCategory(null);
+          }}
         />
-        <PostControlButtons disabled={isPending} />
-      </form>
-    </>
+      </section>
+      <TitleInput defaultValue={title} />
+      <Editor
+        initialData={formContent}
+        placeholder="회원님들과 함께 나누고 싶은 글을 마음껏 작성해 보세요!"
+        setContent={setFormContent}
+      />
+      <PostControlButtons disabled={isPending} />
+    </form>
   );
 };
 

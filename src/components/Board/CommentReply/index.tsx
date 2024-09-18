@@ -13,9 +13,10 @@ interface CommentProps {
   comment: CommentItem;
   postId: number;
   handleDelete: () => void;
+  isAuthor: boolean;
 }
 
-const Comment = ({ comment, postId, handleDelete }: CommentProps) => {
+const Comment = ({ comment, postId, handleDelete, isAuthor }: CommentProps) => {
   const { id, parentId, userName, userProfileImage, content, createdAt } =
     comment;
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -48,18 +49,20 @@ const Comment = ({ comment, postId, handleDelete }: CommentProps) => {
                 {formatDate(createdAt, "MDMH")}
               </p>
             </div>
-            <EditDropdown
-              type="comment"
-              postId={postId}
-              commentId={id}
-              commentEdit={() => {
-                setIsEdit(true);
-              }}
-              commentDelete={() => {
-                handleDelete();
-                setIsTemporaryHidden(true);
-              }}
-            />
+            {isAuthor && (
+              <EditDropdown
+                type="comment"
+                postId={postId}
+                commentId={id}
+                commentEdit={() => {
+                  setIsEdit(true);
+                }}
+                commentDelete={() => {
+                  handleDelete();
+                  setIsTemporaryHidden(true);
+                }}
+              />
+            )}
           </aside>
           {isEdit ? (
             <CommentInput

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import createParamsURL from "@/utils/createParamsURL";
 import CategoryTab from "@/components/CategoryTab";
 import { CATEGORY_LIST } from "@/@types/board";
@@ -17,6 +18,7 @@ const BoardCategory = ({
   activeTab,
 }: BoardCategoryProps) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   return (
     <CategoryTab
@@ -36,15 +38,17 @@ const BoardCategory = ({
           id,
         );
         router.push(url);
+        queryClient.invalidateQueries({ queryKey: [pathname] });
       }}
       handleDeselect={() => {
         const url = createParamsURL(
           "delete",
           searchParams,
           `/${pathname}`,
-          "category",
+          pathname === "communities" ? "communityType" : "followType",
         );
         router.push(url);
+        queryClient.invalidateQueries({ queryKey: [pathname] });
       }}
     />
   );

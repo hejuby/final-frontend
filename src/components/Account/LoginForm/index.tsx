@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import axios, { AxiosError } from "axios";
 import useDialog from "@/hooks/useDialog";
+import useUserStore from "@/store/useUserStore";
 import IconKakao from "@/assets/icons/icon-kakao.svg";
 import IconNaver from "@/assets/icons/icon-naver.svg";
 import IconGoogle from "@/assets/icons/icon-google.svg";
@@ -16,6 +17,7 @@ const initialState = { email: "", password: "" };
 
 const LoginForm = () => {
   const router = useRouter();
+  const setIsLogin = useUserStore((state) => state.setIsLogin);
 
   const { alert } = useDialog();
 
@@ -42,6 +44,7 @@ const LoginForm = () => {
 
       if (response.status === 200) {
         // 로그인 성공
+        setIsLogin(true);
         router.push("/");
       } else if (response.status === 400) {
         // 아이디 또는 비밀번호 확인
