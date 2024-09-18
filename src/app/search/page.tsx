@@ -2,6 +2,10 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Modal from "@/components/Modal";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { ICampaignSearch } from "@/@types/campaignItems";
+import Loading from "@/app/Loading";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
 import IconLeft from "@/assets/icons/icon-direction-right.svg";
 import IconDown from "@/assets/icons/icon-direction-down.svg";
@@ -9,27 +13,195 @@ import IconUp from "@/assets/icons/icon-direction-up.svg";
 import IconClose from "@/assets/icons/icon-close-blue.svg";
 import useDialog from "@/hooks/useDialog";
 import Selectbox, { Option } from "@/components/Selectbox/index";
-// import testData from "@/data/home_test.json";
-// import Card from "@/components/Home/Card";
+import Card from "@/components/Home/Card";
 import CityModal from "./_component/CityModal";
+
 import styles from "./page.module.scss";
 
-const Search = () => {
+const Search = ({
+  searchParams,
+}: {
+  searchParams: {
+    cities?: string;
+    districts?: string;
+    sortBy?: string;
+    category?: string;
+    platform?: string;
+    type?: string;
+  };
+}) => {
   const { alert } = useDialog();
+  const router = useRouter();
 
-  const [category, setCategory] = useState<Option | null>(null);
-  const [flatform, setFlatform] = useState<Option | null>(null);
-  const [type, setType] = useState<Option | null>(null);
-  const [recommend, setRecommend] = useState<Option | null>(null);
+  const initialSortByValue = (() => {
+    switch (searchParams.sortBy) {
+      case "CLOSING_SOON":
+        return "마감임박순";
+      case "NEWEST":
+        return "최신순";
+      default:
+        return "추천순";
+    }
+  })();
+
+  const categories = [
+    { optionLabel: "전체", value: "" },
+    { optionLabel: "맛집", value: "FOOD" },
+    { optionLabel: "뷰티", value: "BEAUTY" },
+    { optionLabel: "여행", value: "TRAVEL" },
+    { optionLabel: "문화", value: "CULTURE" },
+    { optionLabel: "식품", value: "GROCERY" },
+    { optionLabel: "생활", value: "LIFESTYLE" },
+    { optionLabel: "디지털", value: "DIGITAL" },
+  ];
+
+  const initialCategory =
+    categories.find((cat) => cat.value === searchParams.category) ||
+    categories[0];
+  const [category, setCategory] = useState<Option | null>(initialCategory);
+  const [platform, setPlatform] = useState<Option | null>({
+    optionLabel: searchParams.platform || "전체",
+    value: searchParams.platform || "",
+  });
+  const [campaignType, setCampaignType] = useState<Option | null>({
+    optionLabel: searchParams.type || "전체",
+    value: searchParams.type || "",
+  });
+  const [recommend, setRecommend] = useState<Option | null>({
+    optionLabel: initialSortByValue,
+    value: searchParams.sortBy || "RECOMMENDED",
+  });
 
   const [isCityModal, setIsCityModal] = useState(false);
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string>("");
   const [selectedCounty, setSelectedCounty] = useState<
     { city: string; county: string }[]
   >([]);
 
   const [isTablet, setIsTablet] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
+
+  const [campaignData, setCampaignData] = useState<ICampaignSearch | null>(
+    null,
+  );
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  // console.log(
+  //   selectedCity,
+  //   selectedCounty,
+  //   category,
+  //   platform,
+  //   campaignType,
+  //   recommend,
+  // );
+  // console.log(currentPage);
+  useEffect(() => {
+    const getCampaignData = async () => {
+      setLoading(true);
+      try {
+        const cities = selectedCity ? [selectedCity] : [];
+        const districts = selectedCounty.map((county) => county.county);
+        const sortBy = searchParams.sortBy || "RECOMMENDED";
+
+        // console.log(cities, "cities");
+        // console.log(districts, "districts");
+
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/campaigns/search`,
+          {
+            params: {
+              cities,
+              districts,
+              category: category?.value || null,
+              platform: platform?.value || null,
+              type: campaignType?.value || null,
+              sortBy,
+              page: currentPage,
+              size: 10,
+            },
+          },
+        );
+
+        if (currentPage === 0) {
+          setCampaignData(response.data);
+        } else {
+          setCampaignData((prevData) => ({
+            content: [...(prevData?.content || []), ...response.data.content],
+            totalElements: response.data.totalElements,
+            totalPages: response.data.totalPages,
+          }));
+        }
+
+        setTotalPages(response.data.totalPages);
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          alert(error.response.data.msg);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getCampaignData();
+    // eslint-disable-next-line
+  }, [
+    selectedCity,
+    selectedCounty,
+    category,
+    platform,
+    campaignType,
+    recommend,
+    currentPage,
+  ]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (category?.value) params.append("category", category.value.toString());
+    if (platform?.value) params.append("platform", platform.value.toString());
+    if (campaignType?.value)
+      params.append("type", campaignType.value.toString());
+    if (recommend?.value) params.append("sortBy", recommend.value.toString());
+    if (selectedCity) params.append("cities", selectedCity);
+    if (selectedCounty.length > 0) {
+      selectedCounty.forEach(({ county }) =>
+        params.append("districts", county),
+      );
+    }
+
+    router.push(`/search?${params.toString()}`);
+    // eslint-disable-next-line
+  }, [
+    category,
+    platform,
+    campaignType,
+    recommend,
+    selectedCity,
+    selectedCounty,
+    currentPage,
+  ]);
+  const handleScroll = () => {
+    const { scrollY } = window;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    if (
+      scrollY + windowHeight >= documentHeight - 100 &&
+      !loading &&
+      currentPage < totalPages - 1
+    ) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+    // eslint-disable-next-line
+  }, [loading, currentPage, totalPages]);
 
   const handleArea = () => {
     setIsCityModal(!isCityModal);
@@ -84,7 +256,7 @@ const Search = () => {
   // 지역 삭제
   const handleDeleteCounty = (city: string, county: string) => {
     if (city === "전국" || city === "재택") {
-      setSelectedCity(null);
+      setSelectedCity("");
       setSelectedCounty([]);
     } else {
       setSelectedCounty((prevCounties) =>
@@ -125,6 +297,7 @@ const Search = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isCityModal]);
+
   return (
     <div className={styles.container}>
       <h2>체험검색</h2>
@@ -193,58 +366,57 @@ const Search = () => {
             placeholder="카테고리"
             size="medium"
             selected={category}
-            options={[
-              { optionLabel: "전체", value: "All" },
-              { optionLabel: "맛집", value: "Restaurant" },
-              { optionLabel: "뷰티", value: "Beauty" },
-              { optionLabel: "여행", value: "Travel" },
-              { optionLabel: "문화", value: "Culture" },
-              { optionLabel: "식품", value: "Food" },
-              { optionLabel: "생활", value: "Living" },
-              { optionLabel: "디지털", value: "Digital" },
-            ]}
-            onChange={setCategory}
+            options={categories}
+            onChange={(selected) => {
+              setCategory(selected);
+            }}
           />
           <Selectbox
             placeholder="플랫폼"
             size="medium"
-            selected={flatform}
+            selected={platform}
             options={[
-              { optionLabel: "전체", value: "All" },
-              { optionLabel: "인스타그램", value: "Instagram" },
-              { optionLabel: "블로그", value: "Blog" },
-              { optionLabel: "유튜브", value: "Youtube" },
-              { optionLabel: "릴스", value: "Reels" },
-              { optionLabel: "쇼츠", value: "Shorts" },
-              { optionLabel: "틱톡", value: "Tiktok" },
+              { optionLabel: "전체", value: "" },
+              { optionLabel: "인스타그램", value: "INSTAGRAM" },
+              { optionLabel: "블로그", value: "BLOG" },
+              { optionLabel: "유튜브", value: "YOUTUBE" },
+              { optionLabel: "릴스", value: "REELS" },
+              { optionLabel: "쇼츠", value: "SHORTS" },
+              { optionLabel: "틱톡", value: "TIKTOK" },
             ]}
-            onChange={setFlatform}
+            onChange={(selected) => {
+              setPlatform(selected);
+            }}
           />
           <Selectbox
             placeholder="유형"
             size="medium"
-            selected={type}
+            selected={campaignType}
             options={[
-              { optionLabel: "전체", value: "All" },
-              { optionLabel: "방문형", value: "visit" },
-              { optionLabel: "구매형", value: "purchase" },
-              { optionLabel: "배송형", value: "delivery" },
-              { optionLabel: "기자단", value: "corps" },
-              { optionLabel: "포장", value: "packaging" },
+              { optionLabel: "전체", value: "" },
+              { optionLabel: "방문형", value: "VISIT" },
+              { optionLabel: "구매형", value: "PURCHASE" },
+              { optionLabel: "배송형", value: "DELIVERY" },
+              { optionLabel: "기자단", value: "PRESS_CORPS" },
+              { optionLabel: "포장", value: "TAKEOUT" },
             ]}
-            onChange={setType}
+            onChange={(selected) => {
+              setCampaignType(selected);
+            }}
           />
           <Selectbox
             placeholder="추천순"
             size="medium"
             selected={recommend}
             options={[
-              { optionLabel: "추천순", value: "recommend" },
-              { optionLabel: "인기순", value: "popularity" },
-              { optionLabel: "마감임박순", value: "d" },
-              { optionLabel: "최신순", value: "update" },
+              { optionLabel: "추천순", value: "RECOMMENDED" },
+              { optionLabel: "인기순", value: "POPULAR" },
+              { optionLabel: "마감임박순", value: "CLOSING_SOON" },
+              { optionLabel: "최신순", value: "NEWEST" },
             ]}
-            onChange={setRecommend}
+            onChange={(selected) => {
+              setRecommend(selected);
+            }}
           />
           <button type="button">
             <IconHeartGray />
@@ -284,10 +456,16 @@ const Search = () => {
         </div>
       </section>
       <section className={styles["card-section"]}>
-        {/* {premium.map((card) => (
-          <Card key={card.id} card={card} />
-        ))} */}
+        {campaignData?.content.map((card, index) => (
+          // eslint-disable-next-line
+          <Card key={index} {...card} />
+        ))}
       </section>
+      {loading && (
+        <div>
+          <Loading />
+        </div>
+      )}
     </div>
   );
 };
