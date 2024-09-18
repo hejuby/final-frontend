@@ -1,7 +1,14 @@
+export interface ICampaignSearch {
+  content: ICampaignItems[];
+  totalElements: number; // 전체 개수
+  totalPages: number; // 전체 페이지 수
+}
+
 export interface ICampaignItems {
   id?: number;
   businessName: string; // 사업장 이름
   imageUrl: string;
+  serviceProvided: string; // 제공내역
   currentApplicants: number; // 현재 지원자 수
   capacity: number; // 지원 가능한 총 지원자 수
   campaignState: string;
@@ -14,6 +21,7 @@ export interface ICampaignItems {
   experienceStartDate: string; // 체험 시작 날짜
   experienceEndDate: string; // 체험 종료 날짜
   applicationDeadline?: number; // 지원 마감일
+  isCancellable?: boolean;
   isCancel?: boolean; // 취소여부
 }
 
@@ -26,6 +34,8 @@ export interface ICampaignDetails {
   postalCode: string | null;
   latitude: number | null; // 위도
   longitude: number | null; // 경도
+  city: string; // 도, 시
+  district: string; // 시, 군, 구
   availableDays: string[]; // 체험 가능일
   type: string; // 타입 (배송형, 구매형, 기자단 etc...)
   category: string; // 카테고리 (맛집, )
@@ -34,15 +44,22 @@ export interface ICampaignDetails {
   capacity: number; // 지원 가능한 총 지원자 수
   currentApplicants: number; // 현재 지원자 수
   serviceProvided: string; // 서비스 제공내역
-  requirement: string; // 사업주 요구사항
+  requirement: string[]; // 사업주 요구사항
   keywords: string[]; // 키워드
   pointPayment: boolean; // 포인트 지불여부
   pointPerPerson: number; // 포인트
   totalPoints: number; // 총 포인트
+  isLike: boolean;
+  applicationDeadline: number; // 모집 잔여일
   applicationStartDate: string; // 모집 시작날짜
   applicationEndDate: string; // 모집 종료날짜
   announcementDate: string; // 결과 발표
   experienceStartDate: string; // 체험 시작날짜
   experienceEndDate: string; // 체험 종료 날짜
+  experienceStartTime: string | null; // 체험 시작 시간
+  experienceEndTime: string | null; // 체험 종료 시간
   reviewDate: string; // 리뷰 마감
+  enterpriserId: number; // 사업주 넘버
+  enterpriserProfileImage: string | null; // 사업주 프로필
+  enterpriserCompanyName: string; // 사업주명
 }

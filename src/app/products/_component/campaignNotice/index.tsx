@@ -19,8 +19,8 @@ const CampaignNotice = ({
 }) => {
   const { alert } = useDialog();
   // 임시 데이터
-  const latitude: number = 37.123456;
-  const longitude: number = 126.987654;
+  const latitude: number = campaignData.latitude ?? 37.4008978;
+  const longitude: number = campaignData.longitude ?? 126.6400364;
 
   // 카카오맵 호출
   const KakaoMap = dynamic(() => import("../kakaoMap"), {
@@ -73,8 +73,10 @@ const CampaignNotice = ({
               </li>
               <li>
                 <p>
-                  {/* todo경민:  체험 가능시간 누락 */}
-                  <span>체험 가능 시간 : 오후 7시 ~ 오후 10시</span>
+                  <span>
+                    체험 가능 시간 : {campaignData.experienceStartTime} ~{" "}
+                    {campaignData.experienceEndTime}
+                  </span>
                 </p>
               </li>
               <li>
@@ -209,18 +211,12 @@ const CampaignNotice = ({
         <dt>사업주 요청사항</dt>
         <dd>
           <ul>
-            <li>
-              <p>
-                {/* todo: 경민 requirement 배열로 내려줄 수 있는지? */}
-                {campaignData.requirement}
-              </p>
-            </li>
-            <li>
-              <p>30초 이상 동영상 하나 첨부, 소리 필수</p>
-            </li>
-            <li>
-              <p>유료 광고 표시</p>
-            </li>
+            {campaignData.requirement.map((item, index) => (
+              // eslint-disable-next-line
+              <li key={index}>
+                <p>{item}</p>
+              </li>
+            ))}
           </ul>
         </dd>
       </dl>

@@ -20,6 +20,17 @@
   color: #f16161;
 }
 
+/* 오늘 날짜 */
+.react-calendar__tile--now {
+  position: relative;
+  background-color: #fff;
+}
+.react-calendar__tile--now {
+  abbr {
+    color: #fcbe00 !important;
+  }
+}
+
 /* 이번 달 일자 */
 .react-calendar__tile {
   font-size: 14px;
@@ -78,33 +89,6 @@
   opacity: 0.7;
 }
 
-/* 리뷰 마감일 */
-.react-calendar__tile.review-day {
-  position: relative;
-}
-.react-calendar__tile.review-day::after {
-  content: "";
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-  background-color: #f16161;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -20px);
-}
-
-.react-calendar__tile.review-day::before {
-  content: "리뷰마감";
-  display: inline-block;
-  font-size: 12px;
-  width: 100px;
-  position: absolute;
-  bottom: -2px;
-  color: #f16161;
-}
-
 .react-calendar__tile.review-day abbr {
   color: white;
   z-index: 2;
@@ -114,7 +98,7 @@
 .react-calendar__tile.announce-day {
   position: relative;
 }
-.react-calendar__tile.announce-day::after {
+.react-calendar__tile.announce-day abbr::after {
   content: "";
   display: inline-block;
   width: 30px;
@@ -125,15 +109,18 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -20px);
+  z-index: -1;
 }
 
-.react-calendar__tile.announce-day::before {
+.react-calendar__tile.announce-day abbr::before {
   content: "결과발표";
   display: inline-block;
   font-size: 12px;
   width: 100px;
   position: absolute;
-  bottom: -2px;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
   color: #f16161;
 }
 
@@ -147,8 +134,8 @@
 .react-calendar__tile.application-end-day {
   position: relative;
 }
-.react-calendar__tile.application-start-day::after,
-.react-calendar__tile.application-end-day::after {
+.react-calendar__tile.application-start-day abbr::after,
+.react-calendar__tile.application-end-day abbr::after {
   content: "";
   display: inline-block;
   width: 30px;
@@ -159,16 +146,18 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -20px);
-  z-index: 2;
+  z-index: -1;
 }
 
-.react-calendar__tile.application-start-day::before {
+.react-calendar__tile.application-start-day abbr::before {
   content: "모집기간";
   display: inline-block;
   font-size: 12px;
   width: 100px;
   position: absolute;
-  bottom: -2px;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
   color: #acadb3;
 }
 
@@ -212,8 +201,8 @@
 .react-calendar__tile.experience-end-day {
   position: relative;
 }
-.react-calendar__tile.experience-start-day::after,
-.react-calendar__tile.experience-end-day::after {
+.react-calendar__tile.experience-start-day abbr::after,
+.react-calendar__tile.experience-end-day abbr::after {
   content: "";
   display: inline-block;
   width: 30px;
@@ -224,16 +213,19 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -20px);
-  z-index: 2;
+  z-index: -1;
 }
 
-.react-calendar__tile.experience-start-day::before {
+.react-calendar__tile.experience-start-day abbr::before {
+  position: absolute;
   content: "체험기간";
   display: inline-block;
   font-size: 12px;
   width: 100px;
   position: absolute;
-  bottom: -2px;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
   color: #4b65f7;
 }
 
@@ -273,20 +265,39 @@
   overflow: visible !important;
 }
 
-/* 오늘 날짜 */
-.react-calendar__tile--now {
+/* 리뷰 마감일 */
+.react-calendar__tile.review-day {
   position: relative;
-  background-color: #fff;
 }
-.react-calendar__tile--now {
-  abbr {
-    color: #fcbe00 !important;
-  }
+.react-calendar__tile.review-day abbr::after {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: #f16161;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -20px);
+  z-index: -1;
+}
+
+.react-calendar__tile.review-day abbr::before {
+  content: "리뷰마감";
+  display: inline-block;
+  font-size: 12px;
+  width: 100px;
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  color: #f16161;
 }
 
 .react-calendar__tile--now::before {
   content: "";
-  width: 5px;
+  width: 5px !important;
   height: 5px;
   border-radius: 50%;
   background-color: #fcbe00;

@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-// import Image from "next/image";
+import Image from "next/image";
 import Line from "@/components/Line";
 import useDialog from "@/hooks/useDialog";
+import ShareButton from "@/components/ShareButton";
 import { ICampaignDetails } from "@/@types/campaignItems";
 import IconRight from "@/assets/icons/icon-direction-right-gray.svg";
 import axios from "axios";
-// import testImg from "..";
+import Loading from "@/app/Loading";
+import IconProfile from "@/assets/icons/icon-profile.svg?url";
 import CampaignTopInfo from "../_component/campaignTopInfo";
 import CampaignInfo from "../_component/campaignInfo";
 import CampaignNotice from "../_component/campaignNotice";
@@ -49,7 +51,7 @@ const ProductPage = ({ params }: { params: { productsId: string } }) => {
   }, []);
 
   if (!campaignData) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   // 사업주 마이페이지 이동 이벤트
@@ -83,7 +85,7 @@ const ProductPage = ({ params }: { params: { productsId: string } }) => {
         )}
         {/* 캠페인 주의사항 */}
         <CampaignNotice campaignData={campaignData} />
-        {/* todo: 경민  사업주 정보 필요 => 클릭 시 해당 회원의 마이페이지로 이동 */}
+        {/* todo: 경민  클릭 시 해당 회원의 마이페이지로 이동 */}
         <div className={styles["enterprise-info-wrap"]}>
           <button
             className={styles["enterprise-info"]}
@@ -91,8 +93,13 @@ const ProductPage = ({ params }: { params: { productsId: string } }) => {
             onClick={handleBusinessInfo}
           >
             <div>
-              <div>{/* <Image src={testImg} alt="enterpriseImage" /> */}</div>
-              <p>24시 감자탕</p>
+              <div>
+                <Image
+                  src={campaignData.enterpriserProfileImage ?? IconProfile}
+                  alt="enterpriseImage"
+                />
+              </div>
+              <p>{campaignData.enterpriserCompanyName}</p>
             </div>
             <p>
               <IconRight />
@@ -105,8 +112,8 @@ const ProductPage = ({ params }: { params: { productsId: string } }) => {
       {!isTablet && (
         <section className={styles.products__right}>
           <h3>
-            {/* todo 경민: 잔여일 데이터 필요 */}
-            모집기간이 <span>9일</span> 남았어요!
+            모집기간이 <span>{campaignData.applicationDeadline}일</span>{" "}
+            남았어요!
           </h3>
           <p>
             <span>지원 {campaignData.currentApplicants}명</span> /{" "}
@@ -121,6 +128,9 @@ const ProductPage = ({ params }: { params: { productsId: string } }) => {
               experienceEndDate={campaignData.experienceEndDate}
               reviewDate={campaignData.reviewDate}
             />
+          </div>
+          <div>
+            <ShareButton />
           </div>
         </section>
       )}

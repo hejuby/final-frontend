@@ -47,8 +47,7 @@ const CampaignTopInfo = ({
     <div>
       {" "}
       <h2>
-        {/* todo 경민 지역 누락 */} [지역1/지역2]
-        {campaignData.businessName}
+        [{campaignData.city}/{campaignData.district}]{campaignData.businessName}
         <button aria-label="like" type="button">
           <IconHeartGray />
         </button>

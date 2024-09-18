@@ -20,9 +20,9 @@ const CampaignInfo = ({
         >{` `}</div>
         {isTablet && (
           <div className={styles["product-info__update"]}>
-            {/* todo 경민: 잔여일 데이터 필요 */}
             <h3>
-              모집기간이 <span>9일</span> 남았어요!
+              모집기간이 <span>{campaignData.applicationDeadline}일</span>{" "}
+              남았어요!
             </h3>
             <p>
               <span>지원 {campaignData.currentApplicants} </span> /{" "}
