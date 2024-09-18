@@ -27,14 +27,15 @@ const IdFind = () => {
   const [name, setName] = useState("");
   const [certified, setCertified] = useState<boolean>(false);
 
-  const onSubmit: SubmitHandler<typeof initialState> = async (formData) => {
+  const onSubmit: SubmitHandler<typeof initialState> = async () => {
+    // 통합 인증 체크
     if (!certified) {
       await alert("통합인증을 완료해주세요.");
       return;
     }
 
     const requestBody = {
-      name: formData.name,
+      name,
       impId: impUid,
     };
 
@@ -46,20 +47,19 @@ const IdFind = () => {
 
       if (response.status === 200) {
         localStorage.setItem("email", response.data.email);
-        localStorage.setItem("name", formData.name);
-
         router.push(`/auth/id-find-complete`);
       } else {
         await alert(response.data.message || "아이디 찾기에 실패했습니다.");
       }
     } catch (error) {
+      console.error("아이디 찾기 오류:", error);
       await alert("아이디 찾기에 실패했습니다.");
     }
   };
 
   const onError = async (formErrors: any) => {
     if (formErrors) {
-      alert("필수 항목을 모두 입력해 주세요.");
+      alert("통합인증을 완료해주세요.");
     }
   };
 
