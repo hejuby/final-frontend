@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import IconMoreRight from "@/assets/icons/icon-caret-right.svg";
+import { useRouter } from "next/navigation";
 import Card from "@/components/Home/Card";
 import Banner from "@/components/Home/Banner";
 import Category from "@/components/Home/Category";
@@ -52,21 +53,43 @@ const categoryItems = [
   {
     icon: <Restaurant width={52} height={52} />,
     label: "맛집",
-    href: "/search",
+    href: "/search?category=FOOD",
   },
-  { icon: <Beauty width={52} height={52} />, label: "뷰티", href: "/search" },
-  { icon: <Travel width={52} height={52} />, label: "여행", href: "/search" },
-  { icon: <Culture width={52} height={52} />, label: "문화", href: "/search" },
-  { icon: <Food width={52} height={52} />, label: "식품", href: "/search" },
-  { icon: <Living width={52} height={52} />, label: "생활", href: "/search" },
+  {
+    icon: <Beauty width={52} height={52} />,
+    label: "뷰티",
+    href: "/search?category=BEAUTY",
+  },
+  {
+    icon: <Travel width={52} height={52} />,
+    label: "여행",
+    href: "/search?category=TRAVEL",
+  },
+  {
+    icon: <Culture width={52} height={52} />,
+    label: "문화",
+    href: "/search?category=CULTURE",
+  },
+  {
+    icon: <Food width={52} height={52} />,
+    label: "식품",
+    href: "/search?category=GROCERY",
+  },
+  {
+    icon: <Living width={52} height={52} />,
+    label: "생활",
+    href: "/search?category=LIFESTYLE",
+  },
   {
     icon: <Digital width={52} height={52} />,
     label: "디지털",
-    href: "/search",
+    href: "/search?category=DIGITAL",
   },
 ];
 
 const Home = () => {
+  const router = useRouter();
+
   const [campaignData, setCampaignData] = useState<{
     premium: ICampaignItems[];
     popular: ICampaignItems[];
@@ -95,6 +118,24 @@ const Home = () => {
 
     fetchCampaignData();
   }, []);
+
+  const handleClosingMoreClick = () => {
+    const queryParams = new URLSearchParams();
+    queryParams.append("sortBy", "CLOSING_SOON");
+
+    router.push(`/search?${queryParams.toString()}`);
+  };
+
+  const handleNewMoreClick = () => {
+    const queryParams = new URLSearchParams();
+    queryParams.append("sortBy", "NEWEST");
+
+    router.push(`/search?${queryParams.toString()}`);
+  };
+
+  const handleMoreClick = () => {
+    router.push(`/search`);
+  };
 
   return (
     <main>
@@ -152,7 +193,7 @@ const Home = () => {
           <span>
             프리미엄 체험단 <IconSparkle />
           </span>
-          <button type="button" aria-label="moreIcon">
+          <button type="button" aria-label="moreIcon" onClick={handleMoreClick}>
             더보기 <IconMoreRight />
           </button>
         </h2>
@@ -187,7 +228,7 @@ const Home = () => {
           <span>
             인기 체험단 <IconHeart />
           </span>
-          <button type="button" aria-label="moreIcon">
+          <button type="button" aria-label="moreIcon" onClick={handleMoreClick}>
             더보기 <IconMoreRight />
           </button>
         </h2>
@@ -221,7 +262,7 @@ const Home = () => {
         <div>
           <h2>
             신규 체험단
-            <button type="button">
+            <button type="button" onClick={handleNewMoreClick}>
               더보기 <IconMoreRight />
             </button>
           </h2>
@@ -234,7 +275,11 @@ const Home = () => {
         <div>
           <h2>
             마감임박 체험단
-            <button type="button" aria-label="moreIcon">
+            <button
+              type="button"
+              aria-label="moreIcon"
+              onClick={handleClosingMoreClick}
+            >
               더보기 <IconMoreRight />
             </button>
           </h2>
