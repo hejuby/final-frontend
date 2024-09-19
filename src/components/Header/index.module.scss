@@ -20,7 +20,14 @@
       @include flex(start, center);
       @include text-style(18, $black, 600);
       gap: 90px;
+      button {
+        @include text-style(18, $black, 600);
+        transition: 0.4s;
 
+        &:hover {
+          color: $blue-40;
+        }
+      }
       a {
         transition: 0.4s;
 
@@ -119,6 +126,9 @@
       &--left {
         @include text-style(16, $black, 600);
         gap: 40px;
+        button {
+          @include text-style(16, $black, 600);
+        }
       }
       &--right {
         .user-info {

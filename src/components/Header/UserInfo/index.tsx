@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import IconSearch from "@/assets/icons/icon-search.svg";
+import { useRouter } from "next/navigation";
 import IconAlram from "@/assets/icons/icon-alarm.svg";
 import useDialog from "@/hooks/useDialog";
 import Link from "next/link";
 import ms from "@/utils/modifierSelector";
-import useUserStore from "@/store/useUserStore";
 import UserProfile from "../UserProfile";
 import styles from "../index.module.scss";
 
@@ -27,6 +27,7 @@ const UserInfo: React.FC<IUserInfoProps> = ({
   userInfo,
 }) => {
   const { alert, confirm } = useDialog();
+  const router = useRouter();
 
   const [isMounted, setIsMounted] = useState(false);
   const modalRef = useRef<HTMLUListElement | null>(null);
@@ -48,6 +49,16 @@ const UserInfo: React.FC<IUserInfoProps> = ({
 
   const closeModal = () => {
     setIsModal(false);
+  };
+
+  const handleLogin = async () => {
+    const confirmLogin = await confirm(
+      "로그인이 필요한 서비스입니다.",
+      "로그인 하시겠습니까?",
+    );
+    if (confirmLogin) {
+      router.push("/auth/login");
+    }
   };
 
   useEffect(() => {
@@ -74,6 +85,7 @@ const UserInfo: React.FC<IUserInfoProps> = ({
     <div>
       {isMounted && (
         <>
+          {` `}
           {!isLogin ? (
             <ul className={cn("--logout")}>
               <li>
@@ -82,7 +94,9 @@ const UserInfo: React.FC<IUserInfoProps> = ({
                 </span>
               </li>
               <li>
-                <Link href="/">내 포인트 보러가기</Link>
+                <button onClick={handleLogin} type="button">
+                  내 포인트 보러가기
+                </button>
               </li>
               <li>
                 <Link href="/">

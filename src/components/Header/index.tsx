@@ -92,9 +92,12 @@ const Header = () => {
                   <Logo />
                 </Link>
                 <Link href="/search">체험단</Link>
-                <Link href="/" onClick={() => alert("서비스 준비중입니다.")}>
+                <button
+                  onClick={() => alert("서비스 준비중입니다.")}
+                  type="button"
+                >
                   이용안내
-                </Link>
+                </button>
                 <Link href="/announcement">게시판</Link>
               </div>
               <div className={styles["header__content--right"]}>

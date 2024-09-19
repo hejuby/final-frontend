@@ -12,7 +12,6 @@ import IconDown from "@/assets/icons/icon-direction-down-gray.svg";
 import IconUp from "@/assets/icons/icon-direction-up-gray.svg";
 import IconRight from "@/assets/icons/icon-direction-right.svg";
 import styles from "./index.module.scss";
-import { userInfo } from "os";
 
 interface UserInfo {
   userName?: string;
@@ -137,13 +136,21 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             </Link>
           </li>
           <li>
-            <a onClick={() => alert("서비스 준비중입니다.")}>
+            <button
+              onClick={() => alert("서비스 준비중입니다.")}
+              type="button"
+              className={styles["null-button"]}
+            >
               <Guide color="#4b65f7" />
               <span>이용안내</span>
-            </a>
+            </button>
           </li>
           <li>
-            <button type="button" onClick={handleSubmenu}>
+            <button
+              type="button"
+              onClick={handleSubmenu}
+              className={styles["button-wrap"]}
+            >
               <div>
                 <Community color="#4b65f7" />
                 <span>게시판</span>

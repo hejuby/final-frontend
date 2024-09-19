@@ -19,7 +19,7 @@ import styles from "./index.module.scss";
 const gnbItems = [
   { href: "/", icon: Home, label: "홈", segment: null },
   { href: "/search", icon: Group, label: "체험단", segment: "search" },
-  { href: "/guide", icon: Guide, label: "이용안내", segment: "guide" },
+  { href: "#", icon: Guide, label: "이용안내", segment: "guide" },
   {
     href: "/announcement",
     icon: Community,
@@ -63,6 +63,16 @@ const MobileGnb = () => {
     }
   };
 
+  const handleClickLink = (segmentValue: string | null) => {
+    if (segmentValue === "mypage") {
+      return handleMypageClick;
+    }
+    if (segmentValue === "guide") {
+      return handleAlert;
+    }
+    return undefined;
+  };
+
   // 로그인&회원가입 mobile-footer 안 보이게 처리: 민주
   const pathname = usePathname();
   if (pathname.startsWith("/auth")) {
@@ -73,16 +83,7 @@ const MobileGnb = () => {
     <ul className={styles["mobile-footer"]}>
       {gnbItems.map(({ href, icon: Icon, label, segment: segmentValue }) => (
         <li key={href}>
-          <Link
-            href={href}
-            onClick={
-              segmentValue === "mypage"
-                ? handleMypageClick
-                : segmentValue === "guide"
-                  ? handleAlert
-                  : undefined
-            }
-          >
+          <Link href={href} onClick={handleClickLink(segmentValue)}>
             <Icon
               color={
                 segment === segmentValue ||

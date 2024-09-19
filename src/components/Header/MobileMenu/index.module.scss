@@ -109,9 +109,23 @@
             margin-left: 20px;
           }
         }
+        button.null-button {
+          @include flex(start, center);
+          @include text-style(16, $black, 600);
+          width: 100%;
+          padding: 20px 0;
+
+          &:hover {
+            opacity: 0.7;
+          }
+
+          span {
+            margin-left: 20px;
+          }
+        }
       }
 
-      li button {
+      li button.button-wrap {
         @include flex(between, center);
         width: 100%;
         padding: 20px 0;
