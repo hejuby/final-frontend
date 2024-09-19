@@ -47,7 +47,7 @@ const LoginForm = () => {
         setIsLogin(true);
         sessionStorage.setItem(
           "login",
-          (new Date().valueOf() + 1000 * 60 * 60 * 24).toString(),
+          (new Date().valueOf() + 1000 * 60 * 30).toString(),
         );
         router.push("/");
       } else if (response.status === 400) {

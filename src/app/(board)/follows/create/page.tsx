@@ -1,5 +1,11 @@
+import dynamic from "next/dynamic";
 import PostDivider from "@/components/Board/PostDivider";
-import PostForm from "@/components/Board/PostForm";
+import SkeletonPostForm from "@/components/Board/Skeleton/SkeletonPostForm";
+
+const PostForm = dynamic(() => import("@/components/Board/PostForm"), {
+  loading: () => <SkeletonPostForm />,
+  ssr: false,
+});
 
 const FollowsCreate = () => {
   return (

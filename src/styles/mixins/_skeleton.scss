@@ -1,0 +1,7 @@
+@mixin skeleton {
+  background-color: $gray-10;
+  border-radius: 8px;
+  @include tablet {
+    border-radius: 4px;
+  }
+}

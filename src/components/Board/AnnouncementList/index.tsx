@@ -1,34 +1,46 @@
-import { BoardItem } from "@/@types/board";
+import axios from "axios";
+import createRequestParamsURI from "@/utils/createRequestParamsURI";
+import { BoardResponse } from "@/@types/board";
+import Pagination from "@/components/Pagination";
+import AnnoucementListTop from "./AnnouncementListTop";
 import AnnouncementItem from "../AnnouncementItem";
 import styles from "./index.module.scss";
 
 interface ListProps {
-  items: BoardItem[];
+  searchParams: { page: string; keyword: string };
 }
 
-const AnnouncementList = ({ items }: ListProps) => {
+const AnnouncementList = async ({ searchParams }: ListProps) => {
+  const data: BoardResponse = await axios.get(
+    `https://g6-server.dainreview.kr/api/post/notices${createRequestParamsURI(
+      searchParams,
+    )}`,
+  );
+
+  if (!data) {
+    return null;
+  }
+
+  const { content, totalPages } = data.data;
+
   return (
-    <article className={styles.list}>
-      <aside>
-        <ul className={styles.top}>
-          <li className={styles.top__title}>
-            <p>제목</p>
-          </li>
-          <li className={styles.top__date}>
-            <p>등록일</p>
-          </li>
-          <li className={styles.top__views}>
-            <p>조회수</p>
-          </li>
+    <section className={styles.wrapper}>
+      <article className={styles.list}>
+        <AnnoucementListTop />
+        <ul>
+          {content.map((boardItem) => (
+            // eslint-disable-next-line
+            <AnnouncementItem key={boardItem.id} {...boardItem} />
+          ))}
         </ul>
-      </aside>
-      <ul>
-        {items.map((boardItem) => (
-          // eslint-disable-next-line
-          <AnnouncementItem key={boardItem.id} {...boardItem} />
-        ))}
-      </ul>
-    </article>
+      </article>
+      <Pagination
+        pathname="/announcement"
+        searchParams={searchParams}
+        chunkSize={10}
+        totalPages={totalPages}
+      />
+    </section>
   );
 };
 export default AnnouncementList;

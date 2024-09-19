@@ -1,12 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import useUserStore from "@/store/useUserStore";
 import { BoardPostResponse, CATEGORY_LIST } from "@/@types/board";
 import PostDivider from "@/components/Board/PostDivider";
-import PostForm from "@/components/Board/PostForm";
+import SkeletonPostForm from "@/components/Board/Skeleton/SkeletonPostForm";
+
+const PostForm = dynamic(() => import("@/components/Board/PostForm"), {
+  loading: () => <SkeletonPostForm />,
+  ssr: false,
+});
 
 const FollowsEdit = ({ params }: { params: { postId: string } }) => {
   const { data } = useQuery<unknown, unknown, BoardPostResponse>({

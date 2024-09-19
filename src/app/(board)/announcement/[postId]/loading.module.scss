@@ -1,0 +1,21 @@
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  &__text {
+    @include skeleton;
+    height: 24px;
+  }
+  &__info {
+    @include skeleton;
+    height: 20px;
+    @include tablet {
+      height: 14px;
+    }
+  }
+}
+
+.content {
+  @include skeleton;
+  height: 400px;
+}

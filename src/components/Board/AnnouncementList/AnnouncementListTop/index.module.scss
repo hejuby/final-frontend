@@ -1,0 +1,23 @@
+.top {
+  @include flex();
+  @include text-style(16, false, 600);
+  padding: 14px 12px 15px 24px;
+  border-bottom: 1px solid $gray-30;
+  text-align: center;
+  line-height: 1.4;
+  &__title {
+    width: 632px;
+  }
+  &__date {
+    width: 111px;
+    flex-shrink: 0;
+    margin-right: 35px;
+  }
+  &__views {
+    width: 112px;
+    flex-shrink: 0;
+  }
+  @include mobile {
+    display: none;
+  }
+}

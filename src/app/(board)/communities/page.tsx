@@ -10,6 +10,7 @@ import PostButton from "@/components/Board/PostButton";
 import PostDivider from "@/components/Board/PostDivider";
 import List from "@/components/Board/List";
 import Pagination from "@/components/Pagination";
+import SkeletonListItem from "@/components/Board/Skeleton/SkeletonListItem";
 import styles from "./page.module.scss";
 
 const Board = ({
@@ -17,7 +18,7 @@ const Board = ({
 }: {
   searchParams: { page: string; category: string; keyword: string };
 }) => {
-  const { data } = useQuery<unknown, unknown, BoardResponse>({
+  const { data, isPending } = useQuery<unknown, unknown, BoardResponse>({
     queryKey: ["communities"],
     queryFn: () =>
       axios.get(
@@ -46,15 +47,19 @@ const Board = ({
         <PostButton href="/communities/create" />
       </section>
       <PostDivider />
-      <section className={styles.list}>
-        <List items={content} />
-        <Pagination
-          pathname="/communities"
-          searchParams={searchParams}
-          chunkSize={10}
-          totalPages={totalPages}
-        />
-      </section>
+      {isPending ? (
+        Array.from({ length: 10 }, (_, i) => i).map(() => <SkeletonListItem />)
+      ) : (
+        <section className={styles.list}>
+          <List items={content} />
+          <Pagination
+            pathname="/communities"
+            searchParams={searchParams}
+            chunkSize={10}
+            totalPages={totalPages}
+          />
+        </section>
+      )}
     </>
   );
 };

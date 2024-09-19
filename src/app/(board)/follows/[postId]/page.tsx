@@ -17,12 +17,17 @@ import Comment from "@/components/Board/Comment";
 import MoreCommentsButton from "@/components/Board/MoreCommentsButton";
 import PostNavigation from "@/components/Board/PostNavigation";
 import MobileTopButton from "@/components/Board/MobileTopButton";
+import SkeletonPost from "@/components/Board/Skeleton/SkeletonPost";
 import styles from "./page.module.scss";
 
 const Post = ({ params }: { params: { postId: string } }) => {
   const [temporaryCommentDeleteCount, setTemporaryCommentDeleteCount] =
     useState<number>(0);
-  const { data } = useQuery<unknown, unknown, BoardPostResponse>({
+  const { data: postData, isPending } = useQuery<
+    unknown,
+    unknown,
+    BoardPostResponse
+  >({
     queryKey: ["follows", params.postId],
     queryFn: () =>
       axios.get(
@@ -57,61 +62,67 @@ const Post = ({ params }: { params: { postId: string } }) => {
     },
   });
 
-  if (!data || !commentPages) {
+  if (!postData || !commentPages) {
     return null;
   }
 
-  const post = data.data;
+  const post = postData.data;
 
   return (
     <>
       <PostDivider marginBottom="30px" />
-      <section className={styles.post}>
-        <PostTitle post={post} />
-        <PostContent content={post.content} />
-      </section>
-      <aside className={styles.comment}>
-        <MobileCommentCount
-          count={
-            commentPages.pages[0].data.comments.totalElements +
-            commentPages.pages[0].data.replies.length -
-            temporaryCommentDeleteCount
-          }
-        />
-        <CommentInput postId={parseInt(params.postId, 10)} />
-        <section>
-          <ul>
-            {commentPages.pages.map((page) =>
-              page.data.comments.content.map((commentItem) => (
-                <li key={commentItem.id}>
-                  <Comment
-                    postId={parseInt(params.postId, 10)}
-                    comment={commentItem}
-                    handleDelete={() => {
-                      setTemporaryCommentDeleteCount((prev) => prev + 1);
-                    }}
-                    replies={page.data.replies.filter(
-                      (reply) => reply.parentId === commentItem.id,
-                    )}
-                  />
-                </li>
-              )),
-            )}
-          </ul>
-          {hasNextPage && (
-            <MoreCommentsButton
-              onClick={() => fetchNextPage()}
-              disabled={isFetchingNextPage}
+      {isPending ? (
+        <SkeletonPost />
+      ) : (
+        <>
+          <section className={styles.post}>
+            <PostTitle post={post} />
+            <PostContent content={post.content} />
+          </section>
+          <aside className={styles.comment}>
+            <MobileCommentCount
+              count={
+                commentPages.pages[0].data.comments.totalElements +
+                commentPages.pages[0].data.replies.length -
+                temporaryCommentDeleteCount
+              }
             />
-          )}
-        </section>
-      </aside>
-      <PostNavigation
-        previous={post.previousPostId}
-        next={post.nextPostId}
-        list="/follows"
-      />
-      <MobileTopButton />
+            <CommentInput postId={parseInt(params.postId, 10)} />
+            <section>
+              <ul>
+                {commentPages.pages.map((page) =>
+                  page.data.comments.content.map((commentItem) => (
+                    <li key={commentItem.id}>
+                      <Comment
+                        postId={parseInt(params.postId, 10)}
+                        comment={commentItem}
+                        handleDelete={() => {
+                          setTemporaryCommentDeleteCount((prev) => prev + 1);
+                        }}
+                        replies={page.data.replies.filter(
+                          (reply) => reply.parentId === commentItem.id,
+                        )}
+                      />
+                    </li>
+                  )),
+                )}
+              </ul>
+              {hasNextPage && (
+                <MoreCommentsButton
+                  onClick={() => fetchNextPage()}
+                  disabled={isFetchingNextPage}
+                />
+              )}
+            </section>
+          </aside>
+          <PostNavigation
+            previous={post.previousPostId}
+            next={post.nextPostId}
+            list="/follows"
+          />
+          <MobileTopButton />
+        </>
+      )}
     </>
   );
 };
