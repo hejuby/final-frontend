@@ -3,7 +3,9 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import IconMoreRight from "@/assets/icons/icon-caret-right.svg";
+import useUserStore from "@/store/useUserStore";
 import { useRouter } from "next/navigation";
+import useDialog from "@/hooks/useDialog";
 import Card from "@/components/Home/Card";
 import Banner from "@/components/Home/Banner";
 import Category from "@/components/Home/Category";
@@ -88,7 +90,13 @@ const categoryItems = [
 ];
 
 const Home = () => {
+  const { alert } = useDialog();
   const router = useRouter();
+
+  // 로그인 유무
+  const { isLogin } = useUserStore((state) => ({
+    isLogin: state.isLogin,
+  }));
 
   const [campaignData, setCampaignData] = useState<{
     premium: ICampaignItems[];
@@ -108,16 +116,41 @@ const Home = () => {
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/campaigns/home`,
+          {
+            withCredentials: true,
+          },
         );
-        setCampaignData(response.data);
+
+        const updatedData = {
+          premium: response.data.premium.map((item: ICampaignItems) => ({
+            ...item,
+            isLike: isLogin ? item.isLike : false,
+            isCancellable: isLogin ? item.isCancellable : false,
+          })),
+          popular: response.data.popular.map((item: ICampaignItems) => ({
+            ...item,
+            isLike: isLogin ? item.isLike : false,
+          })),
+          newest: response.data.newest.map((item: ICampaignItems) => ({
+            ...item,
+            isLike: isLogin ? item.isLike : false,
+          })),
+          imminent: response.data.imminent.map((item: ICampaignItems) => ({
+            ...item,
+            isLike: isLogin ? item.isLike : false,
+          })),
+        };
+
+        setCampaignData(updatedData);
       } catch (error) {
-        // eslint-disable-next-line
-        console.error("Failed to fetch campaign data", error);
+        if (axios.isAxiosError(error) && error.response) {
+          alert(error.response.data.msg);
+        }
       }
     };
 
     fetchCampaignData();
-  }, []);
+  }, [isLogin]);
 
   const handleClosingMoreClick = () => {
     const queryParams = new URLSearchParams();

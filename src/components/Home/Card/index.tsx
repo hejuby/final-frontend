@@ -2,6 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import useUserStore from "@/store/useUserStore";
+import useDialog from "@/hooks/useDialog";
+import axios from "axios";
 import setComma from "@/utils/numberUtils";
 import formatDate from "@/utils/formatDate";
 import Image from "next/image";
@@ -10,6 +13,7 @@ import Line from "@/components/Line";
 import Tag from "@/components/Tag";
 import { ICampaignItems } from "@/@types/campaignItems";
 import IconHeartWhite from "@/assets/icons/icon-heart-white.svg";
+import IconHeartRed from "@/assets/icons/icon-heart-filled.svg";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
 import IconPointCoin from "@/assets/icons/icon-point-coin.svg";
 import IconPremiumBadgeLg from "@/assets/icons/icon-premium-badge-lg.svg";
@@ -71,16 +75,22 @@ const Card: React.FC<CardProps> = ({
   applicationDeadline,
   platform,
   label,
+  isLike: initialIsLike = false,
   pattern = "vertical",
 }) => {
   const pathname = usePathname();
   const router = useRouter();
+  const { alert, confirm } = useDialog();
+  const { isLogin } = useUserStore((state) => ({
+    isLogin: state.isLogin,
+  }));
 
   // 홈, 검색 페이지에서 카드 스타일 설정
   const isSearchPage = pathname === "/search";
   const optionalClass = isSearchPage ? styles["search-page"] : "";
 
   const [isMobile, setIsMobile] = useState(false);
+  const [isLike, setIsLike] = useState<boolean>(initialIsLike);
 
   const platformIconSrc = getIconForPlatform(platform);
 
@@ -96,6 +106,37 @@ const Card: React.FC<CardProps> = ({
     }
   };
 
+  // 좋아요 이벤트
+  const handleLikeBtn = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+
+    if (isLogin) {
+      try {
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/likes/${id}`,
+          null,
+          {
+            withCredentials: true,
+          },
+        );
+
+        setIsLike((prev) => !prev);
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          alert(error.response.data.msg);
+        }
+      }
+    } else {
+      const confirmLogin = await confirm(
+        "로그인이 필요한 서비스입니다.",
+        "로그인 하시겠습니까?",
+      );
+      if (confirmLogin) {
+        router.push("/auth/login");
+      }
+    }
+  };
+
   // 화면 사이즈 업데이트
   useEffect(() => {
     const handleResize = () => {
@@ -107,6 +148,8 @@ const Card: React.FC<CardProps> = ({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // console.log(isLike, id);
 
   return (
     <div
@@ -133,8 +176,8 @@ const Card: React.FC<CardProps> = ({
               <div>{` `}</div>
             )}
 
-            <button type="button" aria-label="icon">
-              <IconHeartWhite />
+            <button type="button" aria-label="icon" onClick={handleLikeBtn}>
+              {isLike ? <IconHeartRed /> : <IconHeartWhite />}
             </button>
           </div>
         )}
@@ -144,8 +187,8 @@ const Card: React.FC<CardProps> = ({
           <h4>
             {applicationDeadline}일 남음
             {pattern === "horizontal" && (
-              <button type="button" aria-label="icon">
-                <IconHeartGray />
+              <button type="button" aria-label="icon" onClick={handleLikeBtn}>
+                {isLike ? <IconHeartRed /> : <IconHeartGray />}
               </button>
             )}
           </h4>

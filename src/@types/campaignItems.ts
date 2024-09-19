@@ -22,7 +22,7 @@ export interface ICampaignItems {
   experienceEndDate: string; // 체험 종료 날짜
   applicationDeadline?: number; // 지원 마감일
   isCancellable?: boolean;
-  isCancel?: boolean; // 취소여부
+  isLike?: boolean; // 좋아요여부
 }
 
 export interface ICampaignDetails {
