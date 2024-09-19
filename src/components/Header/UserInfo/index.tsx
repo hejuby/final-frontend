@@ -128,9 +128,12 @@ const UserInfo: React.FC<IUserInfoProps> = ({
                   </Link>
                 </li>
                 <li>
-                  <Link href="/" onClick={() => alert("서비스 준비중입니다.")}>
+                  <button
+                    onClick={() => alert("서비스 준비중입니다.")}
+                    type="button"
+                  >
                     <IconAlram />
-                  </Link>
+                  </button>
                 </li>
                 <li>
                   <Link href="/search">
