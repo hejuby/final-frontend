@@ -45,6 +45,10 @@ const LoginForm = () => {
       if (response.status === 200) {
         // 로그인 성공
         setIsLogin(true);
+        sessionStorage.setItem(
+          "login",
+          (new Date().valueOf() + 1000 * 60 * 60 * 24).toString(),
+        );
         router.push("/");
       } else if (response.status === 400) {
         // 아이디 또는 비밀번호 확인

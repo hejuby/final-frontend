@@ -17,6 +17,7 @@ import {
   Image,
   ImageUpload,
   ImageResize,
+  Base64UploadAdapter,
 } from "ckeditor5";
 import "ckeditor5/ckeditor5.css";
 import "./index.scss";
@@ -63,7 +64,13 @@ const Editor = ({ initialData, placeholder, setContent }: EditorProps) => {
           Image,
           ImageUpload,
           ImageResize,
+          Base64UploadAdapter,
         ],
+        image: {
+          upload: {
+            types: ["png", "jpeg", "jpg"],
+          },
+        },
         initialData,
         placeholder,
       }}

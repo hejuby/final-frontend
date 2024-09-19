@@ -11,8 +11,11 @@ interface UserStore {
   setIsInfluencer: (isInfluencer: boolean) => void;
 }
 
+const loginInfo =
+  typeof window !== "undefined" ? sessionStorage.getItem("login") : null;
+
 const useUserStore = create<UserStore>((set) => ({
-  isLogin: false,
+  isLogin: loginInfo ? new Date().valueOf() < parseInt(loginInfo, 10) : false,
   name: "",
   profileImageUrl: "",
   isInfluencer: false,

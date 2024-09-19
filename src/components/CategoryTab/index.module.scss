@@ -3,6 +3,10 @@
   width: 100%;
   gap: 10px;
   overflow-x: scroll;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   &__button {
     @include text-style(16, $black);
     width: max-content;
