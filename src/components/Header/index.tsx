@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import useUserStore from "@/store/useUserStore";
+import useDialog from "@/hooks/useDialog";
 import useHeaderStore from "@/store/useHeaderStore";
 import titles from "@/data/header_title.json";
 import Logo from "@/assets/icons/logo.svg";
@@ -16,16 +18,37 @@ import UserInfo from "./UserInfo";
 import MobileMenu from "./MobileMenu";
 
 const Header = () => {
-  const [isTablet, setIsTablet] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
-
+  const { alert } = useDialog();
   const router = useRouter();
   const pathname = usePathname();
   const setTitle = useHeaderStore((state) => state.setTitle);
   const title = useHeaderStore((state) => state.title);
 
+  const [isTablet, setIsTablet] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+
+  // 로그인 유무
+  const { isLogin, setIsLogin } = useUserStore((state) => ({
+    isLogin: state.isLogin,
+    setIsLogin: state.setIsLogin,
+  }));
+
+  // 유저 정보
+  const { name, profileImageUrl, isInfluencer } = useUserStore((state) => ({
+    name: state.name,
+    profileImageUrl: state.profileImageUrl,
+    isInfluencer: state.isInfluencer,
+  }));
+
+  const userInfo = {
+    userName: name,
+    profileImg: profileImageUrl,
+    checkInfluencer: isInfluencer,
+  };
+
   const toggleMenu = () => setShowMenu((prev) => !prev);
 
+  // 화면 사이즈 업데이트
   useEffect(() => {
     const screenWidth = () => {
       if (window.innerWidth <= 1024) {
@@ -40,6 +63,7 @@ const Header = () => {
     return () => window.removeEventListener("resize", screenWidth);
   }, []);
 
+  // 타이틀설정
   useEffect(() => {
     setTitle(titles[pathname as keyof typeof titles] || "다인 리뷰");
   }, [pathname, setTitle]);
@@ -68,11 +92,17 @@ const Header = () => {
                   <Logo />
                 </Link>
                 <Link href="/search">체험단</Link>
-                <Link href="/">이용안내</Link>
+                <Link href="/" onClick={() => alert("서비스 준비중입니다.")}>
+                  이용안내
+                </Link>
                 <Link href="/announcement">게시판</Link>
               </div>
               <div className={styles["header__content--right"]}>
-                <UserInfo />
+                <UserInfo
+                  isLogin={isLogin}
+                  setIsLogin={setIsLogin}
+                  userInfo={userInfo}
+                />
               </div>
             </>
           ) : (
@@ -92,7 +122,7 @@ const Header = () => {
                   </Link>
                 )}
               </div>
-              {content}
+              <p style={{ marginLeft: 20 }}>{content}</p>
               <ul className={styles["header__mobile-right"]}>
                 <li>
                   <Link href="/search">
@@ -113,7 +143,14 @@ const Header = () => {
           )}
         </div>
       </header>
-      {isTablet && showMenu && <MobileMenu setShowMenu={setShowMenu} />}
+      {isTablet && showMenu && (
+        <MobileMenu
+          setShowMenu={setShowMenu}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          userInfo={userInfo}
+        />
+      )}
     </>
   );
 };

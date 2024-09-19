@@ -4,9 +4,9 @@ import IconProfile from "@/assets/icons/icon-profile.svg?url";
 import styles from "../index.module.scss";
 
 interface UserInfo {
-  userName: string;
-  point: string;
+  userName?: string;
   profileImg?: string;
+  checkInfluencer?: boolean;
 }
 
 interface IUserProfileProps {
@@ -14,11 +14,12 @@ interface IUserProfileProps {
 }
 
 const UserProfile: React.FC<IUserProfileProps> = ({ userInfo }) => {
+  const profileImageSrc = userInfo.profileImg || IconProfile;
   return (
     <div className={styles.profile}>
       <div>
         <Image
-          src={userInfo.profileImg ?? IconProfile}
+          src={profileImageSrc}
           alt="profileImage"
           width={36}
           height={36}

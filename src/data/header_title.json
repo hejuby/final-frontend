@@ -1,8 +1,13 @@
 {
   "/": "홈",
-  "/mypage": "마이페이지",
+  "/mypage/employer": "마이페이지",
+  "/mypage/influencer": "마이페이지",
+  "/mypage/employer/profile": "회원 정보 변경",
+  "/mypage/influencer/profile": "회원 정보 변경",
+  "/campaigns/register": "체험단 등록",
   "/announcement": "게시판",
   "/communities": "게시판",
   "/follows": "게시판",
-  "/login": "게시판"
+  "/login": "게시판",
+  "/search": "체험단"
 }

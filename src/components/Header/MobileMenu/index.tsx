@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useDialog from "@/hooks/useDialog";
 import Image from "next/image";
 import Line from "@/components/Line";
 import Link from "next/link";
@@ -11,16 +12,27 @@ import IconDown from "@/assets/icons/icon-direction-down-gray.svg";
 import IconUp from "@/assets/icons/icon-direction-up-gray.svg";
 import IconRight from "@/assets/icons/icon-direction-right.svg";
 import styles from "./index.module.scss";
+import { userInfo } from "os";
 
+interface UserInfo {
+  userName?: string;
+  profileImg?: string;
+  checkInfluencer?: boolean;
+}
 interface MobileMenuProps {
   isLogin?: boolean;
+  setIsLogin: (isLogin: boolean) => void;
+  userInfo: UserInfo;
   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({
-  isLogin = false,
+  isLogin,
   setShowMenu,
+  userInfo,
+  setIsLogin,
 }) => {
+  const { alert, confirm } = useDialog();
   const [showSubmenu, setShowSubmenu] = useState(false);
 
   const handleSubmenu = () => {
@@ -29,6 +41,16 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 
   const handleCloseMenu = () => {
     setShowMenu(false);
+  };
+
+  // 로그아웃 이벤트
+  const handleLogout = async () => {
+    const confirmLogout = await confirm("로그아웃 하시겠습니까?");
+    if (confirmLogout) {
+      sessionStorage.removeItem("login");
+      setIsLogin(false);
+      setShowMenu(false);
+    }
   };
 
   return (
@@ -40,14 +62,18 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           <div className={styles["user-info--login"]}>
             <Link
               className={styles["user-profile"]}
-              href="/"
+              href={
+                userInfo.checkInfluencer
+                  ? "/mypage/influencer"
+                  : "/mypage/employer"
+              }
               onClick={handleCloseMenu}
             >
               <div>
                 <h3>
-                  감자도리 <IconRight />
+                  {userInfo.userName} <IconRight />
                 </h3>
-                <p>인플루언서</p>
+                <p>{userInfo.checkInfluencer ? "인플루언서" : "사업주"}</p>
               </div>
               <div>
                 <Image
@@ -59,7 +85,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               </div>
             </Link>
             <div className={styles["user-point"]}>
-              <Link href="/" onClick={handleCloseMenu}>
+              <Link
+                href={
+                  userInfo.checkInfluencer
+                    ? "/mypage/influencer"
+                    : "/mypage/employer"
+                }
+                onClick={handleCloseMenu}
+              >
                 보유포인트 <span>0P</span>
               </Link>
             </div>
@@ -104,10 +137,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             </Link>
           </li>
           <li>
-            <Link href="/" onClick={handleCloseMenu}>
+            <a onClick={() => alert("서비스 준비중입니다.")}>
               <Guide color="#4b65f7" />
               <span>이용안내</span>
-            </Link>
+            </a>
           </li>
           <li>
             <button type="button" onClick={handleSubmenu}>
@@ -142,7 +175,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       {/* bottom */}
       {isLogin && (
         <div className={styles["mobile-menu__bottom"]}>
-          <button type="button">로그아웃</button>
+          <button type="button" onClick={handleLogout}>
+            로그아웃
+          </button>
         </div>
       )}
     </div>
