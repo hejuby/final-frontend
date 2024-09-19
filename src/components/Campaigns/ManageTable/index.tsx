@@ -1,4 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import useDialog from "@/hooks/useDialog";
+import { CampaignAttendee, CampaignState } from "@/@types/myCampaignItems";
 import Table from "@/components/Table";
 import Button from "@/components/Button";
 import ToggleSwitch from "@/components/ToggleSwitch";
@@ -6,177 +11,166 @@ import IconLink from "@/assets/icons/icon-link.svg";
 import IconMessage from "@/assets/icons/icon-message.svg";
 import styles from "./index.module.scss";
 
-const TABLE_HEAD = [
-  "번호",
-  "이름",
-  "선정",
-  "플랫폼 등급",
-  "플랫폼",
-  "방문수/팔로워",
-  "취소 횟수",
-  "신청한마디",
-];
+const TABLE: Record<CampaignState, { HEAD: string[]; ORDER: string[] }> = {
+  RECRUITING: {
+    HEAD: [
+      "번호",
+      "이름",
+      "선정",
+      "플랫폼 등급",
+      "플랫폼",
+      "방문수/팔로워",
+      "취소 횟수",
+      "신청한마디",
+    ],
+    ORDER: [
+      "index",
+      "name",
+      "selection",
+      "platformRank",
+      "platform",
+      "views",
+      "cancelledApplicationCount",
+      "message",
+    ],
+  },
+  RECRUITMENT_COMPLETED: {
+    HEAD: [
+      "번호",
+      "이름",
+      "플랫폼 등급",
+      "플랫폼",
+      "방문수/팔로워",
+      "연락처",
+      "신청한마디",
+      "리뷰 등록일",
+      "리뷰 URL",
+      "첨부 자료",
+    ],
+    ORDER: [
+      "index",
+      "name",
+      "platformRank",
+      "platform",
+      "views",
+      "phone",
+      "message",
+      "reviewDate",
+      "reviewUrl",
+      "attachment",
+    ],
+  },
+  EXPERIENCE_AND_REVIEW: {
+    HEAD: [
+      "번호",
+      "이름",
+      "플랫폼 등급",
+      "플랫폼",
+      "방문수/팔로워",
+      "연락처",
+      "신청한마디",
+      "리뷰 등록일",
+      "리뷰 URL",
+      "첨부 자료",
+    ],
+    ORDER: [
+      "index",
+      "name",
+      "platformRank",
+      "platform",
+      "views",
+      "phone",
+      "message",
+      "reviewDate",
+      "reviewUrl",
+      "attachment",
+    ],
+  },
+  REVIEW_CLOSED: {
+    HEAD: [
+      "번호",
+      "이름",
+      "플랫폼 등급",
+      "플랫폼",
+      "방문수/팔로워",
+      "연락처",
+      "신청한마디",
+      "리뷰 등록일",
+      "리뷰 URL",
+      "첨부 자료",
+    ],
+    ORDER: [
+      "index",
+      "name",
+      "platformRank",
+      "platform",
+      "views",
+      "phone",
+      "message",
+      "reviewDate",
+      "reviewUrl",
+      "attachment",
+    ],
+  },
+  INSPECTION: {
+    HEAD: [],
+    ORDER: [],
+  },
+};
 
-const TABLE_ORDER = [
-  "index",
-  "name",
-  "selection",
-  "platformRank",
-  "platform",
-  "views",
-  "cancelCount",
-  "comment",
-];
+interface ManageTableProps {
+  attendees: CampaignAttendee[];
+  campaignState: CampaignState;
+}
 
-const LIST: Record<Omit<typeof TABLE_ORDER, "index">[number], unknown>[] = [
-  {
-    name: "박다은",
-    selection: false,
-    platformRank: "프리미엄",
-    platform: "",
-    views: 350,
-    cancelCount: 2,
-    comment: "안녕하세요",
-  },
-  {
-    name: "서유정",
-    selection: true,
-    platformRank: "초급",
-    platform: "",
-    views: 100,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "김송주",
-    selection: false,
-    platformRank: "고급",
-    platform: "",
-    views: 200,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "이이네",
-    selection: false,
-    platformRank: "중급",
-    platform: "",
-    views: 190,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "김돌석",
-    selection: false,
-    platformRank: "초급",
-    platform: "",
-    views: 140,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "김다혜",
-    selection: false,
-    platformRank: "중급",
-    platform: "",
-    views: 140,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "차영름",
-    selection: true,
-    platformRank: "초급",
-    platform: "",
-    views: 100,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "변희주",
-    selection: false,
-    platformRank: "프리미엄",
-    platform: "",
-    views: 600,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "박만쥬",
-    selection: false,
-    platformRank: "고급",
-    platform: "",
-    views: 220,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "이겨몬",
-    selection: false,
-    platformRank: "초급",
-    platform: "",
-    views: 110,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "권종일",
-    selection: false,
-    platformRank: "중급",
-    platform: "",
-    views: 180,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "송편돌",
-    selection: false,
-    platformRank: "초급",
-    platform: "",
-    views: 120,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "엄해영",
-    selection: false,
-    platformRank: "초급",
-    platform: "",
-    views: 100,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-  {
-    name: "신비공주",
-    selection: false,
-    platformRank: "프리미엄",
-    platform: "",
-    views: 3400,
-    cancelCount: 0,
-    comment: "안녕하세요",
-  },
-];
+const ManageTable = ({ attendees, campaignState }: ManageTableProps) => {
+  const [isOrdered, setIsOrdered] = useState<boolean>(false);
+  const { alert } = useDialog();
 
-const ManageTable = () => {
   return (
     <>
       <aside className={styles.top}>
         <label htmlFor="selected-campaigns" className={styles.top__control}>
-          <ToggleSwitch id="selected-campaigns" />
-          <p>선정된 체험단 우선 정렬</p>
+          {campaignState === "RECRUITING" && (
+            <>
+              <ToggleSwitch
+                onChange={() => {
+                  setIsOrdered((prev) => !prev);
+                }}
+                id="selected-campaigns"
+              />
+              <p>선정된 체험단 우선 정렬</p>
+            </>
+          )}
         </label>
         <p
           className={styles.top__selected}
-        >{`모집인원 ${LIST.filter((item) => item.selection).length}/${LIST.length}`}</p>
+        >{`모집인원 ${attendees.filter((item) => item.isChoice).length}/${attendees.length}`}</p>
       </aside>
       <Table
-        head={TABLE_HEAD}
-        body={LIST.map((item, index) => {
+        head={TABLE[campaignState].HEAD}
+        body={(isOrdered
+          ? attendees.sort((a, b) => {
+              if (a.isChoice && !b.isChoice) {
+                return -1;
+              }
+              if (!a.isChoice && b.isChoice) {
+                return 1;
+              }
+              return 0;
+            })
+          : attendees
+        ).map((item, index) => {
           return {
             ...item,
+            platformRank: "초급",
+            views: 250,
             index: index + 1,
+            attachment: "없음",
+            reviewDate: item.reviewDate ?? "-",
+            reviewUrl: item.reviewUrl ?? "-",
             // eslint-disable-next-line no-extra-boolean-cast
-            selection: !!item.selection ? (
+            selection: item.isChoice ? (
               <Button color="outline" padding="20px" disabled>
                 <p className={styles["selection-button-text"]}>취소하기</p>
               </Button>
@@ -186,19 +180,23 @@ const ManageTable = () => {
               </Button>
             ),
             platform: (
-              <Link href={item.platform as string}>
+              <Link href="/">
                 <IconLink />
               </Link>
             ),
-            comment: (
+            message: (
               <button type="button" aria-label="신청한마디 버튼">
-                <IconMessage />
+                <IconMessage
+                  onClick={async () => {
+                    await alert(item.message);
+                  }}
+                />
               </button>
             ),
-            isActive: !!item.selection,
+            isActive: item.isChoice,
           };
         })}
-        order={TABLE_ORDER}
+        order={TABLE[campaignState].ORDER}
       />
     </>
   );

@@ -1,3 +1,10 @@
+export type CampaignState =
+  | "INSPECTION"
+  | "RECRUITING"
+  | "RECRUITMENT_COMPLETED"
+  | "EXPERIENCE_AND_REVIEW"
+  | "REVIEW_CLOSED";
+
 export interface CampaignItem {
   id: number;
   businessName: string;
@@ -5,7 +12,7 @@ export interface CampaignItem {
   serviceProvided: string;
   currentApplicants: number;
   capacity: number;
-  campaignState: string;
+  campaignState: CampaignState;
   pointPerPerson: number;
   city: string;
   district: string;
@@ -22,4 +29,20 @@ export interface CampaignItem {
 
 export interface CampaignItemProps {
   campaignItems: CampaignItem[];
+}
+
+export interface CampaignAttendee {
+  userId: number;
+  name: string;
+  isChoice: boolean;
+  cancelledApplicationCount: 0;
+  phone: string;
+  message: string;
+  reviewDate: string | null;
+  reviewUrl: string | null;
+  capacity: number;
+}
+
+export interface CampaignManageResponse {
+  data: CampaignAttendee[];
 }
