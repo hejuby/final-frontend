@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { CampaignItemProps } from "@/@types/myCampaignItems";
+import Link from "next/link";
 import ms from "@/utils/modifierSelector";
 import setComma from "@/utils/numberUtils";
 import formatDate from "@/utils/formatDate";
@@ -84,22 +85,27 @@ const CampaignItemEmployer = ({ campaignItems }: CampaignItemProps) => {
       {campaignItems.map((campaignItem) => {
         // 플랫폼
         const platformIcon = getIconPlatform(campaignItem.platform);
+
         // 상태
         const campaignState = getCampaignState(campaignItem.campaignState);
+
         // 상태 색상
         const campaignStateColor = getCampaignStateColor(
           campaignItem.campaignState,
         );
+
         // 리뷰 마감 클래스 추가
         const campaignItemClass =
           campaignItem.campaignState === "REVIEW_CLOSED"
             ? `${cn("__item")} ${styles["review-closed"]}`
             : cn("__item");
+
         // 라벨 프리미엄 클래스 추가
         const campaignLabelClass =
           campaignItem.label === "프리미엄"
             ? `${styles["campaign-label"]} ${styles.premium}`
             : styles["campaign-label"];
+
         // 좋아요 유무
         const likeIcon = campaignItem.isLike ? (
           <IconHeartWhiteFilled />
@@ -187,9 +193,13 @@ const CampaignItemEmployer = ({ campaignItems }: CampaignItemProps) => {
                       취소하기
                     </Button>
                   )}
-                  <Button type="button" color="outline">
-                    체험단 관리
-                  </Button>
+                  <Link
+                    href={`campaigns/${campaignItem.id}/manage?state=${campaignItem.campaignState}`}
+                  >
+                    <Button type="button" color="outline">
+                      체험단 관리
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>

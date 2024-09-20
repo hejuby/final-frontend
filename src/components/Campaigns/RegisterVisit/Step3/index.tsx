@@ -1,15 +1,73 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import Selectbox, { Option } from "@/components/Selectbox";
+import { Step3Data } from "@/@types/register";
 import Checkbox from "@/components/Checkbox";
 import styles from "./index.module.scss";
 
-const VisitStep3 = () => {
-  const [selectedStartTime, setSelectedStartTime] = useState<Option | null>(
-    null,
-  );
-  const [selectedEndTime, setSelectedEndTime] = useState<Option | null>(null);
+interface VisitStep3Props {
+  stepData: Step3Data;
+  setStepData: (data: Step3Data) => void;
+}
+
+const generateTimeOptions = () => {
+  const options: Option[] = [];
+  for (let hour = 0; hour < 24; hour += 1) {
+    const formattedHour = `${hour.toString().padStart(2, "0")}:00`;
+    options.push({ optionLabel: formattedHour, value: formattedHour });
+  }
+  return options;
+};
+
+const days = {
+  mon: "월",
+  tue: "화",
+  wed: "수",
+  thu: "목",
+  fri: "금",
+  sat: "토",
+  sun: "일",
+};
+
+const VisitStep3: React.FC<VisitStep3Props> = ({ stepData, setStepData }) => {
+  const timeOptions = generateTimeOptions();
+
+  useEffect(() => {
+    if (!stepData.experienceStartTime) {
+      setStepData({
+        ...stepData,
+        experienceStartTime: "09:00",
+        experienceEndTime: "18:00",
+      });
+    }
+  }, []);
+
+  const handleDayChange = (day: string) => {
+    const isSelected = stepData.availableDays.includes(day);
+    const updatedDays = isSelected
+      ? stepData.availableDays.filter((d) => d !== day)
+      : [...stepData.availableDays, day];
+
+    setStepData({
+      ...stepData,
+      availableDays: updatedDays,
+    });
+  };
+
+  const handleStartTimeChange = (option: Option | null) => {
+    setStepData({
+      ...stepData,
+      experienceStartTime: option ? String(option.value) : "",
+    });
+  };
+
+  const handleEndTimeChange = (option: Option | null) => {
+    setStepData({
+      ...stepData,
+      experienceEndTime: option ? String(option.value) : "",
+    });
+  };
 
   return (
     <section className={styles.container}>
@@ -18,27 +76,19 @@ const VisitStep3 = () => {
         <article className={styles.article}>
           <h4 className={styles["sub-title"]}>6. 체험 가능 요일</h4>
           <div className={styles["checkbox-container"]}>
-            <Checkbox id="mon" type="checkbox" width={24} gap={12}>
-              월
-            </Checkbox>
-            <Checkbox id="tue" type="checkbox" width={24} gap={12}>
-              화
-            </Checkbox>
-            <Checkbox id="wed" type="checkbox" width={24} gap={12}>
-              수
-            </Checkbox>
-            <Checkbox id="thu" type="checkbox" width={24} gap={12}>
-              목
-            </Checkbox>
-            <Checkbox id="fri" type="checkbox" width={24} gap={12}>
-              금
-            </Checkbox>
-            <Checkbox id="sat" type="checkbox" width={24} gap={12}>
-              토
-            </Checkbox>
-            <Checkbox id="sun" type="checkbox" width={24} gap={12}>
-              일
-            </Checkbox>
+            {Object.entries(days).map(([id, label]) => (
+              <Checkbox
+                key={id}
+                id={id}
+                type="checkbox"
+                width={24}
+                gap={12}
+                checked={stepData.availableDays.includes(label)}
+                onChange={() => handleDayChange(label)}
+              >
+                {label}
+              </Checkbox>
+            ))}
           </div>
         </article>
         <article className={styles.article}>
@@ -47,29 +97,24 @@ const VisitStep3 = () => {
             <Selectbox
               label="시작 시간"
               placeholder="선택"
-              selected={selectedStartTime}
-              options={[
-                { optionLabel: "9:00", value: "blog" },
-                { optionLabel: "10:00", value: "instagram" },
-                { optionLabel: "유튜브", value: "youtube" },
-                { optionLabel: "틱톡", value: "tictock" },
-                { optionLabel: "릴스", value: "reels" },
-                { optionLabel: "쇼츠", value: "shorts" },
-              ]}
-              onChange={setSelectedStartTime}
+              selected={
+                timeOptions.find(
+                  (option) => option.value === stepData.experienceStartTime,
+                ) || null
+              }
+              options={timeOptions}
+              onChange={handleStartTimeChange}
             />
             <Selectbox
               label="종료 시간"
               placeholder="선택"
-              selected={selectedEndTime}
-              options={[
-                { optionLabel: "18:00", value: "visit" },
-                { optionLabel: "구매형", value: "pay" },
-                { optionLabel: "배송형", value: "delivery" },
-                { optionLabel: "기자단", value: "editor" },
-                { optionLabel: "포장", value: "pack" },
-              ]}
-              onChange={setSelectedEndTime}
+              selected={
+                timeOptions.find(
+                  (option) => option.value === stepData.experienceEndTime,
+                ) || null
+              }
+              options={timeOptions}
+              onChange={handleEndTimeChange}
             />
           </div>
           <p className={styles["info-message"]}>
