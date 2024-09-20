@@ -32,7 +32,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       return;
     }
     axios
-      .get("https://g6-server.dainreview.kr/api/user/header-info", {
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user/header-info`, {
         withCredentials: true,
       })
       .then(

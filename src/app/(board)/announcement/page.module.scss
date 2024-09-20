@@ -19,13 +19,3 @@
     align-items: flex-start;
   }
 }
-
-.list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 82px;
-  @include tablet {
-    gap: 18px;
-  }
-}

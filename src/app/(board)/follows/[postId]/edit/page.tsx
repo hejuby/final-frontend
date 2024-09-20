@@ -19,7 +19,7 @@ const FollowsEdit = ({ params }: { params: { postId: string } }) => {
     queryKey: ["follows", params.postId],
     queryFn: () =>
       axios.get(
-        `https://g6-server.dainreview.kr/api/post/follows/${params.postId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/follows/${params.postId}`,
         { withCredentials: true },
       ),
   });

@@ -31,7 +31,7 @@ const Post = ({ params }: { params: { postId: string } }) => {
     queryKey: ["follows", params.postId],
     queryFn: () =>
       axios.get(
-        `https://g6-server.dainreview.kr/api/post/follows/${params.postId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/follows/${params.postId}`,
         { withCredentials: true },
       ),
   });
@@ -50,7 +50,7 @@ const Post = ({ params }: { params: { postId: string } }) => {
     queryKey: ["comments", params.postId],
     queryFn: (pageParam) =>
       axios.get(
-        `https://g6-server.dainreview.kr/api/post/${params.postId}/comments${pageParam.pageParam ? `?page=${pageParam.pageParam}` : ""}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${params.postId}/comments${pageParam.pageParam ? `?page=${pageParam.pageParam}` : ""}`,
         { withCredentials: true },
       ),
     initialPageParam: 0,

@@ -22,7 +22,7 @@ const Board = ({
     queryKey: ["follows"],
     queryFn: () =>
       axios.get(
-        `https://g6-server.dainreview.kr/api/post/follows${createRequestParamsURI(searchParams)}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/follows${createRequestParamsURI(searchParams)}`,
         { withCredentials: true },
       ),
   });
@@ -48,7 +48,9 @@ const Board = ({
       </section>
       <PostDivider />
       {isPending ? (
-        Array.from({ length: 10 }, (_, i) => i).map(() => <SkeletonListItem />)
+        Array.from({ length: 10 }, (_, i) => i).map((number) => (
+          <SkeletonListItem key={number} />
+        ))
       ) : (
         <section className={styles.list}>
           <List items={content} />

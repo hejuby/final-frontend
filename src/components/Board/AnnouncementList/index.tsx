@@ -12,7 +12,7 @@ interface ListProps {
 
 const AnnouncementList = async ({ searchParams }: ListProps) => {
   const data: BoardResponse = await axios.get(
-    `https://g6-server.dainreview.kr/api/post/notices${createRequestParamsURI(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/notices${createRequestParamsURI(
       searchParams,
     )}`,
   );

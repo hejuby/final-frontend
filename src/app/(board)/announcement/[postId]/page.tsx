@@ -7,7 +7,7 @@ import styles from "./page.module.scss";
 
 const Post = async ({ params }: { params: { postId: string } }) => {
   const data: BoardPostResponse = await axios.get(
-    `https://g6-server.dainreview.kr/api/post/notices/${params.postId}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/notices/${params.postId}`,
   );
   const post = data.data;
 

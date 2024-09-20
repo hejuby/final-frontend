@@ -19,7 +19,7 @@ const CommunityEdit = ({ params }: { params: { postId: string } }) => {
     queryKey: ["communities", params.postId],
     queryFn: () =>
       axios.get(
-        `https://g6-server.dainreview.kr/api/post/communities/${params.postId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/communities/${params.postId}`,
         { withCredentials: true },
       ),
   });

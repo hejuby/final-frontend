@@ -37,13 +37,13 @@ const EditDropdown = ({
     mutationFn: () => {
       return type === "post"
         ? axios.delete(
-            `https://g6-server.dainreview.kr/api/post/${boardType}/${postId}`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${boardType}/${postId}`,
             {
               withCredentials: true,
             },
           )
         : axios.delete(
-            `https://g6-server.dainreview.kr/api/post/${postId}/comments/${commentId}`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}/comments/${commentId}`,
             {
               withCredentials: true,
             },
@@ -61,10 +61,6 @@ const EditDropdown = ({
       });
     };
   }, []);
-
-  if (type === "post" && !boardType) {
-    return null;
-  }
 
   useEffect(() => {
     if (!isSuccess) {
@@ -98,6 +94,10 @@ const EditDropdown = ({
     };
     alertError();
   }, [isError]);
+
+  if (type === "post" && !boardType) {
+    return null;
+  }
 
   return (
     <nav className={styles.wrapper}>

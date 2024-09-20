@@ -26,17 +26,20 @@ const CommentInput = ({
   const { alert } = useDialog();
   const queryClient = useQueryClient();
   const { mutate, isError, isSuccess, isPending } = useMutation({
-    mutationFn: (comment: { content: string; parentId?: number | null }) => {
+    mutationFn: (requestBody: {
+      content: string;
+      parentId?: number | null;
+    }) => {
       return commentId
         ? axios.patch(
-            `https://g6-server.dainreview.kr/api/post/${postId}/comments/${commentId}`,
-            comment,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}/comments/${commentId}`,
+            requestBody,
             {
               withCredentials: true,
             },
           )
         : axios.post(
-            `https://g6-server.dainreview.kr/api/post/${postId}/comments`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}/comments`,
             comment,
             {
               withCredentials: true,
