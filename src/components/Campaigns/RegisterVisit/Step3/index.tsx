@@ -34,20 +34,20 @@ const VisitStep3: React.FC<VisitStep3Props> = ({ stepData, setStepData }) => {
   const timeOptions = generateTimeOptions();
 
   useEffect(() => {
-    if (!stepData.experienceStartTime) {
+    if (!stepData.experienceStartTime || !stepData.experienceEndTime) {
       setStepData({
         ...stepData,
-        experienceStartTime: "09:00",
-        experienceEndTime: "18:00",
+        experienceStartTime: stepData.experienceStartTime || "09:00",
+        experienceEndTime: stepData.experienceEndTime || "18:00",
       });
     }
-  }, []);
+  }, [stepData, setStepData]);
 
   const handleDayChange = (day: string) => {
-    const isSelected = stepData.availableDays.includes(day);
+    const isSelected = stepData.availableDays?.includes(day) || false;
     const updatedDays = isSelected
-      ? stepData.availableDays.filter((d) => d !== day)
-      : [...stepData.availableDays, day];
+      ? stepData.availableDays?.filter((d) => d !== day) || []
+      : [...(stepData.availableDays || []), day];
 
     setStepData({
       ...stepData,
@@ -83,7 +83,7 @@ const VisitStep3: React.FC<VisitStep3Props> = ({ stepData, setStepData }) => {
                 type="checkbox"
                 width={24}
                 gap={12}
-                checked={stepData.availableDays.includes(label)}
+                checked={stepData.availableDays?.includes(label) || false}
                 onChange={() => handleDayChange(label)}
               >
                 {label}
@@ -125,4 +125,5 @@ const VisitStep3: React.FC<VisitStep3Props> = ({ stepData, setStepData }) => {
     </section>
   );
 };
+
 export default VisitStep3;

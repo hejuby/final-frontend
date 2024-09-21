@@ -1,16 +1,57 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
+import { Step5Data } from "@/@types/register";
 import Input from "@/components/Input";
 import BoxRadioButton from "@/components/BoxRadioButton";
 import styles from "./index.module.scss";
 
-const PayStep5 = () => {
-  const [isPoint, setIsPoint] = useState<string | null>(null);
+interface PayStep5Props {
+  stepData: Step5Data;
+  setStepData: (data: Step5Data) => void;
+}
 
+const PayStep5: React.FC<PayStep5Props> = ({ stepData, setStepData }) => {
   const handlePointChange = (value: string) => {
-    setIsPoint(value);
+    const pointPayment = value === "yes";
+    setStepData({
+      ...stepData,
+      pointPayment,
+    });
   };
+
+  const handleCapacityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const capacity = Number(e.target.value);
+    setStepData({
+      ...stepData,
+      capacity,
+    });
+  };
+
+  const handlePointPerPersonChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const pointPerPerson = Number(e.target.value);
+    setStepData({
+      ...stepData,
+      pointPerPerson,
+    });
+  };
+
+  useEffect(() => {
+    if (stepData.pointPayment && stepData.capacity && stepData.pointPerPerson) {
+      const totalPoint = stepData.capacity * stepData.pointPerPerson * 1.2;
+      setStepData({
+        ...stepData,
+        totalPoint,
+      });
+    } else {
+      setStepData({
+        ...stepData,
+        totalPoint: 0,
+      });
+    }
+  }, [stepData.capacity, stepData.pointPerPerson, stepData.pointPayment]);
 
   return (
     <section className={styles.container}>
@@ -24,6 +65,8 @@ const PayStep5 = () => {
             type="textarea"
             full
             unit="명"
+            value={stepData.capacity || ""}
+            onChange={handleCapacityChange}
           />
         </article>
         <article className={styles.article}>
@@ -35,7 +78,7 @@ const PayStep5 = () => {
                 { value: "no", optionLabel: "아니오" },
               ]}
               onChange={handlePointChange}
-              selectedValue={isPoint}
+              selectedValue={stepData.pointPayment ? "yes" : "no"}
               label="포인트 지급 여부"
             />
           </div>
@@ -43,30 +86,37 @@ const PayStep5 = () => {
             📢 포인트를 지급할 경우 프리미엄 체험단으로 등록되어 양질의
             인플루언서가 지원할 확률이 높아집니다.
           </p>
-          <div className={styles["input-container"]}>
-            <Input
-              label="1인당 지급 포인트"
-              id="onePoint"
-              type="number"
-              unit="Point"
-              disabled
-              full
-            />
-            <Input
-              label="총 지급 포인트"
-              id="totalPoint"
-              type="number"
-              unit="Point"
-              gap={6}
-              full
-            />
-            <p className={styles["info-message"]}>
-              = 총 모집 인원 수 X 1인당 지급 포인트 X 수수료 20%
-            </p>
-          </div>
+          {stepData.pointPayment && (
+            <div className={styles["input-container"]}>
+              <Input
+                label="1인당 지급 포인트"
+                id="onePoint"
+                type="number"
+                unit="Point"
+                disabled={!stepData.pointPayment}
+                full
+                value={stepData.pointPerPerson || ""}
+                onChange={handlePointPerPersonChange}
+              />
+              <Input
+                label="총 지급 포인트"
+                id="totalPoint"
+                type="number"
+                unit="Point"
+                gap={6}
+                full
+                value={stepData.totalPoint || ""}
+                disabled
+              />
+              <p className={styles["info-message"]}>
+                = 총 모집 인원 수 X 1인당 지급 포인트 X 수수료 20%
+              </p>
+            </div>
+          )}
         </article>
       </div>
     </section>
   );
 };
+
 export default PayStep5;

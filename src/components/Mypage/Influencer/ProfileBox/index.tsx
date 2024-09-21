@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import axios from "axios";
 import Link from "next/link";
 import ProfileImgUpload from "@/components/ProfileImgUpload";
 import SNSList, { SNSResponse } from "@/components/SNSList";
@@ -21,7 +22,6 @@ const ProfileBoxInfluencer = ({
 }: ProfileBoxInfluencerProps) => {
   const [profileImg, setProfileImg] = useState<File | null>(null);
   const defaultImg = profileImageUrl || "/images/profile-default-mypage.svg";
-
   const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
@@ -35,13 +35,49 @@ const ProfileBoxInfluencer = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleImageUpload = async (file: File | null) => {
+    if (!file) {
+      setProfileImg(null);
+      alert("기본 이미지가 설정되었습니다.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("imageFile", file);
+
+    try {
+      await axios.patch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/profile`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        },
+      );
+      alert("프로필 이미지가 성공적으로 업로드되었습니다.");
+    } catch (error) {
+      console.error("이미지 업로드 중 오류가 발생했습니다.", error);
+      alert("이미지 업로드 중 오류가 발생했습니다.");
+    }
+  };
+
   return (
     <section className={styles["profile-container"]}>
       <h3 className="visually-hidden">나의 프로필</h3>
       <div className={styles.profile__img}>
         <ProfileImgUpload
           profileImg={profileImg}
-          setProfileImg={setProfileImg}
+          setProfileImg={(img) => {
+            setProfileImg(img);
+            if (img) {
+              // @ts-ignore
+              handleImageUpload(img);
+            } else {
+              alert("기본 이미지가 설정되었습니다.");
+            }
+          }}
           defaultImg={defaultImg}
           cameraButon
         />

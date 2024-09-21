@@ -19,6 +19,10 @@ import VisitStep4 from "../RegisterVisit/Step4";
 import VisitStep5 from "../RegisterVisit/Step5";
 import RegisterProgress from "../RegisterProgress";
 import styles from "./index.module.scss";
+import PayStep2 from "../RegisterPay/Step2";
+import PayStep3 from "../RegisterPay/Step3";
+import PayStep4 from "../RegisterPay/Step4";
+import PayStep5 from "../RegisterPay/Step5";
 
 const RegisterFormStep: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -48,6 +52,7 @@ const RegisterFormStep: React.FC = () => {
     availableDays: [],
     experienceStartTime: "",
     experienceEndTime: "",
+    serviceUrl: "",
   });
 
   // Step 4
@@ -71,67 +76,141 @@ const RegisterFormStep: React.FC = () => {
     }));
   };
 
-  const steps = [
-    {
-      component: (
-        <VisitStep1 stepData={step1Data} setStepData={updateStep1Data} />
-      ),
-      label: "플랫폼 유형 제공 서비스",
-      validate: () => {
-        return (
-          step1Data.platform &&
-          step1Data.type &&
-          step1Data.category &&
-          step1Data.serviceProvided.trim() !== ""
-        );
-      },
-    },
-    {
-      component: <VisitStep2 stepData={step2Data} setStepData={setStep2Data} />,
-      label: "사업주 정보",
-      validate: () => {
-        return (
-          step2Data.businessName.trim() !== "" &&
-          step2Data.imageUrl !== null &&
-          step2Data.postalCode.trim() !== "" &&
-          step2Data.address.trim() !== "" &&
-          step2Data.contactNumber.trim() !== ""
-        );
-      },
-    },
-    {
-      component: <VisitStep3 stepData={step3Data} setStepData={setStep3Data} />,
-      label: "체험 정보",
-      validate: () => {
-        return (
-          step3Data.availableDays.length > 0 &&
-          step3Data.experienceStartTime.trim() !== "" &&
-          step3Data.experienceEndTime.trim() !== ""
-        );
-      },
-    },
-    {
-      component: <VisitStep4 stepData={step4Data} setStepData={setStep4Data} />,
-      label: "미션",
-      validate: () => {
-        return (
-          step4Data.requirement.trim() !== "" &&
-          step4Data.keywords.some((keyword) => keyword.trim() !== "")
-        );
-      },
-    },
-    {
-      component: <VisitStep5 stepData={step5Data} setStepData={setStep5Data} />,
-      label: "모집 인원 지급 포인트",
-      validate: () => {
-        return (
-          step5Data.capacity > 0 &&
-          (!step5Data.pointPayment ||
-            (step5Data.pointPerPerson > 0 && step5Data.totalPoint > 0))
-        );
-      },
-    },
-  ];
+  const steps =
+    step1Data.type === "PURCHASE"
+      ? [
+          {
+            component: (
+              <VisitStep1 stepData={step1Data} setStepData={updateStep1Data} />
+            ),
+            label: "플랫폼 유형 제공 서비스",
+            validate: () => {
+              return (
+                step1Data.platform &&
+                step1Data.type &&
+                step1Data.category &&
+                step1Data.serviceProvided.trim() !== ""
+              );
+            },
+          },
+          {
+            component: (
+              <PayStep2 stepData={step2Data} setStepData={setStep2Data} />
+            ),
+            label: "사업주 정보",
+            validate: () => {
+              return (
+                step2Data.businessName.trim() !== "" &&
+                step2Data.imageUrl !== null &&
+                step2Data.contactNumber.trim() !== ""
+              );
+            },
+          },
+          {
+            component: (
+              <PayStep3 stepData={step3Data} setStepData={setStep3Data} />
+            ),
+            label: "서비스 안내",
+            validate: () => {
+              return step3Data.serviceUrl?.trim() !== "";
+            },
+          },
+          {
+            component: (
+              <PayStep4 stepData={step4Data} setStepData={setStep4Data} />
+            ),
+            label: "미션",
+            validate: () => {
+              return (
+                step4Data.requirement.trim() !== "" &&
+                step4Data.keywords.some((keyword) => keyword.trim() !== "")
+              );
+            },
+          },
+          {
+            component: (
+              <PayStep5 stepData={step5Data} setStepData={setStep5Data} />
+            ),
+            label: "모집 인원 지급 포인트",
+            validate: () => {
+              return (
+                step5Data.capacity > 0 &&
+                (!step5Data.pointPayment ||
+                  (step5Data.pointPerPerson > 0 && step5Data.totalPoint > 0))
+              );
+            },
+          },
+        ]
+      : [
+          {
+            component: (
+              <VisitStep1 stepData={step1Data} setStepData={updateStep1Data} />
+            ),
+            label: "플랫폼 유형 제공 서비스",
+            validate: () => {
+              return (
+                step1Data.platform &&
+                step1Data.type &&
+                step1Data.category &&
+                step1Data.serviceProvided.trim() !== ""
+              );
+            },
+          },
+          {
+            component: (
+              <VisitStep2 stepData={step2Data} setStepData={setStep2Data} />
+            ),
+            label: "사업주 정보",
+            validate: () => {
+              return (
+                step2Data.businessName.trim() !== "" &&
+                step2Data.imageUrl !== null &&
+                step2Data.postalCode?.trim() !== "" &&
+                step2Data.address?.trim() !== "" &&
+                step2Data.contactNumber.trim() !== ""
+              );
+            },
+          },
+          {
+            component: (
+              <VisitStep3 stepData={step3Data} setStepData={setStep3Data} />
+            ),
+            label: "체험 정보",
+            validate: () => {
+              return (
+                Array.isArray(step3Data.availableDays) &&
+                step3Data.availableDays.length > 0 &&
+                step3Data.experienceStartTime?.trim() !== "" &&
+                step3Data.experienceEndTime?.trim() !== ""
+              );
+            },
+          },
+          {
+            component: (
+              <VisitStep4 stepData={step4Data} setStepData={setStep4Data} />
+            ),
+            label: "미션",
+            validate: () => {
+              return (
+                step4Data.requirement.trim() !== "" &&
+                step4Data.keywords.some((keyword) => keyword.trim() !== "")
+              );
+            },
+          },
+          {
+            component: (
+              <VisitStep5 stepData={step5Data} setStepData={setStep5Data} />
+            ),
+            label: "모집 인원 지급 포인트",
+            validate: () => {
+              return (
+                step5Data.capacity > 0 &&
+                (!step5Data.pointPayment ||
+                  (step5Data.pointPerPerson > 0 && step5Data.totalPoint > 0))
+              );
+            },
+          },
+        ];
 
   const nextStep = () => {
     const isValid = steps[currentStep - 1].validate();
@@ -182,6 +261,7 @@ const RegisterFormStep: React.FC = () => {
       capacity: step5Data.capacity,
       pointPayment: step5Data.pointPayment,
       pointPerPerson: step5Data.pointPerPerson,
+      serviceUrl: step3Data.serviceUrl,
     };
 
     // data를 Blob으로 변환하여 application/json 타입으로 전송

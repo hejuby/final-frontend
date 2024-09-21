@@ -16,6 +16,12 @@
     }
   }
 
+  .campaign__list {
+    > nav {
+      margin-top: 40px;
+    }
+  }
+
   @include tablet {
     .sub-title {
       font-size: 20px;

@@ -20,18 +20,14 @@ const KakaoCallback = () => {
           const response = await axios.post(
             `${process.env.NEXT_PUBLIC_BASE_URL}/login/oauth2/code/kakao`,
             { code, type },
+            { validateStatus: (status) => status === 200 || status === 400 },
           );
 
-          const { isRegistered, token } = response.data;
-
-          localStorage.setItem("authCode", code);
-
-          if (isRegistered) {
-            // 이미 가입된 회원인 경우
-            localStorage.setItem("accessToken", token);
+          if (response.status === 200) {
+            // 200: 로그인 성공
             router.push("/");
-          } else {
-            // 가입되지 않은 회원인 경우
+          } else if (response.status === 400) {
+            // 400: 회원가입 페이지로 이동
             router.push(`/auth/signup?type=${type}`);
           }
         } catch (error) {

@@ -26,8 +26,29 @@
     margin-top: 40px;
   }
 
-  input[type="textarea"] {
-    min-height: 250px;
+  .textarea {
+    @include text-style(14, $black);
+    padding: 18px;
+    border: 2px solid $gray-20;
+    border-radius: 8px;
+    line-height: 1.4;
+    background-color: $white;
+
+    &::placeholder {
+      @include text-style(14, $gray-60);
+    }
+
+    &:focus {
+      border: 1px solid $blue-40;
+    }
+
+    &:disabled,
+    &:read-only {
+      @include text-style(14, $gray-50);
+      background-color: $gray-disabled;
+      border: 2px solid $gray-20;
+      cursor: unset;
+    }
   }
 
   .input-container {
@@ -41,7 +62,8 @@
   }
 
   @include tablet {
-    padding: 30px 30px 40px;
+    padding: 30px 0px 40px;
+
     .article {
       &:first-of-type {
         margin-top: 20px;

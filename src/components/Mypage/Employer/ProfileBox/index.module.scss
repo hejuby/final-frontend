@@ -10,10 +10,14 @@
   .profile__img {
     display: inline-block;
 
-    button {
-      width: 123px;
-      height: 123px;
-      border-radius: 50%;
+    > div {
+      > div {
+        > button {
+          width: 123px;
+          height: 123px;
+          border-radius: 50%;
+        }
+      }
     }
   }
 
