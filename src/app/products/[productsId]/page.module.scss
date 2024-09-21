@@ -226,6 +226,15 @@
         font-weight: 600;
       }
     }
+    .button-wrap {
+      @include flex(between, center);
+      width: 350px;
+      margin-top: 20px;
+      div {
+        width: 100%;
+        margin-left: 10px;
+      }
+    }
   }
 
   @include desktop {
@@ -436,5 +445,26 @@
         padding: 0 20px;
       }
     }
+  }
+}
+
+.mobile-btn-wrap {
+  @include flex(between, top);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 40px;
+  background-color: $white;
+  border-top: 1px solid $gray-20;
+  z-index: 99;
+
+  .alli-btn {
+    flex-grow: 1;
+    margin-left: 20px;
+  }
+
+  @include mobile {
+    padding: 10px 20px;
   }
 }
