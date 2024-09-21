@@ -3,8 +3,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import Modal from "@/components/Modal";
 import axios from "axios";
+import { throttle } from "lodash";
 import { useRouter } from "next/navigation";
-import { ICampaignSearch } from "@/@types/campaignItems";
+import { ICampaignSearch, ICampaignItems } from "@/@types/campaignItems";
+import useUserStore from "@/store/useUserStore";
 import Loading from "@/app/Loading";
 import IconHeartGray from "@/assets/icons/icon-heart-gray.svg";
 import IconLeft from "@/assets/icons/icon-direction-right.svg";
@@ -32,6 +34,11 @@ const Search = ({
 }) => {
   const { alert } = useDialog();
   const router = useRouter();
+
+  // 로그인 유무
+  const { isLogin } = useUserStore((state) => ({
+    isLogin: state.isLogin,
+  }));
 
   const initialSortByValue = (() => {
     switch (searchParams.sortBy) {
@@ -107,9 +114,6 @@ const Search = ({
           .join(", ");
         const sortBy = searchParams.sortBy || "RECOMMENDED";
 
-        console.log(cities, "cities");
-        console.log(districts, "districts");
-
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/campaigns/search`,
           {
@@ -123,14 +127,26 @@ const Search = ({
               page: currentPage,
               size: 10,
             },
+            withCredentials: true,
           },
         );
 
+        const updateData = response.data.content.map(
+          (item: ICampaignItems) => ({
+            ...item,
+            isLike: isLogin ? item.isLike : false,
+          }),
+        );
+
         if (currentPage === 0) {
-          setCampaignData(response.data);
+          setCampaignData({
+            content: updateData,
+            totalElements: response.data.totalElements,
+            totalPages: response.data.totalPages,
+          });
         } else {
           setCampaignData((prevData) => ({
-            content: [...(prevData?.content || []), ...response.data.content],
+            content: [...(prevData?.content || []), ...updateData],
             totalElements: response.data.totalElements,
             totalPages: response.data.totalPages,
           }));
@@ -156,6 +172,7 @@ const Search = ({
     campaignType,
     recommend,
     currentPage,
+    isLogin,
   ]);
 
   useEffect(() => {
@@ -172,7 +189,9 @@ const Search = ({
       );
     }
 
-    router.push(`/search?${params.toString()}`);
+    if (currentPage === 0) {
+      router.replace(`/search?${params.toString()}`);
+    }
     // eslint-disable-next-line
   }, [
     category,
@@ -181,21 +200,22 @@ const Search = ({
     recommend,
     selectedCity,
     selectedCounty,
-    currentPage,
   ]);
-  const handleScroll = () => {
+
+  const handleScroll = throttle(() => {
     const { scrollY } = window;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
 
     if (
-      scrollY + windowHeight >= documentHeight - 100 &&
+      scrollY + windowHeight >= documentHeight - 150 &&
       !loading &&
       currentPage < totalPages - 1
     ) {
+      setLoading(true);
       setCurrentPage((prevPage) => prevPage + 1);
     }
-  };
+  }, 300);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -204,6 +224,12 @@ const Search = ({
     };
     // eslint-disable-next-line
   }, [loading, currentPage, totalPages]);
+
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
 
   const handleArea = () => {
     setIsCityModal(!isCityModal);
