@@ -44,6 +44,9 @@ const UserInfo: React.FC<IUserInfoProps> = ({
     if (confirmLogout) {
       sessionStorage.removeItem("login");
       setIsLogin(false);
+
+      await alert("로그아웃 되었습니다.");
+      window.location.reload();
     }
   };
 
