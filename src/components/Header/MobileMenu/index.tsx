@@ -34,6 +34,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   const { alert, confirm } = useDialog();
   const [showSubmenu, setShowSubmenu] = useState(false);
 
+  // 모달관련 이벤트
   const handleSubmenu = () => {
     setShowSubmenu(!showSubmenu);
   };
