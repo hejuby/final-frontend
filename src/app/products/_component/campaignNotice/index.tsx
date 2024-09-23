@@ -56,45 +56,70 @@ const CampaignNotice = ({
 
   return (
     <div className={styles["product-notice-list"]}>
-      {campaignData.type === "방문형" && (
-        <dl>
-          <dt>방문・예약 안내</dt>
-          <dd>
-            <ul>
-              <li>
+      <dl>
+        <dt>방문・예약 안내</dt>
+        <dd>
+          <ul>
+            <li>
+              <p>
+                <span>
+                  체험가능 요일:
+                  {campaignData.availableDays.map((item) => (
+                    <span key={item}> {item}, </span>
+                  ))}
+                </span>
+              </p>
+            </li>
+            <li>
+              <p>
+                <span>
+                  체험 가능 시간 : {campaignData.experienceStartTime} ~{" "}
+                  {campaignData.experienceEndTime}
+                </span>
+              </p>
+            </li>
+            <li>
+              <p>
+                체험 불가능 요일 :
+                {campaignData.availableDays.length > 0 &&
+                  unavailableDay.map((item) => (
+                    <span key={item}> {item}, </span>
+                  ))}
+              </p>
+            </li>
+            <li>
+              {campaignData.type === "방문형" && (
                 <p>
-                  <span>
-                    체험가능 요일:
-                    {campaignData.availableDays.map((item) => (
-                      <span key={item}> {item}, </span>
-                    ))}
-                  </span>
+                  방문&체험 후 {campaignData.platform} 콘텐츠를 올리는
+                  체험단입니다.
                 </p>
-              </li>
-              <li>
+              )}
+              {campaignData.type === "구매형" && (
                 <p>
-                  <span>
-                    체험 가능 시간 : {campaignData.experienceStartTime} ~{" "}
-                    {campaignData.experienceEndTime}
-                  </span>
+                  구매 후 {campaignData.platform} 콘텐츠를 올리는 체험단입니다.
                 </p>
-              </li>
-              <li>
+              )}
+              {campaignData.type === "배송형" && (
                 <p>
-                  체험 불가능 요일 :
-                  {campaignData.availableDays.length > 0 &&
-                    unavailableDay.map((item) => (
-                      <span key={item}> {item}, </span>
-                    ))}
+                  제품 수령 후 {campaignData.platform} 콘텐츠를 올리는
+                  체험단입니다.
                 </p>
-              </li>
-              <li>
-                <p>방문&체험 후 릴스 콘텐츠를 올리는 체험단입니다.</p>
-              </li>
-            </ul>
-          </dd>
-        </dl>
-      )}
+              )}
+              {campaignData.type === "기자단" && (
+                <p>
+                  광고를 받아 {campaignData.platform} 콘텐츠를 올리는
+                  체험단입니다.
+                </p>
+              )}
+              {campaignData.type === "포장" && (
+                <p>
+                  포장 후 {campaignData.platform} 콘텐츠를 올리는 체험단입니다.
+                </p>
+              )}
+            </li>
+          </ul>
+        </dd>
+      </dl>
 
       <dl>
         <dt>주의 사항</dt>

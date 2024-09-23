@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import useDialog from "@/hooks/useDialog";
+import { useRouter } from "next/navigation";
 import { ICampaignDetails } from "@/@types/campaignItems";
 import setComma from "@/utils/numberUtils";
 import formatDate from "@/utils/formatDate";
@@ -44,11 +45,12 @@ const getIconForPlatform = (platform: string) => {
 
 const Application = ({ params }: { params: { productsId: string } }) => {
   const { alert } = useDialog();
+  const router = useRouter();
 
   const [campaignData, setCampaignData] = useState<ICampaignDetails | null>(
     null,
   );
-  const [message, setMessage] = useState<string>("");
+  const [aplliMessage, setAppliMessage] = useState<string>("");
   const [isAgreed, setIsAgreed] = useState(false);
 
   // 캠페인 데이터 호출
@@ -84,15 +86,24 @@ const Application = ({ params }: { params: { productsId: string } }) => {
     }
 
     const formData = new FormData(e.target as HTMLFormElement);
-    const message = formData.get("message") as string;
+    const messageForm = formData.get("aplliMessage") as string;
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer/application`, {
-        campaignId: params.productsId,
-        message,
-      })
-      .then(() => {
-        alert(`${campaignData?.businessName}체험단 신청이 완료되었습니다.`);
+      .post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/influencer/application`,
+        {
+          campaignId: params.productsId,
+          message: messageForm,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then(async () => {
+        await alert(
+          `${campaignData?.businessName}체험단 신청이 완료되었습니다.`,
+        );
+        router.push(`/products/${params.productsId}`);
       })
       .catch((error) => {
         if (axios.isAxiosError(error) && error.response) {
@@ -184,12 +195,12 @@ const Application = ({ params }: { params: { productsId: string } }) => {
             <h3>신청한마디</h3>
             <p>신청시 광고주가 참고할 수 있는 내용이 있다면 작성해주세요.</p>
             <textarea
-              name="message"
-              id="message"
+              name="aplliMessage"
+              id="aplliMessage"
               placeholder={`내용을 입력해주세요.\n예시) 평일 오전 시간대를 선호합니다. 평소 뷰티 디바이스에 관심이 많습니다. 등...`}
               style={{ whiteSpace: "pre-wrap" }}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={aplliMessage}
+              onChange={(e) => setAppliMessage(e.target.value)}
             />
             <div>
               <Checkbox
