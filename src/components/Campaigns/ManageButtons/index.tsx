@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { CampaignState } from "@/@types/myCampaignItems";
 import Button from "@/components/Button";
 import styles from "./index.module.scss";
 
 interface ManageButtonsProps {
+  campaignId: string;
   campaignState: CampaignState;
   handleCheckSchedule: () => void;
   handleFinishRecruiting: () => void;
@@ -13,6 +15,7 @@ interface ManageButtonsProps {
 }
 
 const ManageButtons = ({
+  campaignId,
   campaignState,
   handleCheckSchedule,
   handleFinishRecruiting,
@@ -39,9 +42,15 @@ const ManageButtons = ({
     <nav className={styles.nav}>
       {campaignState === "RECRUITING" && (
         <>
-          <Button color="outline" full={isMobile} onClick={handleCheckSchedule}>
-            일정확인
-          </Button>
+          <Link href={`/products/${campaignId}`}>
+            <Button
+              color="outline"
+              full={isMobile}
+              onClick={handleCheckSchedule}
+            >
+              일정확인
+            </Button>
+          </Link>
           <Button
             color="solid"
             full={isMobile}
@@ -53,15 +62,23 @@ const ManageButtons = ({
       )}
       {(campaignState === "RECRUITMENT_COMPLETED" ||
         campaignState === "EXPERIENCE_AND_REVIEW") && (
-        <Button color="outline" full={isMobile} onClick={handleCheckSchedule}>
-          일정확인
-        </Button>
-      )}
-      {campaignState === "REVIEW_CLOSED" && (
-        <>
+        <Link href={`/products/${campaignId}`}>
           <Button color="outline" full={isMobile} onClick={handleCheckSchedule}>
             일정확인
           </Button>
+        </Link>
+      )}
+      {campaignState === "REVIEW_CLOSED" && (
+        <>
+          <Link href={`/products/${campaignId}`}>
+            <Button
+              color="outline"
+              full={isMobile}
+              onClick={handleCheckSchedule}
+            >
+              일정확인
+            </Button>
+          </Link>
           <Button color="solid" full={isMobile} onClick={handleResultReport}>
             결과 보고서
           </Button>

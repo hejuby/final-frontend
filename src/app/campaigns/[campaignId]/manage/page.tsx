@@ -1,5 +1,6 @@
 "use client";
 
+import { notFound } from "next/navigation";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -32,9 +33,20 @@ const campaignStateToURI = (state: CampaignState): string => {
   return "";
 };
 
-const Page = ({ params }: { params: { campaignId: string } }) => {
+const Page = ({
+  params,
+  searchParams,
+}: {
+  params: { campaignId: string };
+  searchParams: { state: string };
+}) => {
+  const state = searchParams.state as CampaignState;
+  if (!CAMPAIGN_STATES.includes(state)) {
+    notFound();
+  }
+
   const progressIndex = CAMPAIGN_STATES.findIndex(
-    (state) => state === "RECRUITING",
+    (campaignState) => campaignState === state,
   );
 
   const { data, isPending, isError } = useQuery<
@@ -45,7 +57,7 @@ const Page = ({ params }: { params: { campaignId: string } }) => {
     queryKey: ["campaigns", "manage", params.campaignId],
     queryFn: () =>
       axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/campaigns/${params.campaignId}/management/${campaignStateToURI("RECRUITING")}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/campaigns/${params.campaignId}/management/${campaignStateToURI(state)}`,
       ),
   });
 
@@ -59,7 +71,8 @@ const Page = ({ params }: { params: { campaignId: string } }) => {
     <>
       <section className={styles.info}>
         <ManageButtons
-          campaignState="RECRUITING"
+          campaignId={params.campaignId}
+          campaignState={state}
           handleCheckSchedule={() => {}}
           handleFinishRecruiting={() => {}}
           handleResultReport={() => {}}
@@ -69,7 +82,7 @@ const Page = ({ params }: { params: { campaignId: string } }) => {
       <section className={styles.divider}>
         <Line type="thick" />
       </section>
-      <ManageTable attendees={attendees} campaignState="RECRUITING" />
+      <ManageTable attendees={attendees} campaignState={state} />
     </>
   );
 };
